@@ -1,7 +1,7 @@
 #include <headers/ECS/SpriteComponent.hpp>
 
-SpriteComponent::SpriteComponent(const std::string& fileName, const float& des_w, const float& des_h) {
-    m_texture = TextureManager::loadTexture(fileName);
+SpriteComponent::SpriteComponent(const SpriteID& id, const float& des_w, const float& des_h) {
+    // m_texture = Game::getResourceManager()->getTexture(id);
 
     m_destRect.w = des_w;
     m_destRect.h = des_h;
@@ -9,6 +9,10 @@ SpriteComponent::SpriteComponent(const std::string& fileName, const float& des_w
 
 SpriteComponent::~SpriteComponent() {
     SDL_DestroyTexture(m_texture);
+}
+
+SDL_FRect SpriteComponent::getHitBox() {
+    return m_destRect;
 }
 
 void SpriteComponent::init() {

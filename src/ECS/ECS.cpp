@@ -2,7 +2,9 @@
 #include <iostream>
 
 //------------------------------------Entity------------------------------------
-Entity::Entity() {}
+Entity::Entity() {
+    alive = true;
+}
 
 Entity::~Entity() {}
 

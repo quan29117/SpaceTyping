@@ -15,6 +15,6 @@ void ColliderComponent::init() {
 }
 
 void ColliderComponent::update() {
-    m_collider.x = m_trans->position.x;
-    m_collider.y = m_trans->position.y;
+    // m_collider.x = m_trans->position.x;
+    // m_collider.y = m_trans->position.y;
 }

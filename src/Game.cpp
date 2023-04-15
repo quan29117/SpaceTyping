@@ -1,6 +1,7 @@
 #include <headers/Game.hpp>
 
 SDL_Renderer* Game::m_renderer = nullptr;
+// ResourceManager* Game::m_resMan = new ResourceManager;
 
 void Game::initSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -44,12 +45,22 @@ void Game::initSpec() {
     states.push(new GamePlay());  //TODO : edit to new MainMenu
 }
 
+void Game::initResMan() {   //TODO
+    // m_resMan->addTexture(player, "Player.png");
+    // m_resMan->addTexture(enemy, "Enemy.png");
+}
+
 Game::Game() {
     initSDL();
     initSpec();
+    initResMan();
 }
 
 Game::~Game() {}
+
+// ResourceManager* Game::getResourceManager() {
+//     return m_resMan;
+// }
 
 SDL_Renderer* Game::getRenderer() {
     return m_renderer;

@@ -21,6 +21,8 @@ struct Vector2D {
     Vector2D& operator *= (const Vector2D& v);
     Vector2D& operator /= (const Vector2D& v);
 
+    Vector2D& operator * (const float& i);
+
     friend std::ostream& operator << (std::ostream& stream, const Vector2D& v);
 
     Vector2D unitVector();
