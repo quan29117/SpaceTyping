@@ -1,14 +1,17 @@
 #include <headers/ECS/SpriteComponent.hpp>
 
+#include <headers/Game.hpp>
+#include <headers/Structs.hpp>
+
 SpriteComponent::SpriteComponent(const SpriteID& id, const float& des_w, const float& des_h) {
-    // m_texture = Game::getResourceManager()->getTexture(id);
+    m_texture = Game::getResourceManager()->getTexture(id);
 
     m_destRect.w = des_w;
     m_destRect.h = des_h;
 }
 
 SpriteComponent::~SpriteComponent() {
-    SDL_DestroyTexture(m_texture);
+    // SDL_DestroyTexture(m_texture);
 }
 
 SDL_FRect SpriteComponent::getHitBox() {

@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <headers/Gameplay.hpp>
-#include <headers/State.hpp>
 #include <headers/ResourceManager.hpp>
 
 class Game {
@@ -10,7 +9,7 @@ private:
 //SDL
     SDL_Window*          m_window;
     static SDL_Renderer* m_renderer;
-    // static ResourceManager* m_resMan;
+    static ResourceManager* m_resMan;
     
 //Spec
     bool isRunning;
@@ -29,7 +28,7 @@ public:
     Game();
     virtual ~Game();
 
-    // static ResourceManager* getResourceManager();
+    static ResourceManager* getResourceManager();
     static SDL_Renderer* getRenderer();
 
     void run();

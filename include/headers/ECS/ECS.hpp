@@ -11,15 +11,15 @@ class Entity;
 
 using ComponentID = std::size_t;
 
-inline ComponentID getComponentTypeID() {
+inline ComponentID getUniqueComponentTypeID() {
     static ComponentID lastID = 0;
     return lastID++;
 }
 
 template <typename T>
 inline ComponentID getComponentTypeID() noexcept {
-    static_assert (std::is_base_of<Component, T>::value, "");
-    static ComponentID typeID = getComponentTypeID();
+    static_assert (std::is_base_of<Component, T>::value, "Doesn't inherit from Component\n");
+    static ComponentID typeID = getUniqueComponentTypeID();
     return typeID;
 }
 

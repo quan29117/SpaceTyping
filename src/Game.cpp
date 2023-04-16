@@ -1,7 +1,9 @@
 #include <headers/Game.hpp>
 
+#include <headers/Global.hpp>
+
 SDL_Renderer* Game::m_renderer = nullptr;
-// ResourceManager* Game::m_resMan = new ResourceManager;
+ResourceManager* Game::m_resMan = new ResourceManager;
 
 void Game::initSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -28,7 +30,7 @@ void Game::initRenderer() {
     if (m_renderer == nullptr)
         std::cout << "SDL renderer created failed\n";
 
-    // SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 }
 
 void Game::initLib() {
@@ -46,21 +48,21 @@ void Game::initSpec() {
 }
 
 void Game::initResMan() {   //TODO
-    // m_resMan->addTexture(player, "Player.png");
-    // m_resMan->addTexture(enemy, "Enemy.png");
+    m_resMan->addTexture(player, "Player.png");
+    m_resMan->addTexture(enemy, "Enemy.png");
 }
 
 Game::Game() {
     initSDL();
-    initSpec();
     initResMan();
+    initSpec();
 }
 
 Game::~Game() {}
 
-// ResourceManager* Game::getResourceManager() {
-//     return m_resMan;
-// }
+ResourceManager* Game::getResourceManager() {
+    return m_resMan;
+}
 
 SDL_Renderer* Game::getRenderer() {
     return m_renderer;
@@ -89,6 +91,8 @@ void Game::run() {
 }
 
 void Game::clean() {
+    m_resMan->freeTextures();
+    
     IMG_Quit();
 
     SDL_DestroyRenderer(m_renderer);

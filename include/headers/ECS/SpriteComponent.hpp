@@ -1,6 +1,7 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_rect.h>
 #include <headers/ECS/TransformComponent.hpp>
 #include <headers/ResourceManager.hpp>
 

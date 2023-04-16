@@ -1,6 +1,8 @@
 #pragma once
 
-#include <headers/Game.hpp>
+#include <string>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_rect.h>
 
 struct TextureManager {
     static SDL_Texture* loadTexture(const std::string& fileName);

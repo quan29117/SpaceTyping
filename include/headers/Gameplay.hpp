@@ -2,10 +2,8 @@
 
 #include <random>
 #include <SDL2/SDL_image.h>
-#include <headers/Game.hpp>
 #include <headers/State.hpp>
 #include <headers/ECS/Components.hpp>
-#include <headers/Structs.hpp>
 
 class GamePlay : public State {
 private:
@@ -24,9 +22,9 @@ private:
 	std::mt19937 rng;
 
 //Ptr
-	
+	EntityManager manager;
+	Entity& m_player = manager.addEntity();
     // Player* player;
-	
 	// EnemySystem* enemy_system;
 	// PauseMenu* pause_menu;
 

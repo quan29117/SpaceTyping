@@ -6,7 +6,9 @@ Entity::Entity() {
     alive = true;
 }
 
-Entity::~Entity() {}
+Entity::~Entity() {
+
+}
 
 bool Entity::isAlive() {
     return alive;
@@ -38,12 +40,12 @@ void EntityManager::render() {
 }
 
 void EntityManager::refresh() {
-    entities.erase(std::remove_if(std::begin(entities), std::end(entities),
+    entities.erase(std::remove_if(entities.begin(), entities.end(),
         [](const std::unique_ptr<Entity> &m_Entity)
     {
-        return !m_Entity->isAlive();
+        return m_Entity->isAlive() == false;
     }),
-        std::end(entities));
+        entities.end());
 }
 
 Entity& EntityManager::addEntity() {

@@ -1,8 +1,8 @@
 #include <headers/Gameplay.hpp>
 
-EntityManager manager;
-Entity& m_player = manager.addEntity();
-Entity& m_enemy = manager.addEntity();
+#include <headers/Game.hpp>
+#include <headers/Global.hpp>
+#include <headers/Structs.hpp>
 
 void GamePlay::initPtr() {
 	// m_player = new Player(renderer);
@@ -22,13 +22,16 @@ GamePlay::GamePlay()
 	initPtr();
 	initProgress();
 
+	
+	// Entity& m_enemy = manager.addEntity();
+
 	m_player.addComponent<TransformComponent>(PLAYER_START_POS_X, PLAYER_START_POS_Y);
 	m_player.addComponent<SpriteComponent>(player, PLAYER_WIDTH, PLAYER_HEIGHT);
-	m_player.addComponent<ColliderComponent>("player");
+	// m_player.addComponent<ColliderComponent>("player");
 
-	m_enemy.addComponent<TransformComponent>(1000, 100, true, 10, 410, 10);
-	m_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
-	m_enemy.addComponent<ColliderComponent>("enemy");
+	// m_enemy.addComponent<TransformComponent>(1000, 100, true, 10, 410, 10);
+	// m_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
+	// m_enemy.addComponent<ColliderComponent>("enemy");
 }
 
 GamePlay::~GamePlay() {
@@ -67,15 +70,16 @@ void GamePlay::pollEvent() {
 }
 
 void GamePlay::updateGame() {
-	manager.refresh();
 	manager.update();
+	manager.refresh();
 
-	if (Collision::AABB(m_player.getComponent<SpriteComponent>().getHitBox(),
-						m_enemy.getComponent<SpriteComponent>().getHitBox()))
-	{
-		m_player.destroy();
-		m_enemy.destroy();
-	}
+	// if (Collision::AABB(m_player.getComponent<SpriteComponent>().getHitBox(),
+	// 					m_enemy.getComponent<SpriteComponent>().getHitBox()))
+	// {
+	// 	// m_player.destroy();
+	// 	m_enemy.destroy();
+	// }
+	if (char_input == 't') m_player.destroy();
 }
 
 void GamePlay::render() {

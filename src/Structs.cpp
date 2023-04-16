@@ -1,5 +1,8 @@
 #include <headers/Structs.hpp>
 
+#include <headers/Game.hpp>
+#include <headers/Global.hpp>
+
 //---------------------------------TextureManager---------------------------------
 SDL_Texture* TextureManager::loadTexture(const std::string& fileName) {
     SDL_Surface* img = IMG_Load((PATH_BEGIN_IMAGE + fileName).c_str());

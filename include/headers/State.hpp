@@ -1,8 +1,7 @@
 #pragma once
 
 #include <queue>
-#include <SDL2/SDL.h>
-#include <headers/Global.hpp>
+#include <SDL2/SDL_video.h>
 
 class State {
 protected:

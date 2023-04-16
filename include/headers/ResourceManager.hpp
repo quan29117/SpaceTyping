@@ -2,7 +2,7 @@
 
 #include <map>
 #include <string>
-#include <headers/Structs.hpp>
+#include <SDL2/SDL_render.h>
 
 enum SpriteID {
     player = 0,
@@ -20,8 +20,10 @@ private:
 
 public:
     ResourceManager() {}
-    virtual ~ResourceManager();
+    virtual ~ResourceManager() {}
 
-    void addTexture (const SpriteID& id, const std::string& fileName);
+    void addTexture(const SpriteID& id, const std::string& fileName);
     SDL_Texture* getTexture(const SpriteID& id);
+
+    void freeTextures();
 };
