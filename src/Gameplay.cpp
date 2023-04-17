@@ -2,7 +2,19 @@
 
 #include <headers/Game.hpp>
 #include <headers/Global.hpp>
+#include <headers/ECS/Components.hpp>
 #include <headers/Structs.hpp>
+
+EntityManager manager;
+Entity& m_player = manager.addEntity();
+// Entity& m_enemy = manager.addEntity();
+
+enum EntityGroup : std::size_t {
+	GEnemy,
+	GBulletPlayer_B,	//BulletPlayer to defeat BulletEnemy
+	GBulletPlayer_E,	//BulletPlayer to defeat Enemy
+	GBulletEnemy,
+};
 
 void GamePlay::initPtr() {
 	// m_player = new Player(renderer);
@@ -21,17 +33,11 @@ GamePlay::GamePlay()
 {
 	initPtr();
 	initProgress();
-
 	
-	// Entity& m_enemy = manager.addEntity();
-
 	m_player.addComponent<TransformComponent>(PLAYER_START_POS_X, PLAYER_START_POS_Y);
 	m_player.addComponent<SpriteComponent>(player, PLAYER_WIDTH, PLAYER_HEIGHT);
 	// m_player.addComponent<ColliderComponent>("player");
 
-	// m_enemy.addComponent<TransformComponent>(1000, 100, true, 10, 410, 10);
-	// m_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
-	// m_enemy.addComponent<ColliderComponent>("enemy");
 }
 
 GamePlay::~GamePlay() {
@@ -43,7 +49,7 @@ GamePlay::~GamePlay() {
 void GamePlay::run(std::queue <State*>& states)
 {
 	pollEvent();
-	updateGame();
+	if (!pause)	updateGame();
 	render();
 }
 
@@ -61,27 +67,42 @@ void GamePlay::pollEvent() {
 				break;
 			
 			case SDL_TEXTINPUT:
-				char_input = event.text.text[0];
-				std::cout << char_input;
+				if (!pause)
+					char_input = event.text.text[0];
 				break;
 			
 		}
 	}
 }
 
+Entity& creatEnemy(const int& a, const int& b) {
+	auto& e_enemy (manager.addEntity());
+
+	e_enemy.addComponent<TransformComponent>(a, b, false, 10, 410, 10);
+	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
+	e_enemy.addComponent<TextComponent>(yoster, "abc");
+
+	e_enemy.addGroup(GEnemy);
+
+	return e_enemy;
+}
+
 void GamePlay::updateGame() {
 	manager.update();
 	manager.refresh();
-
-	// if (Collision::AABB(m_player.getComponent<SpriteComponent>().getHitBox(),
-	// 					m_enemy.getComponent<SpriteComponent>().getHitBox()))
-	// {
-	// 	// m_player.destroy();
-	// 	m_enemy.destroy();
-	// }
-	if (char_input == 't') m_player.destroy();
+	
+	if (char_input == 'm') {
+		creatEnemy(10, 410);
+		char_input = '\0';
+		std::cout << "mcreate\n";
+	}
+	
+	if (char_input == 'n') {
+		creatEnemy(1000, 410);
+		char_input = '\0';
+		std::cout << "ncreate\n";
+	}
 }
-
 void GamePlay::render() {
 	SDL_RenderClear(Game::getRenderer());
 
@@ -90,8 +111,4 @@ void GamePlay::render() {
 	}
 
 	SDL_RenderPresent(Game::getRenderer());
-}
-
-void GamePlay::spawnEnemies() {
-	
 }

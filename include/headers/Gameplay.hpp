@@ -3,7 +3,6 @@
 #include <random>
 #include <SDL2/SDL_image.h>
 #include <headers/State.hpp>
-#include <headers/ECS/Components.hpp>
 
 class GamePlay : public State {
 private:
@@ -22,8 +21,7 @@ private:
 	std::mt19937 rng;
 
 //Ptr
-	EntityManager manager;
-	Entity& m_player = manager.addEntity();
+	
     // Player* player;
 	// EnemySystem* enemy_system;
 	// PauseMenu* pause_menu;
@@ -32,14 +30,13 @@ private:
 	void initPtr();
 	void initProgress();
 
+	void pollEvent();
+	void updateGame();
+	void render();
+
 public:
     GamePlay();
     virtual ~GamePlay();
 
     void run(std::queue <State*>& states);
-	void pollEvent();
-	void updateGame();
-	void render();
-
-	void spawnEnemies();
 };

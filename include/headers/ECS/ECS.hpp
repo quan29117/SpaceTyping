@@ -8,8 +8,10 @@
 
 class Component;
 class Entity;
+class EntityManager;
 
 using ComponentID = std::size_t;
+using Group = std::size_t;
 
 inline ComponentID getUniqueComponentTypeID() {
     static ComponentID lastID = 0;
@@ -24,9 +26,11 @@ inline ComponentID getComponentTypeID() noexcept {
 }
 
 constexpr std::size_t maxComponents = 32;
-
 using ComponentBitSet = std::bitset <maxComponents>;
 using ComponentArray = std::array <Component*, maxComponents>;
+
+constexpr std::size_t maxGroups = 32;
+using GroupBitSet = std::bitset <maxGroups>;
 
 class Component {
 public:
@@ -41,14 +45,18 @@ public:
 
 class Entity {
 private:
+    EntityManager& manager;
+
     bool alive;
     std::vector <std::unique_ptr<Component>> components;
 
     ComponentArray componentArray;
     ComponentBitSet componentBitSet;
 
+    GroupBitSet groupBitSet;
+
 public:
-    Entity();
+    Entity(EntityManager& man);
     virtual ~Entity();
 
     bool isAlive();
@@ -82,16 +90,24 @@ public:
         auto ptr (componentArray[getComponentTypeID<T>()]);
         return *static_cast<T*> (ptr);
     }
+
+    bool hasGroup(const Group& mGroup) noexcept;
+    void addGroup(const Group& mGroup) noexcept;
+    void delGroup(const Group& mGroup) noexcept;
 };
 
 class EntityManager {
 private:
-    std::vector <std::unique_ptr<Entity>> entities;
+    
+    std::array <std::vector<Entity*>, maxGroups> groupedEntities;
 
-public:
+public:std::vector <std::unique_ptr<Entity>> entities; // todo
     void update();
     void render();
     void refresh();
 
     Entity& addEntity();
+
+    void addToGroup(Entity* mEntity, const Group& mGroup);
+    std::vector<Entity*>& getEntitesByGroup(const Group& mGroup);
 };

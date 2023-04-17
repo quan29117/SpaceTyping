@@ -39,6 +39,10 @@ void Game::initLib() {
     int initStatus = IMG_Init(flags);
     if ((initStatus & flags) != flags)
         std::cout << "SDL2_Image format not available\n";
+
+// Setup and initialize the SDL2_TTF library
+    if (TTF_Init() == -1) 
+        std::cout <<"SDL2_TTF format not available\n";
 }
 
 void Game::initSpec() {
@@ -48,8 +52,13 @@ void Game::initSpec() {
 }
 
 void Game::initResMan() {   //TODO
+//Add Textures
     m_resMan->addTexture(player, "Player.png");
     m_resMan->addTexture(enemy, "Enemy.png");
+
+//Add Fonts
+    m_resMan->addFont(yoster, "yoster.ttf", 30);
+    m_resMan->addFont(mariana, "mariana.ttf", 30);
 }
 
 Game::Game() {
@@ -86,15 +95,14 @@ void Game::run() {
         if (frameDelay > frameTime)
             SDL_Delay(frameDelay - frameTime);
     }
-
-    clean();
 }
 
 void Game::clean() {
-    m_resMan->freeTextures();
+    m_resMan->clear();
     
     IMG_Quit();
-
+    TTF_Quit();
+    
     SDL_DestroyRenderer(m_renderer);
     m_renderer = nullptr;
     SDL_DestroyWindow(m_window);
