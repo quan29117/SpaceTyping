@@ -92,16 +92,15 @@ void Game::run() {
         else break;
 
         frameTime = SDL_GetTicks() - frameStart;
-        if (frameDelay > frameTime)
+        if (frameDelay > frameTime) 
             SDL_Delay(frameDelay - frameTime);
     }
 }
 
 void Game::clean() {
     m_resMan->clear();
-    
-    IMG_Quit();
     TTF_Quit();
+    IMG_Quit();
     
     SDL_DestroyRenderer(m_renderer);
     m_renderer = nullptr;

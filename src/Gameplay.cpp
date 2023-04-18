@@ -1,5 +1,6 @@
 #include <headers/Gameplay.hpp>
 
+#include <fstream>
 #include <headers/Game.hpp>
 #include <headers/Global.hpp>
 #include <headers/ECS/Components.hpp>
@@ -7,7 +8,6 @@
 
 EntityManager manager;
 Entity& m_player = manager.addEntity();
-// Entity& m_enemy = manager.addEntity();
 
 enum EntityGroup : std::size_t {
 	GEnemy,
@@ -17,8 +17,6 @@ enum EntityGroup : std::size_t {
 };
 
 void GamePlay::initPtr() {
-	// m_player = new Player(renderer);
-	// enemy_system = new EnemySystem;
 	// pause_menu = new PauseMenu(i_res);
 }
 
@@ -28,11 +26,25 @@ void GamePlay::initProgress() {
 	char_input = '\0';
 }
 
+void GamePlay::initTime() {
+	start = end = elapsedS = 0;
+}
+
+void GamePlay::initWordList() {
+	std::ifstream file(PATH_BEGIN + "words.txt");
+	std::string word;
+	if (file.is_open())
+		while (file >> word)
+			word_list.push_back(word);
+	file.close();
+}
+
 GamePlay::GamePlay()
 	: rng(rd())
 {
-	initPtr();
 	initProgress();
+	initTime();
+	initWordList();
 	
 	m_player.addComponent<TransformComponent>(PLAYER_START_POS_X, PLAYER_START_POS_Y);
 	m_player.addComponent<SpriteComponent>(player, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -41,16 +53,19 @@ GamePlay::GamePlay()
 }
 
 GamePlay::~GamePlay() {
-	// delete player;
-	// delete enemy_system;
 	// delete pause_menu;
 }
 
 void GamePlay::run(std::queue <State*>& states)
 {
 	pollEvent();
-	if (!pause)	updateGame();
+	if (!pause) updateGame();
 	render();
+
+//Update time
+	end = SDL_GetTicks() / 1000.f;
+	elapsedS = (end - start);
+	std::cout << start << " " << end << "\n";
 }
 
 void GamePlay::pollEvent() {
@@ -70,39 +85,46 @@ void GamePlay::pollEvent() {
 				if (!pause)
 					char_input = event.text.text[0];
 				break;
-			
 		}
 	}
 }
 
-Entity& creatEnemy(const int& a, const int& b) {
+void GamePlay::updateGame() {
+	manager.update();
+	manager.refresh();
+
+	spawnEnemy();
+}
+
+Entity& createEnemy(const int& pos_x, const int& pos_y, const std::string& text) {
 	auto& e_enemy (manager.addEntity());
 
-	e_enemy.addComponent<TransformComponent>(a, b, false, 10, 410, 10);
+	e_enemy.addComponent<TransformComponent>(pos_x, pos_y, true, 10, 410, 10);
 	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
-	e_enemy.addComponent<TextComponent>(yoster, "abc");
+	e_enemy.addComponent<TextComponent>(yoster, text);
 
 	e_enemy.addGroup(GEnemy);
 
 	return e_enemy;
 }
 
-void GamePlay::updateGame() {
-	manager.update();
-	manager.refresh();
-	
-	if (char_input == 'm') {
-		creatEnemy(10, 410);
-		char_input = '\0';
-		std::cout << "mcreate\n";
-	}
-	
-	if (char_input == 'n') {
-		creatEnemy(1000, 410);
-		char_input = '\0';
-		std::cout << "ncreate\n";
+void GamePlay::spawnEnemy() {
+	if (elapsedS >= 5) {
+		std::uniform_int_distribution<int> uni(0, WINDOW_SIZE_HEIGHT);
+
+		std::string text = "";
+		for (int i = 0; i <= uni(rng) % 2; i++)  
+			text += word_list[uni(rng) % word_list.size()] + " ";
+		text.erase(text.size() - 1, 1);
+		
+		createEnemy(WINDOW_SIZE_WIDTH, uni(rng), text);
+
+	//reset the time
+		elapsedS = 0;
+		start = end;
 	}
 }
+
 void GamePlay::render() {
 	SDL_RenderClear(Game::getRenderer());
 

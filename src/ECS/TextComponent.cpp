@@ -13,8 +13,11 @@ TextComponent::~TextComponent() {
 }
 
 void TextComponent::init() {
-    if (entity->hasComponent<TransformComponent>())
+    if (entity->hasComponent<TransformComponent>()) {
         m_trans = &entity->getComponent<TransformComponent>();
+        m_destRect.x = (int) m_trans->position.x;
+        m_destRect.y = (int) m_trans->position.y;
+    }
     else std::cout << "No TransformComponent\n";
 
     setText();
