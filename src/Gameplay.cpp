@@ -95,6 +95,7 @@ void GamePlay::updateGame() {
 	spawnEnemy();
 	playerShoot();
 	enemyShoot();
+	char_input = '\0';
 }
 
 void GamePlay::render() {
@@ -186,7 +187,7 @@ Entity& createBulletEnemy(const char& ch, const Vector2D& pos, const Vector2D& d
 	p_bullet.addComponent<SpriteComponent>(bullet_enemy, BULLET_ENEMY_SIZE, BULLET_ENEMY_SIZE);
 
 	std::string str;	str += ch;
-	p_bullet.addComponent<TextComponent>(yoster, str, true);
+	p_bullet.addComponent<TextComponent>(yoster, str, true, SDL_Color {255, 0, 0, 255});
 
 	p_bullet.addGroup(GBulletEnemy);
 
