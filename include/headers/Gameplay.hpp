@@ -16,8 +16,6 @@ private:
 	unsigned int point;
     unsigned char char_input;
 
-	
-
 	//Display
 	
 //Time
@@ -41,8 +39,11 @@ private:
 
 	void pollEvent();
 	void updateGame();
-	void spawnEnemy();
 	void render();
+
+	void spawnEnemy();
+	void playerShoot();
+	void enemyShoot();
 
 public:
     GamePlay();

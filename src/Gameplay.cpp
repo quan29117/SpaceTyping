@@ -46,7 +46,7 @@ GamePlay::GamePlay()
 	initTime();
 	initWordList();
 	
-	m_player.addComponent<TransformComponent>(PLAYER_START_POS_X, PLAYER_START_POS_Y);
+	m_player.addComponent<TransformComponent>(PLAYER_POS_X, PLAYER_POS_Y);
 	m_player.addComponent<SpriteComponent>(player, PLAYER_WIDTH, PLAYER_HEIGHT);
 	// m_player.addComponent<ColliderComponent>("player");
 
@@ -64,8 +64,7 @@ void GamePlay::run(std::queue <State*>& states)
 
 //Update time
 	end = SDL_GetTicks() / 1000.f;
-	elapsedS = (end - start);
-	std::cout << start << " " << end << "\n";
+	elapsedS = end - start;
 }
 
 void GamePlay::pollEvent() {
@@ -94,12 +93,67 @@ void GamePlay::updateGame() {
 	manager.refresh();
 
 	spawnEnemy();
+	playerShoot();
+	enemyShoot();
+}
+
+void GamePlay::render() {
+	SDL_RenderClear(Game::getRenderer());
+
+	if (!pause) {
+		manager.render();
+	}
+
+	SDL_RenderPresent(Game::getRenderer());
+}
+
+Entity& createBulletPlayer(const EntityGroup& EG, const char& ch, const Vector2D& dir) {
+	auto& p_bullet (manager.addEntity());
+
+	p_bullet.addComponent<TransformComponent>(BULLET_PLAYER_START_POS_X, BULLET_PLAYER_START_POS_Y, true, dir.x, dir.y, BULLET_PLAYER_SPEED);
+	p_bullet.addComponent<SpriteComponent>(bullet_player, BULLET_PLAYER_SIZE, BULLET_PLAYER_SIZE);
+
+	std::stringstream ss;
+	ss << ch;
+	p_bullet.addComponent<TextComponent>(yoster, ss.str(), false);
+
+	p_bullet.addGroup(EG);
+
+	return p_bullet;
+}
+
+void GamePlay::playerShoot() {
+	if (char_input != '\0') {
+		for (auto& bullet : manager.getEntitesByGroup(GBulletEnemy)) {
+			if (char_input == bullet->getComponent<TextComponent>().getFirstChar()) {
+				Vector2D dir = bullet->getComponent<TransformComponent>().position;
+				createBulletPlayer(GBulletPlayer_B, char_input, dir);
+				//TODO : shooting audio
+				bullet->getComponent<TextComponent>().eraseFirstChar();
+				char_input = '\0';
+				break;
+			}
+		}
+	}
+
+	if (char_input != '\0') {
+		for (auto& enemy : manager.getEntitesByGroup(GEnemy)) {
+			if (char_input == enemy->getComponent<TextComponent>().getFirstChar()) {
+				Vector2D dir = enemy->getComponent<TransformComponent>().position;
+				createBulletPlayer(GBulletPlayer_E, char_input, dir);
+				//TODO : shooting audio
+				enemy->getComponent<TextComponent>().eraseFirstChar();
+				char_input = '\0';
+				break;
+			}
+		}
+	}
 }
 
 Entity& createEnemy(const int& pos_x, const int& pos_y, const std::string& text) {
 	auto& e_enemy (manager.addEntity());
 
-	e_enemy.addComponent<TransformComponent>(pos_x, pos_y, true, 10, 410, 10);
+	e_enemy.addComponent<TransformComponent>(pos_x, pos_y, true, 10, 410, ENEMY_SPEED);
 	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
 	e_enemy.addComponent<TextComponent>(yoster, text);
 
@@ -125,12 +179,29 @@ void GamePlay::spawnEnemy() {
 	}
 }
 
-void GamePlay::render() {
-	SDL_RenderClear(Game::getRenderer());
+Entity& createBulletEnemy(const char& ch, const Vector2D& pos, const Vector2D& dir) {
+	auto& p_bullet (manager.addEntity());
 
-	if (!pause) {
-		manager.render();
+	p_bullet.addComponent<TransformComponent>(pos.x, pos.y, true, dir.x, dir.y, BULLET_ENEMY_SPEED);
+	p_bullet.addComponent<SpriteComponent>(bullet_enemy, BULLET_ENEMY_SIZE, BULLET_ENEMY_SIZE);
+
+	std::string str;	str += ch;
+	p_bullet.addComponent<TextComponent>(yoster, str, true);
+
+	p_bullet.addGroup(GBulletEnemy);
+
+	return p_bullet;
+}
+
+void GamePlay::enemyShoot() {
+	for (auto& enemy : manager.getEntitesByGroup(GEnemy)) {
+		auto& rec = enemy->getComponent<TransformComponent>().position;
+		if (rec.x > WINDOW_SIZE_WIDTH / 2.0f) {
+			std::uniform_int_distribution<int> uni(0, ENEMY_FIRE_CHANCE);
+			if (uni(rng) == 0) {
+				char ch = char(uni(rng) % 26 + 65);
+				createBulletEnemy(ch, rec, Vector2D(PLAYER_POS_X, PLAYER_POS_Y));
+			}
+		}
 	}
-
-	SDL_RenderPresent(Game::getRenderer());
 }

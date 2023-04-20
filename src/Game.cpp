@@ -55,6 +55,8 @@ void Game::initResMan() {   //TODO
 //Add Textures
     m_resMan->addTexture(player, "Player.png");
     m_resMan->addTexture(enemy, "Enemy.png");
+    m_resMan->addTexture(bullet_player, "Bullet_Player.png");
+    m_resMan->addTexture(bullet_enemy, "Bullet_Enemy.png");
 
 //Add Fonts
     m_resMan->addFont(yoster, "yoster.ttf", 30);
@@ -92,20 +94,20 @@ void Game::run() {
         else break;
 
         frameTime = SDL_GetTicks() - frameStart;
-        if (frameDelay > frameTime) 
+        if (frameDelay > frameTime)
             SDL_Delay(frameDelay - frameTime);
     }
 }
 
 void Game::clean() {
     m_resMan->clear();
-    TTF_Quit();
-    IMG_Quit();
     
     SDL_DestroyRenderer(m_renderer);
     m_renderer = nullptr;
     SDL_DestroyWindow(m_window);
     m_window = nullptr;
 
+    TTF_Quit();
+    IMG_Quit();
     SDL_Quit();
 }

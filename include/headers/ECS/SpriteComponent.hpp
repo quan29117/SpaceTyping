@@ -12,7 +12,7 @@ private:
     SDL_FRect m_destRect;
 
 public:
-    SpriteComponent(const SpriteID& id, const float& des_w, const float& des_h);
+    SpriteComponent(const SpriteID& id, const float& dest_w, const float& dest_h);
     virtual ~SpriteComponent();
 
     SDL_FRect getHitBox();
