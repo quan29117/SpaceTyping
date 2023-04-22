@@ -57,6 +57,7 @@ void Game::initResMan() {   //TODO
     m_resMan->addTexture(enemy, "Enemy.png");
     m_resMan->addTexture(bullet_player, "Bullet_Player.png");
     m_resMan->addTexture(bullet_enemy, "Bullet_Enemy.png");
+    m_resMan->addTexture(gameplay_bg, "GamePlay_Background.png");
 
 //Add Fonts
     m_resMan->addFont(yoster, "yoster.ttf", 30);

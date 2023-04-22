@@ -7,7 +7,7 @@
 
 struct TextureManager {
     static SDL_Texture* loadTexture(const std::string& fileName);
-    static void render(SDL_Texture* texture, const SDL_FRect* dest);
+    static void render(SDL_Texture* texture, const SDL_FRect* dest, const SDL_Rect* src = nullptr);
 };
 
 struct Collision {

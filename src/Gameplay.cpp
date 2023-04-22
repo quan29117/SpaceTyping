@@ -16,6 +16,14 @@ enum EntityGroup : std::size_t {
 	GBulletEnemy,
 };
 
+void GamePlay::initBackground() {
+	m_bg_texture = Game::getResourceManager()->getTexture(gameplay_bg);
+	camera.x = 0;
+    camera.y = 0;
+    camera.w = WINDOW_SIZE_WIDTH;
+    camera.h = WINDOW_SIZE_HEIGHT;
+}
+
 void GamePlay::initPtr() {
 	// pause_menu = new PauseMenu(i_res);
 }
@@ -42,6 +50,7 @@ void GamePlay::initWordList() {
 GamePlay::GamePlay()
 	: rng(rd())
 {
+	initBackground();
 	initProgress();
 	initTime();
 	initWordList();
@@ -95,13 +104,21 @@ void GamePlay::updateGame() {
 	spawnEnemy();
 	playerShoot();
 	enemyShoot();
+	scrollBackground();
 	char_input = '\0';
 }
 
 void GamePlay::render() {
 	SDL_RenderClear(Game::getRenderer());
 
+	SDL_FRect dest;
+    dest.x = 0;
+    dest.y = 0;
+    dest.w = 1920;
+    dest.h = 1080;
+
 	if (!pause) {
+		TextureManager::render(m_bg_texture, &dest, &camera);
 		manager.render();
 	}
 
@@ -126,7 +143,7 @@ Entity& createBulletPlayer(const EntityGroup& EG, const char& ch, const Vector2D
 void GamePlay::playerShoot() {
 	if (char_input != '\0') {
 		for (auto& bullet : manager.getEntitesByGroup(GBulletEnemy)) {
-			if (char_input == bullet->getComponent<TextComponent>().getFirstChar()) {
+			if (char_input == bullet->getComponent<TextComponent>().getCharNeedTyped()) {
 				Vector2D dir = bullet->getComponent<TransformComponent>().position;
 				createBulletPlayer(GBulletPlayer_B, char_input, dir);
 				//TODO : shooting audio
@@ -139,11 +156,11 @@ void GamePlay::playerShoot() {
 
 	if (char_input != '\0') {
 		for (auto& enemy : manager.getEntitesByGroup(GEnemy)) {
-			if (char_input == enemy->getComponent<TextComponent>().getFirstChar()) {
+			if (char_input == enemy->getComponent<TextEnemyComponent>().getCharNeedTyped()) {
 				Vector2D dir = enemy->getComponent<TransformComponent>().position;
 				createBulletPlayer(GBulletPlayer_E, char_input, dir);
 				//TODO : shooting audio
-				enemy->getComponent<TextComponent>().eraseFirstChar();
+				enemy->getComponent<TextEnemyComponent>().eraseFirstChar();
 				char_input = '\0';
 				break;
 			}
@@ -156,7 +173,7 @@ Entity& createEnemy(const int& pos_x, const int& pos_y, const std::string& text)
 
 	e_enemy.addComponent<TransformComponent>(pos_x, pos_y, true, 10, 410, ENEMY_SPEED);
 	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
-	e_enemy.addComponent<TextComponent>(yoster, text);
+	e_enemy.addComponent<TextEnemyComponent>(yoster, text);
 
 	e_enemy.addGroup(GEnemy);
 
@@ -164,7 +181,7 @@ Entity& createEnemy(const int& pos_x, const int& pos_y, const std::string& text)
 }
 
 void GamePlay::spawnEnemy() {
-	if (elapsedS >= 5) {
+	if (elapsedS >= 5 && manager.getEntitesByGroup(GEnemy).size() < 7) {
 		std::uniform_int_distribution<int> uni(0, WINDOW_SIZE_HEIGHT);
 
 		std::string text = "";
@@ -204,5 +221,14 @@ void GamePlay::enemyShoot() {
 				createBulletEnemy(ch, rec, Vector2D(PLAYER_POS_X, PLAYER_POS_Y));
 			}
 		}
+	}
+}
+
+void GamePlay::scrollBackground() {
+	if (!pause) {
+		camera.x++;
+        if (camera.x >= GAMEPLAY_BACKGROUND_WIDTH) {
+            camera.x = 1;
+        }
 	}
 }

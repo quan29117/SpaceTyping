@@ -17,11 +17,15 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define WINDOW_SIZE_HEIGHT  1080
 #define FRAME_PER_SECOND    60
 
+//Background
+#define GAMEPLAY_BACKGROUND_WIDTH   3840
+#define GAMEPLAY_BACKGROUND_HEIGHT  1080
+
 //Player
-#define PLAYER_POS_X       10
-#define PLAYER_POS_Y       410
-#define PLAYER_WIDTH       137.75
-#define PLAYER_HEIGHT      130.25
+#define PLAYER_POS_X        10
+#define PLAYER_POS_Y        410
+#define PLAYER_WIDTH        137.75
+#define PLAYER_HEIGHT       130.25
 
 //Enemy
 #define ENEMY_START_POS_X   1920

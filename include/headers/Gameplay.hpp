@@ -9,7 +9,8 @@
 class GamePlay : public State {
 private:
 //SDL
-
+	SDL_Texture* m_bg_texture;
+	SDL_Rect camera;
 
 //Progress
     unsigned int stage;
@@ -32,6 +33,7 @@ private:
 	// PauseMenu* pause_menu;
 
 //Functions
+	void initBackground();
 	void initPtr();
 	void initProgress();
 	void initTime();
@@ -44,6 +46,8 @@ private:
 	void spawnEnemy();
 	void playerShoot();
 	void enemyShoot();
+
+	void scrollBackground();
 
 public:
     GamePlay();

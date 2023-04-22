@@ -19,8 +19,8 @@ SDL_Texture* TextureManager::loadTexture(const std::string& fileName) {
     return texture;
 }
 
-void TextureManager::render(SDL_Texture* texture, const SDL_FRect* dest) {
-    SDL_RenderCopyF(Game::getRenderer(), texture, nullptr, dest);
+void TextureManager::render(SDL_Texture* texture, const SDL_FRect* dest, const SDL_Rect* src) {
+    SDL_RenderCopyF(Game::getRenderer(), texture, src, dest);
 }
 
 //-----------------------------------Collision------------------------------------
