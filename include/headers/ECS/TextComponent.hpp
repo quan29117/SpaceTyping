@@ -5,39 +5,36 @@
 
 class TextComponent : public Component {
 protected:
-    SpriteComponent* m_sprite;
-    FontID m_id;
-    std::string m_text_display, m_text_ref;
-    bool m_render;
-    SDL_Color m_color;
-    SDL_Texture* m_texture;
-    SDL_Rect m_destRect;
+    SpriteComponent*    m_sprite;
+    SDL_Texture*        m_texture;
+    SDL_Rect            m_destRect;
+    bool                m_render,
+                        m_center;
+    std::string         m_text_display,
+                        m_text_ref;
+    FontID              m_id;
+    SDL_Color           m_color;
 
     void setText();
     virtual void setPos();
 
 public:
     TextComponent() = default;
-    TextComponent(const FontID& id, const std::string& text, const bool& render = true, const SDL_Color& color = SDL_Color {255, 255, 255, 255});
+    TextComponent(const FontID& id, const std::string& text, const bool& center = true, const bool& render = true, const SDL_Color& color = SDL_Color {255, 255, 255, 255});
     virtual ~TextComponent();
 
     char getFirstChar();
     char getCharNeedTyped();
 
+    std::string getTextDisplay();
+
+    bool isFinished();
+
     void init() override;
     void update() override;
     void render() override;
 
-    void eraseFirstChar();
-};
-
-class TextEnemyComponent : public TextComponent {
-private:
-    
-public:
-    TextEnemyComponent(const FontID& id, const std::string& text);
-    virtual ~TextEnemyComponent();
-
-    void setPos() override;
-    void getShot();
+    void Typed();
+    void Shot();
+    void changeTextColor(const SDL_Color& color);
 };

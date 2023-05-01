@@ -4,9 +4,8 @@
 #include <headers/Structs.hpp>
 #include <headers/Global.hpp>
 
-//---------------------------------TextComponent-----------------------------------
-TextComponent::TextComponent(const FontID& id, const std::string& text, const bool& render, const SDL_Color& color)
-    : m_id (id), m_text_display (text), m_text_ref (text), m_render (render), m_color (color)
+TextComponent::TextComponent(const FontID& id, const std::string& text, const bool& center, const bool& render, const SDL_Color& color)
+    : m_id (id), m_text_display (text), m_text_ref (text), m_center (center), m_render (render), m_color (color)
 {}
 
 TextComponent::~TextComponent() {}
@@ -23,6 +22,14 @@ char TextComponent::getCharNeedTyped() {
     return '\0';
 }
 
+std::string TextComponent::getTextDisplay() {
+    return m_text_display;
+}
+
+bool TextComponent::isFinished() {
+    return (m_text_display.size() == 0);
+}
+
 void TextComponent::init() {
     if (entity->hasComponent<SpriteComponent>()) {
         m_sprite = &entity->getComponent<SpriteComponent>();
@@ -34,6 +41,9 @@ void TextComponent::init() {
 
 void TextComponent::update() {
     setPos();
+    if (m_text_ref.size() == 0) {
+        entity->destroy();
+    }
 }
 
 void TextComponent::render() {
@@ -44,8 +54,14 @@ void TextComponent::render() {
 void TextComponent::setPos() {
     SDL_FRect rect = m_sprite->getHitBox();
 
-    m_destRect.x = (int) (rect.x + rect.w / 2 - m_destRect.w / 2);
-    m_destRect.y = (int) (rect.y + rect.h / 2 - m_destRect.h / 2);
+    if (m_center) {
+        m_destRect.x = (int) (rect.x + rect.w / 2 - m_destRect.w / 2);
+        m_destRect.y = (int) (rect.y + rect.h / 2 - m_destRect.h / 2);
+    } else {
+    //Special allignment for Enemy
+        m_destRect.x = (int) (rect.x + ENEMY_CENTER_X - m_destRect.w / 2);
+        m_destRect.y = (int) (rect.y + ENEMY_CENTER_Y - m_destRect.h / 2);
+    }
 }
 
 void TextComponent::setText() {
@@ -58,9 +74,9 @@ void TextComponent::setText() {
     SDL_QueryTexture(m_texture, nullptr, nullptr, &m_destRect.w, &m_destRect.h);
 }
 
-void TextComponent::eraseFirstChar() {
+void TextComponent::Typed() {
     /**
-		Erase the first char of word display when being * typed *
+		Erase the first char of text display when being * typed *
 	 */
 
     if (m_text_display.size() > 0) {
@@ -69,28 +85,15 @@ void TextComponent::eraseFirstChar() {
     }
 }
 
-//-------------------------------TextEnemyComponent--------------------------------
-TextEnemyComponent::TextEnemyComponent(const FontID& id, const std::string& text) {
-    m_id = id;
-    m_text_display = m_text_ref = text;
-    m_render = true;
-    m_color = SDL_Color {255, 255, 255, 255};
-}
-
-TextEnemyComponent::~TextEnemyComponent() {}
-
-void TextEnemyComponent::setPos() {
-    SDL_FRect rect = m_sprite->getHitBox();
-    
-    m_destRect.x = (int) (rect.x + ENEMY_CENTER_X - m_destRect.w / 2);
-    m_destRect.y = (int) (rect.y + ENEMY_CENTER_Y - m_destRect.h / 2);
-}
-
-void TextEnemyComponent::getShot() {
+void TextComponent::Shot() {
     /**
-		Erase the first char of text_ref to make condition of collision Bullet - Enemy
+		Erase the first char of text_ref when being * hit *
 	 */
 
     if (m_text_ref.size() > 0)
         m_text_ref.erase(0,1);
+}
+
+void TextComponent::changeTextColor(const SDL_Color& color) {
+    m_color = color;
 }

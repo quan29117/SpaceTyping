@@ -45,23 +45,24 @@ void Game::initLib() {
         std::cout <<"SDL2_TTF format not available\n";
 }
 
-void Game::initSpec() {
-    isRunning = true;
-    frameDelay = 1000 / FRAME_PER_SECOND;
-    states.push(new GamePlay());  //TODO : edit to new MainMenu
-}
-
 void Game::initResMan() {   //TODO
 //Add Textures
+    m_resMan->addTexture(mouse, "Mouse.png");
     m_resMan->addTexture(player, "Player.png");
     m_resMan->addTexture(enemy, "Enemy.png");
     m_resMan->addTexture(bullet_player, "Bullet_Player.png");
     m_resMan->addTexture(bullet_enemy, "Bullet_Enemy.png");
     m_resMan->addTexture(gameplay_bg, "GamePlay_Background.png");
-
+    
 //Add Fonts
     m_resMan->addFont(yoster, "yoster.ttf", 30);
     m_resMan->addFont(mariana, "mariana.ttf", 30);
+}
+
+void Game::initSpec() {
+    isRunning = true;
+    frameDelay = 1000 / FRAME_PER_SECOND;
+    states.push(new PlayState());  //TODO : edit to new MainMenu
 }
 
 Game::Game() {

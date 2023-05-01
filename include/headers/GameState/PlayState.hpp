@@ -4,13 +4,14 @@
 #include <vector>
 #include <string>
 #include <SDL2/SDL_image.h>
-#include <headers/State.hpp>
+#include <headers/GameState/State.hpp>
 
-class GamePlay : public State {
+class PlayState : public State {
 private:
 //SDL
 	SDL_Texture* m_bg_texture;
 	SDL_Rect camera;
+	SDL_FRect bg_dest;
 
 //Progress
     unsigned int stage;
@@ -34,24 +35,24 @@ private:
 
 //Functions
 	void initBackground();
-	void initPtr();
-	void initProgress();
 	void initTime();
 	void initWordList();
+	void initPlayer();
 
 	void pollEvent();
 	void updateGame();
 	void render();
 
 	void spawnEnemy();
-	void playerShoot();
 	void enemyShoot();
-
+	void playerShoot_t();
+	void shooting();
+	void updateCollision();
 	void scrollBackground();
 
 public:
-    GamePlay();
-    virtual ~GamePlay();
+    PlayState();
+    virtual ~PlayState();
 
     void run(std::queue <State*>& states);
 };

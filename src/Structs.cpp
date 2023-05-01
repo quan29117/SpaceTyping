@@ -24,7 +24,7 @@ void TextureManager::render(SDL_Texture* texture, const SDL_FRect* dest, const S
 }
 
 //-----------------------------------Collision------------------------------------
-bool Collision::AABB(const SDL_FRect& rec1, const SDL_FRect& rec2) {
+bool Collision::AABB_t(const SDL_FRect& rec1, const SDL_FRect& rec2) {
     if (
         rec1.x + rec1.w >= rec2.x &&
         rec2.x + rec2.w >= rec1.x &&
@@ -35,7 +35,7 @@ bool Collision::AABB(const SDL_FRect& rec1, const SDL_FRect& rec2) {
     return false;
 }
 
-bool Collision::AABB_t(Entity& e1, Entity& e2) {
+bool Collision::AABB(Entity& e1, Entity& e2) {
     if (e1.isAlive() && e2.isAlive()) {
         SDL_FRect rec1 = e1.getComponent<SpriteComponent>().getHitBox(),
                   rec2 = e2.getComponent<SpriteComponent>().getHitBox();

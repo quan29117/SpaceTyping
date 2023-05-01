@@ -1,14 +1,14 @@
 #pragma once
 
 #include <iostream>
-#include <headers/Gameplay.hpp>
+#include <headers/GameState/PlayState.hpp>
 #include <headers/ResourceManager.hpp>
 
 class Game {
 private:
 //SDL
-    SDL_Window*          m_window;
-    static SDL_Renderer* m_renderer;
+    SDL_Window*             m_window;
+    static SDL_Renderer*    m_renderer;
     static ResourceManager* m_resMan;
     
 //Spec
@@ -21,8 +21,8 @@ private:
     void initWindow();
     void initRenderer();
     void initLib();
-    void initSpec();
     void initResMan();
+    void initSpec();
 
 public:
     Game();

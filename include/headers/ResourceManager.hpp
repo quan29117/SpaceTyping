@@ -6,7 +6,8 @@
 #include <SDL2/SDL_ttf.h>
 
 enum SpriteID {
-    player = 0,
+    mouse = 0,
+    player,
     enemy,
     bullet_player,
     bullet_enemy,

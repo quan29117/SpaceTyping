@@ -11,6 +11,6 @@ struct TextureManager {
 };
 
 struct Collision {
-    static bool AABB(const SDL_FRect& rec1, const SDL_FRect& rec2);
-    static bool AABB_t(Entity& e1, Entity& e2);
+    static bool AABB_t(const SDL_FRect& rec1, const SDL_FRect& rec2);
+    static bool AABB(Entity& e1, Entity& e2);
 };

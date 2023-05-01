@@ -98,10 +98,10 @@ public:
 
 class EntityManager {
 private:
-    
+    std::vector <std::unique_ptr<Entity>> entities;
     std::array <std::vector<Entity*>, maxGroups> groupedEntities;
 
-public:std::vector <std::unique_ptr<Entity>> entities; // todo
+public:
     void update();
     void render();
     void refresh();
