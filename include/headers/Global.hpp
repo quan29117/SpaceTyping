@@ -18,12 +18,17 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define FRAME_PER_SECOND    60
 
 //Background
-#define GAMEPLAY_BACKGROUND_WIDTH   3840
-#define GAMEPLAY_BACKGROUND_HEIGHT  1080
+#define PLAYSTATE_BACKGROUND_WIDTH  3840
+#define MENUSTATE_BACKGROUND_WIDTH  1920
+#define BACKGROUND_HEIGHT           1080
 
 //Mouse
-#define MOUSE_WIDTH         30
-#define MOUSE_HEIGHT        51
+#define MOUSE_WIDTH         15
+#define MOUSE_HEIGHT        25.5
+
+//Button
+#define BUTTON_WIDTH        400
+#define BUTTON_HEIGHT       100
 
 //Player
 #define PLAYER_POS_X        10

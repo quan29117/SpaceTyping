@@ -1,10 +1,10 @@
-#include <headers/Game.hpp>
+#include <headers/Application.hpp>
 
 int main(int argc, char* argv[]) {
-    Game game;
+    Application app;
 
-    game.run();
-    game.clean();
+    app.run();
+    app.clean();
 
     return 0;
 }

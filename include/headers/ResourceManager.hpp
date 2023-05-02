@@ -7,12 +7,13 @@
 
 enum SpriteID {
     mouse = 0,
+    button,
     player,
     enemy,
     bullet_player,
     bullet_enemy,
-    gameplay_bg,
-    main_menu_bg,
+    play_bg,
+    menu_bg,
 };
 
 enum FontID {

@@ -1,12 +1,12 @@
 #pragma once
 
 #include <iostream>
-#include <headers/GameState/PlayState.hpp>
+#include <headers/GameState/State.hpp>
 #include <headers/ResourceManager.hpp>
 
-class Game {
+class Application {
 private:
-//SDL
+//Application elements
     SDL_Window*             m_window;
     static SDL_Renderer*    m_renderer;
     static ResourceManager* m_resMan;
@@ -14,19 +14,20 @@ private:
 //Spec
     bool isRunning;
     int frameDelay, frameTime, frameStart;
-    std::queue <State*> states;
+    std::stack <State*> states;
 
-//Funtions
+//Init Funtions
     void initSDL();
     void initWindow();
     void initRenderer();
     void initLib();
     void initResMan();
     void initSpec();
+    void customApp();
 
 public:
-    Game();
-    virtual ~Game();
+    Application();
+    virtual ~Application();
 
     static ResourceManager* getResourceManager();
     static SDL_Renderer* getRenderer();

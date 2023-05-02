@@ -1,10 +1,10 @@
 #include <headers/ECS/SpriteComponent.hpp>
 
-#include <headers/Game.hpp>
+#include <headers/Application.hpp>
 #include <headers/Structs.hpp>
 
 SpriteComponent::SpriteComponent(const SpriteID& id, const float& dest_w, const float& dest_h) {
-    m_texture = Game::getResourceManager()->getTexture(id);
+    m_texture = Application::getResourceManager()->getTexture(id);
 
     m_destRect.w = dest_w;
     m_destRect.h = dest_h;

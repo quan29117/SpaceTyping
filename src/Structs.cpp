@@ -1,6 +1,7 @@
 #include <headers/Structs.hpp>
 
-#include <headers/Game.hpp>
+#include <SDL2/SDL_image.h>
+#include <headers/Application.hpp>
 #include <headers/Global.hpp>
 #include <headers/ECS/SpriteComponent.hpp>
 
@@ -10,7 +11,7 @@ SDL_Texture* TextureManager::loadTexture(const std::string& fileName) {
     if (img == nullptr)
         std::cout << "Unable to load file " << fileName << std::endl;
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(Game::getRenderer(), img);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(Application::getRenderer(), img);
     if (texture == nullptr)
         std::cout << "Unable to create texture " << fileName << std::endl;
     
@@ -20,7 +21,7 @@ SDL_Texture* TextureManager::loadTexture(const std::string& fileName) {
 }
 
 void TextureManager::render(SDL_Texture* texture, const SDL_FRect* dest, const SDL_Rect* src) {
-    SDL_RenderCopyF(Game::getRenderer(), texture, src, dest);
+    SDL_RenderCopyF(Application::getRenderer(), texture, src, dest);
 }
 
 //-----------------------------------Collision------------------------------------

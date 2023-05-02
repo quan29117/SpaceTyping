@@ -1,7 +1,7 @@
 #include <headers/GameState/PlayState.hpp>
 
 #include <fstream>
-#include <headers/Game.hpp>
+#include <headers/Application.hpp>
 #include <headers/Global.hpp>
 #include <headers/ECS/Components.hpp>
 #include <headers/Structs.hpp>
@@ -17,7 +17,7 @@ enum EntityGroup : std::size_t {
 };
 
 void PlayState::initBackground() {
-	m_bg_texture = Game::getResourceManager()->getTexture(gameplay_bg);
+	m_bg_texture = Application::getResourceManager()->getTexture(play_bg);
 
 	camera.x = 0;
     camera.y = 0;
@@ -47,7 +47,7 @@ void PlayState::initPlayer() {
 	m_player.addComponent<TransformComponent>(PLAYER_POS_X, PLAYER_POS_Y);
 	m_player.addComponent<SpriteComponent>(player, PLAYER_WIDTH, PLAYER_HEIGHT);
 	// m_player.addComponent<ColliderComponent>("player");
-	m_player.addComponent<LockEnemyComponent>();
+	// m_player.addComponent<LockEnemyComponent>();
 }
 
 PlayState::PlayState()
@@ -61,21 +61,19 @@ PlayState::PlayState()
 }
 
 PlayState::~PlayState() {
-	// delete pause_menu;
+	
 }
 
-void PlayState::run(std::queue <State*>& states)
+void PlayState::run(std::stack <State*>& states)
 {
-	pollEvent();
-	if (!pause) updateGame();
+	pollEvent(states);
+	if (!pause) update();
 	render();
 
-//Update time
-	end = SDL_GetTicks() / 1000.f;
-	elapsedS = end - start;
+	updateTime();
 }
 
-void PlayState::pollEvent() {
+void PlayState::pollEvent(std::stack <State*>& states) {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -96,7 +94,7 @@ void PlayState::pollEvent() {
 	}
 }
 
-void PlayState::updateGame() {
+void PlayState::update() {
 	manager.update();
 	manager.refresh();
 
@@ -109,14 +107,19 @@ void PlayState::updateGame() {
 }
 
 void PlayState::render() {
-	SDL_RenderClear(Game::getRenderer());
+	SDL_RenderClear(Application::getRenderer());
 
 	if (!pause) {
 		TextureManager::render(m_bg_texture, &bg_dest, &camera);
 		manager.render();
 	}
 
-	SDL_RenderPresent(Game::getRenderer());
+	SDL_RenderPresent(Application::getRenderer());
+}
+
+void PlayState::updateTime() {
+	end = SDL_GetTicks() / 1000.f;
+	elapsedS = end - start;
 }
 
 Entity& createBulletPlayer(const EntityGroup& EG, const char& ch, const Vector2D& dir) {
@@ -149,22 +152,22 @@ void playerShoot(unsigned char& char_input, const EntityGroup& bulletGroup, cons
 }
 
 void PlayState::playerShoot_t() {
-	if (char_input != '\0') {
-		if (m_player.getComponent<LockEnemyComponent>().isFree()) {
-			for (auto& x : manager.getEntitesByGroup(GEnemy)) {
-				if (char_input == x->getComponent<TextComponent>().getCharNeedTyped()) {
-					m_player.getComponent<LockEnemyComponent>().lock(x);
-					m_player.getComponent<LockEnemyComponent>().changeColorText();
-					break;
-				}
-			}
-		} else {
-			if (char_input == m_player.getComponent<LockEnemyComponent>().getCharNeedTyped()) {
+	// if (char_input != '\0') {
+	// 	if (m_player.getComponent<LockEnemyComponent>().isFree()) {
+	// 		for (auto& x : manager.getEntitesByGroup(GEnemy)) {
+	// 			if (char_input == x->getComponent<TextComponent>().getCharNeedTyped()) {
+	// 				m_player.getComponent<LockEnemyComponent>().lock(x);
+	// 				m_player.getComponent<LockEnemyComponent>().changeColorText();
+	// 				break;
+	// 			}
+	// 		}
+	// 	} else {
+	// 		if (char_input == m_player.getComponent<LockEnemyComponent>().getCharNeedTyped()) {
 				
-			}
-		}
+	// 		}
+	// 	}
 		
-	}
+	// }
 }
 
 Entity& createEnemy(const int& pos_x, const int& pos_y, const std::string& text) {
@@ -269,7 +272,7 @@ void PlayState::updateCollision() {
 void PlayState::scrollBackground() {
 	if (!pause) {
 		camera.x++;
-        if (camera.x >= GAMEPLAY_BACKGROUND_WIDTH)
+        if (camera.x >= PLAYSTATE_BACKGROUND_WIDTH)
             camera.x = 1;
 	}
 }

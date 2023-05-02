@@ -3,15 +3,15 @@
 #include <random>
 #include <vector>
 #include <string>
-#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_render.h>
 #include <headers/GameState/State.hpp>
 
 class PlayState : public State {
 private:
 //SDL
-	SDL_Texture* m_bg_texture;
-	SDL_Rect camera;
-	SDL_FRect bg_dest;
+	SDL_Texture* 	m_bg_texture;
+	SDL_Rect 		camera;
+	SDL_FRect		bg_dest;
 
 //Progress
     unsigned int stage;
@@ -30,18 +30,11 @@ private:
 	std::random_device rd;
 	std::mt19937 rng;
 
-//Ptr
-	// PauseMenu* pause_menu;
-
 //Functions
 	void initBackground();
 	void initTime();
 	void initWordList();
 	void initPlayer();
-
-	void pollEvent();
-	void updateGame();
-	void render();
 
 	void spawnEnemy();
 	void enemyShoot();
@@ -50,9 +43,14 @@ private:
 	void updateCollision();
 	void scrollBackground();
 
+	void pollEvent(std::stack <State*>& states)	override;
+	void update()								override;
+	void render()								override;
+	void updateTime();
+
 public:
     PlayState();
     virtual ~PlayState();
 
-    void run(std::queue <State*>& states);
+    void run(std::stack <State*>& states)	override;
 };

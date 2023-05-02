@@ -1,6 +1,6 @@
 #include <headers/ECS/TextComponent.hpp>
 
-#include <headers/Game.hpp>
+#include <headers/Application.hpp>
 #include <headers/Structs.hpp>
 #include <headers/Global.hpp>
 
@@ -48,7 +48,7 @@ void TextComponent::update() {
 
 void TextComponent::render() {
     if (m_render)
-        SDL_RenderCopy(Game::getRenderer(), m_texture, nullptr, &m_destRect);
+        SDL_RenderCopy(Application::getRenderer(), m_texture, nullptr, &m_destRect);
 }
 
 void TextComponent::setPos() {
@@ -65,8 +65,8 @@ void TextComponent::setPos() {
 }
 
 void TextComponent::setText() {
-    SDL_Surface* surface = TTF_RenderText_Blended(Game::getResourceManager()->getFont(m_id), m_text_display.c_str(), m_color);
-    m_texture = SDL_CreateTextureFromSurface(Game::getRenderer(), surface);
+    SDL_Surface* surface = TTF_RenderText_Blended(Application::getResourceManager()->getFont(m_id), m_text_display.c_str(), m_color);
+    m_texture = SDL_CreateTextureFromSurface(Application::getRenderer(), surface);
     if (m_texture == nullptr && m_text_display.size() > 0)
         std::cout << "Unable to create texture TextComponent\n";
     SDL_FreeSurface(surface);

@@ -5,4 +5,3 @@
 #include <headers/ECS/SpriteComponent.hpp>
 // #include <headers/ECS/ColliderComponent.hpp>
 #include <headers/ECS/TextComponent.hpp>
-#include <headers/ECS/LockEnemyComponent.hpp>
