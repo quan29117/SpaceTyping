@@ -1,8 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <headers/GameState/State.hpp>
 #include <headers/ResourceManager.hpp>
+#include <headers/GameState/State.hpp>
 
 class Application {
 private:
@@ -10,11 +10,11 @@ private:
     SDL_Window*             m_window;
     static SDL_Renderer*    m_renderer;
     static ResourceManager* m_resMan;
+    static StateManager*    m_stateMan;
     
 //Spec
-    bool isRunning;
+    static bool isRunning;
     int frameDelay, frameTime, frameStart;
-    std::stack <State*> states;
 
 //Init Funtions
     void initSDL();
@@ -22,6 +22,7 @@ private:
     void initRenderer();
     void initLib();
     void initResMan();
+    void initStateMan();
     void initSpec();
     void customApp();
 
@@ -29,8 +30,10 @@ public:
     Application();
     virtual ~Application();
 
+    static void             closeApp();
+    static SDL_Renderer*    getRenderer();
     static ResourceManager* getResourceManager();
-    static SDL_Renderer* getRenderer();
+    static StateManager*    getStateManager();
 
     void run();
     void clean();

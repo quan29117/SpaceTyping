@@ -16,22 +16,27 @@ enum EntityGroup : std::size_t {
 	GBulletEnemy,
 };
 
+void PlayState::initInheritance() {
+	m_name = StateName::play;
+	m_close = m_pause = false;
+}
+
 void PlayState::initBackground() {
 	m_bg_texture = Application::getResourceManager()->getTexture(play_bg);
 
-	camera.x = 0;
-    camera.y = 0;
-    camera.w = WINDOW_SIZE_WIDTH;
-    camera.h = WINDOW_SIZE_HEIGHT;
+	m_camera.x = 0;
+    m_camera.y = 0;
+    m_camera.w = WINDOW_SIZE_WIDTH;
+    m_camera.h = WINDOW_SIZE_HEIGHT;
 
-	bg_dest.x = 0;
-    bg_dest.y = 0;
-    bg_dest.w = 1920;
-    bg_dest.h = 1080;
+	m_bg_dest.x = 0;
+    m_bg_dest.y = 0;
+    m_bg_dest.w = 1920;
+    m_bg_dest.h = 1080;
 }
 
 void PlayState::initTime() {
-	start = end = elapsedS = 0;
+	start = end = spawnTime = 0;
 }
 
 void PlayState::initWordList() {
@@ -39,7 +44,7 @@ void PlayState::initWordList() {
 	std::string word;
 	if (file.is_open())
 		while (file >> word)
-			word_list.push_back(word);
+			m_word_list.push_back(word);
 	file.close();
 }
 
@@ -51,43 +56,46 @@ void PlayState::initPlayer() {
 }
 
 PlayState::PlayState()
-	: rng(rd()), stage(1), point (0), char_input ('\0')
+	: rng(rd()), point (0), char_input ('\0')
 {
+	initInheritance();
 	initBackground();
 	initTime();
 	initWordList();
 	initPlayer();
-
 }
 
 PlayState::~PlayState() {
 	
 }
 
-void PlayState::run(std::stack <State*>& states)
+void PlayState::run()
 {
-	pollEvent(states);
-	if (!pause) update();
+	pollEvent();
+	if (!m_pause) update();
 	render();
 
 	updateTime();
 }
 
-void PlayState::pollEvent(std::stack <State*>& states) {
+void PlayState::pollEvent() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 			case SDL_QUIT:
-				close = true;
+				m_close = true;
 				break;
 
 			case SDL_KEYDOWN:
 				if (event.key.keysym.sym == SDLK_ESCAPE)
-					if (!close) pause = !pause;
+					if (!m_close) {
+						m_pause = true;
+						Application::getStateManager()->pushState(StateName::pause);
+					}
 				break;
 			
 			case SDL_TEXTINPUT:
-				if (!pause)
+				if (!m_pause)
 					char_input = event.text.text[0];
 				break;
 		}
@@ -109,8 +117,8 @@ void PlayState::update() {
 void PlayState::render() {
 	SDL_RenderClear(Application::getRenderer());
 
-	if (!pause) {
-		TextureManager::render(m_bg_texture, &bg_dest, &camera);
+	if (!m_pause) {
+		TextureManager::render(m_bg_texture, &m_bg_dest, &m_camera);
 		manager.render();
 	}
 
@@ -119,7 +127,7 @@ void PlayState::render() {
 
 void PlayState::updateTime() {
 	end = SDL_GetTicks() / 1000.f;
-	elapsedS = end - start;
+	spawnTime = end - start;
 }
 
 Entity& createBulletPlayer(const EntityGroup& EG, const char& ch, const Vector2D& dir) {
@@ -151,25 +159,6 @@ void playerShoot(unsigned char& char_input, const EntityGroup& bulletGroup, cons
 	}
 }
 
-void PlayState::playerShoot_t() {
-	// if (char_input != '\0') {
-	// 	if (m_player.getComponent<LockEnemyComponent>().isFree()) {
-	// 		for (auto& x : manager.getEntitesByGroup(GEnemy)) {
-	// 			if (char_input == x->getComponent<TextComponent>().getCharNeedTyped()) {
-	// 				m_player.getComponent<LockEnemyComponent>().lock(x);
-	// 				m_player.getComponent<LockEnemyComponent>().changeColorText();
-	// 				break;
-	// 			}
-	// 		}
-	// 	} else {
-	// 		if (char_input == m_player.getComponent<LockEnemyComponent>().getCharNeedTyped()) {
-				
-	// 		}
-	// 	}
-		
-	// }
-}
-
 Entity& createEnemy(const int& pos_x, const int& pos_y, const std::string& text) {
 	auto& e_enemy (manager.addEntity());
 
@@ -183,18 +172,18 @@ Entity& createEnemy(const int& pos_x, const int& pos_y, const std::string& text)
 }
 
 void PlayState::spawnEnemy() {
-	if (elapsedS >= 5 && manager.getEntitesByGroup(GEnemy).size() < 7) {
+	if (spawnTime >= 5 && manager.getEntitesByGroup(GEnemy).size() < 7) {
 		std::uniform_int_distribution<int> uni(0, WINDOW_SIZE_HEIGHT);
 
 		std::string text = "";
 		for (int i = 0; i <= uni(rng) % 2; i++)  
-			text += word_list[uni(rng) % word_list.size()] + " ";
+			text += m_word_list[uni(rng) % m_word_list.size()] + " ";
 		text.erase(text.size() - 1, 1);
 		
 		createEnemy(WINDOW_SIZE_WIDTH, uni(rng), text);
 
 	//reset the time
-		elapsedS = 0;
+		spawnTime = 0;
 		start = end;
 	}
 }
@@ -270,10 +259,10 @@ void PlayState::updateCollision() {
 }
 
 void PlayState::scrollBackground() {
-	if (!pause) {
-		camera.x++;
-        if (camera.x >= PLAYSTATE_BACKGROUND_WIDTH)
-            camera.x = 1;
+	if (!m_pause) {
+		m_camera.x++;
+        if (m_camera.x >= PLAYSTATE_BACKGROUND_WIDTH)
+            m_camera.x = 1;
 	}
 }
 

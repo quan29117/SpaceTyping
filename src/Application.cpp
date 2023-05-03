@@ -5,8 +5,10 @@
 #include <headers/GameState/MenuState.hpp>
 #include <headers/GameState/PlayState.hpp>
 
-SDL_Renderer* Application::m_renderer = nullptr;
-ResourceManager* Application::m_resMan = new ResourceManager;
+bool             Application::isRunning  = true;
+SDL_Renderer*    Application::m_renderer = nullptr;
+ResourceManager* Application::m_resMan   = new ResourceManager;
+StateManager*    Application::m_stateMan = new StateManager;
 
 void Application::initSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -58,16 +60,20 @@ void Application::initResMan() {
     m_resMan->addTexture(bullet_enemy, "Bullet_Enemy.png");
     m_resMan->addTexture(menu_bg, "Menu_Background.png");
     m_resMan->addTexture(play_bg, "Play_Background.png");
+    m_resMan->addTexture(pause_bg, "Pause_Background.png");
     
 //Add Fonts
     m_resMan->addFont(yoster, "yoster.ttf", 30);
     m_resMan->addFont(mariana, "mariana.ttf", 30);
 }
 
+void Application::initStateMan() {
+    m_stateMan->pushState(menu);
+}
+
 void Application::initSpec() {
-    isRunning = true;
     frameDelay = 1000 / FRAME_PER_SECOND;
-    states.push(new MenuState());
+    frameTime = frameStart = 0;
 }
 
 void Application::customApp() {
@@ -77,31 +83,35 @@ void Application::customApp() {
 Application::Application() {
     initSDL();
     initResMan();
+    initStateMan();
     initSpec();
     customApp();
 }
 
 Application::~Application() {}
 
-ResourceManager* Application::getResourceManager() {
-    return m_resMan;
+void Application::closeApp() {
+    isRunning = false;
 }
 
 SDL_Renderer* Application::getRenderer() {
     return m_renderer;
 }
 
+ResourceManager* Application::getResourceManager() {
+    return m_resMan;
+}
+
+StateManager* Application::getStateManager() {
+    return m_stateMan;
+}
+
 void Application::run() {
     while (isRunning) {
         frameStart = SDL_GetTicks();
 
-        if (!states.empty()) {
-			states.top()->run(states);
-			if (states.top()->isClosed()) {
-				delete states.top();
-				states.pop();
-			}
-		}
+        if (!m_stateMan->isExit())
+			m_stateMan->run();
         else break;
 
         frameTime = SDL_GetTicks() - frameStart;

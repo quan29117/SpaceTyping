@@ -14,6 +14,7 @@ enum SpriteID {
     bullet_enemy,
     play_bg,
     menu_bg,
+    pause_bg,
 };
 
 enum FontID {
