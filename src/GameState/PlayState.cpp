@@ -116,7 +116,7 @@ void PlayState::update() {
 
 void PlayState::render() {
 	SDL_RenderClear(Application::getRenderer());
-	int a;
+
 	if (!m_pause) {
 		TextureManager::render(m_bg_texture, &m_bg_dest, &m_camera);
 		manager.render();
