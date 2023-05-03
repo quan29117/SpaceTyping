@@ -45,7 +45,9 @@ void MenuState::pollEvent() {
 		switch (event.type) {
 			case SDL_QUIT:
 				m_close = true;
+                Application::closeApp();
 				break;
+                
             case SDL_MOUSEBUTTONUP:
                 if (event.button.button == SDL_BUTTON_LEFT) {
                     if (m_buttons[start]->isSelected()) {

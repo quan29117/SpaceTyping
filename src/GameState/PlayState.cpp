@@ -9,6 +9,8 @@
 EntityManager manager;
 Entity& m_player = manager.addEntity();
 
+unsigned char PlayState::m_char_input = '\0';
+
 enum EntityGroup : std::size_t {
 	GEnemy,
 	GBulletPlayer_B,	//BulletPlayer to defeat BulletEnemy
@@ -52,11 +54,10 @@ void PlayState::initPlayer() {
 	m_player.addComponent<TransformComponent>(PLAYER_POS_X, PLAYER_POS_Y);
 	m_player.addComponent<SpriteComponent>(player, PLAYER_WIDTH, PLAYER_HEIGHT);
 	// m_player.addComponent<ColliderComponent>("player");
-	// m_player.addComponent<LockEnemyComponent>();
 }
 
 PlayState::PlayState()
-	: rng(rd()), point (0), char_input ('\0')
+	: rng(rd()), point (0)
 {
 	initInheritance();
 	initBackground();
@@ -67,6 +68,10 @@ PlayState::PlayState()
 
 PlayState::~PlayState() {
 	
+}
+
+unsigned char PlayState::getCharInput() {
+	return m_char_input;
 }
 
 void PlayState::run()
@@ -84,6 +89,7 @@ void PlayState::pollEvent() {
 		switch (event.type) {
 			case SDL_QUIT:
 				m_close = true;
+				Application::closeApp();
 				break;
 
 			case SDL_KEYDOWN:
@@ -96,7 +102,7 @@ void PlayState::pollEvent() {
 			
 			case SDL_TEXTINPUT:
 				if (!m_pause)
-					char_input = event.text.text[0];
+					m_char_input = event.text.text[0];
 				break;
 		}
 	}
@@ -111,7 +117,7 @@ void PlayState::update() {
 	updateCollision();
 	scrollBackground();
 	
-	char_input = '\0';
+	m_char_input = '\0';
 }
 
 void PlayState::render() {
@@ -144,15 +150,15 @@ Entity& createBulletPlayer(const EntityGroup& EG, const char& ch, const Vector2D
 	return p_bullet;
 }
 
-void playerShoot(unsigned char& char_input, const EntityGroup& bulletGroup, const EntityGroup& enemyGroup) {
-	if (char_input != '\0') {
+void playerShoot(unsigned char& m_char_input, const EntityGroup& bulletGroup, const EntityGroup& enemyGroup) {
+	if (m_char_input != '\0') {
 		for (auto& x : manager.getEntitesByGroup(enemyGroup)) {
-			if (char_input == x->getComponent<TextComponent>().getCharNeedTyped()) {
+			if (m_char_input == x->getComponent<TextComponent>().getCharNeedTyped()) {
 				Vector2D dir = x->getComponent<TransformComponent>().position;
-				createBulletPlayer(bulletGroup, char_input, dir);
+				createBulletPlayer(bulletGroup, m_char_input, dir);
 				//TODO : shooting audio
 				x->getComponent<TextComponent>().Typed();
-				char_input = '\0';
+				m_char_input = '\0';
 				break;
 			}
 		}
@@ -216,8 +222,8 @@ void PlayState::enemyShoot() {
 }
 
 void PlayState::shooting() {
-	playerShoot(char_input, GBulletPlayer_E, GEnemy);
-	playerShoot(char_input, GBulletPlayer_B, GBulletEnemy);
+	playerShoot(m_char_input, GBulletPlayer_E, GEnemy);
+	playerShoot(m_char_input, GBulletPlayer_B, GBulletEnemy);
 	enemyShoot();
 }
 

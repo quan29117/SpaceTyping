@@ -19,7 +19,7 @@ private:
 
 //Progress
 	unsigned int point;
-    unsigned char char_input;
+    static unsigned char m_char_input;
 
 	//Display
 	
@@ -54,6 +54,8 @@ private:
 public:
     PlayState();
     virtual ~PlayState();
+
+	static unsigned char getCharInput();
 
     void run()		 override;
 };

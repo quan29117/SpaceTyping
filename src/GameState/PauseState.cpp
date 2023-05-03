@@ -45,6 +45,7 @@ void PauseState::pollEvent() {
 		switch (event.type) {
 			case SDL_QUIT:
 				m_close = true;
+                Application::closeApp();
 				break;
                 
             case SDL_MOUSEBUTTONUP:
