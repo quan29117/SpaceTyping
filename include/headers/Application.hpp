@@ -8,12 +8,12 @@ class Application {
 private:
 //Application elements
     SDL_Window*             m_window;
-    static SDL_Renderer*    m_renderer;
-    static ResourceManager* m_resMan;
-    static StateManager*    m_stateMan;
+    static SDL_Renderer*    s_renderer;
+    static ResourceManager* s_resMan;
+    static StateManager*    s_stateMan;
     
 //Spec
-    static bool isRunning;
+    static bool s_isRunning;
     int frameDelay, frameTime, frameStart;
 
 //Init Funtions

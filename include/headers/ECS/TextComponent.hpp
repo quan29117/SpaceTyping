@@ -4,7 +4,7 @@
 #include <headers/ResourceManager.hpp>
 
 class TextComponent : public Component {
-protected:
+private:
     SpriteComponent*    m_sprite;
     SDL_Texture*        m_texture;
     SDL_Rect            m_destRect;

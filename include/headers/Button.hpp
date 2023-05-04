@@ -6,11 +6,11 @@ class Button {
 private:
     SDL_Texture*    m_texture;
     SDL_FRect       m_dest;
-    SDL_Rect        m_src;
+    SDL_Rect        m_src_idle, m_src_hover;
     bool            selected;
-
+    
 public:
-    Button(const float& src_y, const float& dest_x, const float& dest_y);
+    Button(const SDL_Rect& src_idle, const SDL_Rect& src_hover, const SDL_FRect& dest);
     virtual ~Button();
 
     bool isSelected();

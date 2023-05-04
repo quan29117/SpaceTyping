@@ -9,20 +9,28 @@
 
 void MenuState::initBackground() {
     m_bg_texture = Application::getResourceManager()->getTexture(menu_bg);
-    m_bg_dest.x = m_bg_dest.y = 0;
-    m_bg_dest.w = MENUSTATE_BACKGROUND_WIDTH;
-    m_bg_dest.h = BACKGROUND_HEIGHT;
+    m_bg_dest.x  = m_bg_dest.y = 0;
+    m_bg_dest.w  = BACKGROUND_WIDTH;
+    m_bg_dest.h  = BACKGROUND_HEIGHT;
+
+    m_title_texture = Application::getResourceManager()->getTexture(title);
+    m_title_dest.x  = 100;
+    m_title_dest.y  = 150;
+    m_title_dest.w  = TITLE_WIDTH;
+    m_title_dest.h  = TITLE_HEIGHT;
 }
 
 void MenuState::initButtons() {
-    m_buttons[start] = new Button (0, 150, 400);
-    m_buttons[exit]  = new Button (200, 150, 550);
+    m_buttons.push_back (new Button (SDL_Rect {80, 0, 240, 100},
+                                     SDL_Rect {480, 0, 240, 100},
+                                     SDL_FRect {150, 400, 240, 100}));
+    m_buttons.push_back (new Button (SDL_Rect {100, 200, 200, 100},
+                                     SDL_Rect {500, 200, 200, 100},
+                                     SDL_FRect {150, 550, 200, 100}));
 }
 
 MenuState::MenuState() {
-    m_name = StateName::menu;
-    initBackground();
-    initButtons();
+    initState(StateName::menu);
 }
 
 MenuState::~MenuState() {
@@ -71,6 +79,8 @@ void MenuState::render() {
     SDL_RenderClear(Application::getRenderer());
 
     TextureManager::render(m_bg_texture, &m_bg_dest);
+    TextureManager::render(m_title_texture, &m_title_dest);
+
     for (auto& button : m_buttons) button->render();
     m_mouse.render();
 

@@ -7,20 +7,17 @@
 #include <headers/GameState/State.hpp>
 #include <headers/Button.hpp>
 
+#include <headers/ECS/Components.hpp>
+
 class PlayState : public State {
 private:
-//Background
-	SDL_Texture* 	m_bg_texture;
-	SDL_Rect 		m_camera;
-	SDL_FRect		m_bg_dest;
+//Background camera
+	SDL_Rect m_camera;
 
-//Buttons
-	// Button* m_buttons [2];
-
-//Progress
-	unsigned int point;
-    static unsigned char m_char_input;
-
+//Progress																
+	unsigned int m_score, m_wrong_type;
+    unsigned char s_char_input;
+	static EntityManager* s_manager;
 	//Display
 	
 //Time
@@ -34,8 +31,8 @@ private:
 	std::mt19937 rng;
 
 //Functions
-	void initInheritance();
-	void initBackground();
+	void initBackground() override;
+	void initButtons()	  override;
 	void initTime();
 	void initWordList();
 	void initPlayer();
@@ -51,11 +48,12 @@ private:
 	void render()	 override;
 	void updateTime();
 
-public:
+public:			
     PlayState();
     virtual ~PlayState();
 
-	static unsigned char getCharInput();
+	unsigned char& getCharInput();
+	static EntityManager* getEntityManager();
 
     void run()		 override;
 };

@@ -7,11 +7,12 @@
 #include <headers/GameState/PauseState.hpp>
 
 //----------------------------------------State----------------------------------------
-State::State() 
-	: m_close(0), m_pause (0)
-{}
-
-State::~State() {}
+void State::initState(const StateName& stateName) {
+	m_name = stateName;
+	m_close = m_pause = false;
+	initBackground();
+	initButtons();
+}
 
 bool State::isClosed() {
 	return m_close;

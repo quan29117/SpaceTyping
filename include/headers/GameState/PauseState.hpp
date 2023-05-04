@@ -7,26 +7,19 @@
 
 class PauseState : public State {
 private:
-//Background
-    SDL_Texture* m_bg_texture;
-    SDL_FRect	 m_bg_dest;
-
-//Interaction
-    Mouse   m_mouse;
-    Button* m_buttons [2];
     enum ButtonNames {conti = 0, exit};
 
 //Functions
-    void initBackground();
-    void initButtons();
+    void initBackground() override;
+    void initButtons()    override;
 
-    void pollEvent() override;
-    void update()    override;
-	void render()	 override;
+    void pollEvent()      override;
+    void update()         override;
+	void render()         override;
 
 public:
     PauseState();
     virtual ~PauseState();
 
-    void run()       override;
+    void run()            override;
 };

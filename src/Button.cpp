@@ -4,17 +4,12 @@
 #include <headers/Application.hpp>
 #include <headers/Structs.hpp>
 
-Button::Button(const float& src_y, const float& dest_x, const float& dest_y) {
+Button::Button(const SDL_Rect& src_idle, const SDL_Rect& src_hover , const SDL_FRect& dest) {
     m_texture = Application::getResourceManager()->getTexture(button);
 
-    m_src.x = 0;
-    m_src.y = src_y;
-
-    m_src.w = m_dest.w = BUTTON_WIDTH;
-    m_src.h = m_dest.h = BUTTON_HEIGHT;
-
-    m_dest.x = dest_x;
-    m_dest.y = dest_y;
+    m_src_idle = src_idle;
+    m_src_hover = src_hover;
+    m_dest = dest;
 }
 
 Button::~Button() {
@@ -28,14 +23,15 @@ bool Button::isSelected() {
 void Button::update(Mouse& mouse) {
     if (SDL_HasIntersectionF(&m_dest, &mouse.getPoint())) {
         selected = true;
-        m_src.x = 400;
         //TODO : play sound
-    } else {
+    } else
         selected = false;
-        m_src.x = 0;
-    }
+    
 }
 
 void Button::render() {
-    TextureManager::render(m_texture, &m_dest, &m_src);
+    if (!selected)
+        TextureManager::render(m_texture, &m_dest, &m_src_idle);
+    else 
+        TextureManager::render(m_texture, &m_dest, &m_src_hover);
 }

@@ -8,21 +8,23 @@
 #include <headers/GameState/PlayState.hpp>
 
 void PauseState::initBackground() {
-    m_bg_texture = Application::getResourceManager()->getTexture(menu_bg);
-    m_bg_dest.x = m_bg_dest.y = 0;
-    m_bg_dest.w = MENUSTATE_BACKGROUND_WIDTH;
-    m_bg_dest.h = BACKGROUND_HEIGHT;
+    m_bg_texture = Application::getResourceManager()->getTexture(pause_bg);
+    m_bg_dest.x  = m_bg_dest.y = 0;
+    m_bg_dest.w  = BACKGROUND_WIDTH;
+    m_bg_dest.h  = BACKGROUND_HEIGHT;
 }
 
 void PauseState::initButtons() {
-    m_buttons[conti] = new Button (100, 150, 400);
-    m_buttons[exit]  = new Button (200, 150, 550);
+    m_buttons.push_back (new Button (SDL_Rect {0, 100, 400, 100},
+                                     SDL_Rect {400, 100, 400, 100},
+                                     SDL_FRect {150, 400, 400, 100}));
+    m_buttons.push_back (new Button (SDL_Rect {100, 200, 200, 100},
+                                     SDL_Rect {500, 200, 200, 100},
+                                     SDL_FRect {150, 550, 200, 100}));
 }
 
 PauseState::PauseState() {
-    m_name = StateName::pause;
-    initBackground();
-    initButtons();
+    initState(StateName::pause);
 }
 
 PauseState::~PauseState() {

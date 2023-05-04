@@ -16,6 +16,10 @@ bool Entity::isAlive() {
     return alive;
 }
 
+EntityManager& Entity::getManager() {
+    return manager;
+}
+
 void Entity::destroy() {
     alive = false;
 }

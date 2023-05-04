@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream> //TODO : Delete this
 #include <sstream>
 #include <string>
 #include <cmath>
@@ -19,22 +18,26 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 
 //Background
 #define PLAYSTATE_BACKGROUND_WIDTH  3840
-#define MENUSTATE_BACKGROUND_WIDTH  1920
+#define BACKGROUND_WIDTH            1920
 #define BACKGROUND_HEIGHT           1080
 
+//Title
+#define TITLE_WIDTH     800
+#define TITLE_HEIGHT    225
+
 //Mouse
-#define MOUSE_WIDTH         15
-#define MOUSE_HEIGHT        25.5
+#define MOUSE_WIDTH     15
+#define MOUSE_HEIGHT    25.5
 
 //Button
-#define BUTTON_WIDTH        400
-#define BUTTON_HEIGHT       100
+#define BUTTON_WIDTH    400
+#define BUTTON_HEIGHT   100
 
 //Player
-#define PLAYER_POS_X        10
-#define PLAYER_POS_Y        410
-#define PLAYER_WIDTH        137.75
-#define PLAYER_HEIGHT       130.25
+#define PLAYER_POS_X    10
+#define PLAYER_POS_Y    410
+#define PLAYER_WIDTH    137.75
+#define PLAYER_HEIGHT   130.25
 
 //Enemy
 #define ENEMY_START_POS_X   1920

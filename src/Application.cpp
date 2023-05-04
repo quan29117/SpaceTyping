@@ -5,10 +5,10 @@
 #include <headers/GameState/MenuState.hpp>
 #include <headers/GameState/PlayState.hpp>
 
-bool             Application::isRunning  = true;
-SDL_Renderer*    Application::m_renderer = nullptr;
-ResourceManager* Application::m_resMan   = new ResourceManager;
-StateManager*    Application::m_stateMan = new StateManager;
+bool             Application::s_isRunning  = true;
+SDL_Renderer*    Application::s_renderer   = nullptr;
+ResourceManager* Application::s_resMan     = new ResourceManager;
+StateManager*    Application::s_stateMan   = new StateManager;
 
 void Application::initSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -31,11 +31,11 @@ void Application::initWindow() {
 }
 
 void Application::initRenderer() {
-    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
-    if (m_renderer == nullptr)
+    s_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+    if (s_renderer == nullptr)
         std::cout << "SDL renderer created failed\n";
 
-    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(s_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 }
 
 void Application::initLib() {
@@ -52,23 +52,24 @@ void Application::initLib() {
 
 void Application::initResMan() {
 //Add Textures
-    m_resMan->addTexture(mouse, "Mouse.png");
-    m_resMan->addTexture(button, "Button.png");
-    m_resMan->addTexture(player, "Player.png");
-    m_resMan->addTexture(enemy, "Enemy.png");
-    m_resMan->addTexture(bullet_player, "Bullet_Player.png");
-    m_resMan->addTexture(bullet_enemy, "Bullet_Enemy.png");
-    m_resMan->addTexture(menu_bg, "Menu_Background.png");
-    m_resMan->addTexture(play_bg, "Play_Background.png");
-    m_resMan->addTexture(pause_bg, "Pause_Background.png");
+    s_resMan->addTexture(mouse, "Mouse.png");
+    s_resMan->addTexture(button, "Button.png");
+    s_resMan->addTexture(player, "Player.png");
+    s_resMan->addTexture(enemy, "Enemy.png");
+    s_resMan->addTexture(bullet_player, "Bullet_Player.png");
+    s_resMan->addTexture(bullet_enemy, "Bullet_Enemy.png");
+    s_resMan->addTexture(menu_bg, "Menu_Background.png");
+    s_resMan->addTexture(play_bg, "Play_Background.png");
+    s_resMan->addTexture(pause_bg, "Pause_Background.png");
+    s_resMan->addTexture(title, "Title.png");
     
 //Add Fonts
-    m_resMan->addFont(yoster, "yoster.ttf", 30);
-    m_resMan->addFont(mariana, "mariana.ttf", 30);
+    s_resMan->addFont(yoster, "yoster.ttf", 30);
+    s_resMan->addFont(mariana, "mariana.ttf", 30);
 }
 
 void Application::initStateMan() {
-    m_stateMan->pushState(menu);
+    s_stateMan->pushState(menu);
 }
 
 void Application::initSpec() {
@@ -91,27 +92,27 @@ Application::Application() {
 Application::~Application() {}
 
 void Application::closeApp() {
-    isRunning = false;
+    s_isRunning = false;
 }
 
 SDL_Renderer* Application::getRenderer() {
-    return m_renderer;
+    return s_renderer;
 }
 
 ResourceManager* Application::getResourceManager() {
-    return m_resMan;
+    return s_resMan;
 }
 
 StateManager* Application::getStateManager() {
-    return m_stateMan;
+    return s_stateMan;
 }
 
 void Application::run() {
-    while (isRunning) {
+    while (s_isRunning) {
         frameStart = SDL_GetTicks();
 
-        if (!m_stateMan->isExit())
-			m_stateMan->run();
+        if (!s_stateMan->isExit())
+			s_stateMan->run();
         else break;
 
         frameTime = SDL_GetTicks() - frameStart;
@@ -121,10 +122,10 @@ void Application::run() {
 }
 
 void Application::clean() {
-    m_resMan->clear();
+    s_resMan->clear();
     
-    SDL_DestroyRenderer(m_renderer);
-    m_renderer = nullptr;
+    SDL_DestroyRenderer(s_renderer);
+    s_renderer = nullptr;
     SDL_DestroyWindow(m_window);
     m_window = nullptr;
 
