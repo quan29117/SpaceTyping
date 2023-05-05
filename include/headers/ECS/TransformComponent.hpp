@@ -5,15 +5,15 @@
 
 class TransformComponent : public Component {
 private:
-    Vector2D direction, velocity;
-    bool movable;
-    float speed;
+    Vector2D m_direction, m_velocity, m_position;
+    bool     m_movable;
+    float    m_speed;
     
 public:
-    Vector2D position;
-
-    TransformComponent(const float& pos_x, const float& pos_y, const bool& move = false, const float& dir_x = 0, const float& dir_y = 0, const float& spd = 0);
+    TransformComponent(const Vector2D& start_pos, const bool& move = false, const Vector2D& dir = Vector2D {0, 0}, const float& speed = 0);
     virtual ~TransformComponent() {}
+
+    Vector2D getPosition();
 
     void init()   override {}
     void update() override;

@@ -14,10 +14,13 @@ PlayerShootComponent::~PlayerShootComponent() {
 
 }
 
-Entity& createBulletPlayer(const EntityGroup& EG, const char& ch, const Vector2D& dir) {
+Entity& createBulletPlayer(const EntityGroup& EG, const char& ch, const Vector2D& direction) {
 	auto& p_bullet (PlayState::getEntityManager()->addEntity());
 
-	p_bullet.addComponent<TransformComponent>(BULLET_PLAYER_START_POS_X, BULLET_PLAYER_START_POS_Y, true, dir.x, dir.y, BULLET_PLAYER_SPEED);
+	p_bullet.addComponent<TransformComponent>(BULLET_PLAYER_START_POS,
+											  true,
+											  direction,
+											  BULLET_PLAYER_SPEED);
 	p_bullet.addComponent<SpriteComponent>(bullet_player, BULLET_PLAYER_SIZE, BULLET_PLAYER_SIZE);
 
 	std::string str; str += ch;
@@ -32,7 +35,7 @@ void PlayerShootComponent::shootEnemy() {
 	if (*s_char_input != '\0' && PlayState::getEntityManager()->getEntitesByGroup(GEnemy).size() > 0) {
 		auto& x = PlayState::getEntityManager()->getEntitesByGroup(GEnemy)[0];
 		if (*s_char_input == x->getComponent<TextComponent>().getCharNeedTyped()) {
-			Vector2D dir = x->getComponent<TransformComponent>().position;
+			Vector2D dir = x->getComponent<TransformComponent>().getPosition();
 			createBulletPlayer(GBulletPlayer_E, *s_char_input, dir);
 			//TODO : shooting audio
 			x->getComponent<TextComponent>().Typed();
@@ -45,7 +48,7 @@ void PlayerShootComponent::shootBulletEnemy() {
 	if (*s_char_input != '\0') {
 		for (auto& x : PlayState::getEntityManager()->getEntitesByGroup(GBulletEnemy)) {
 			if (*s_char_input == x->getComponent<TextComponent>().getCharNeedTyped()) {
-				Vector2D dir = x->getComponent<TransformComponent>().position;
+				Vector2D dir = x->getComponent<TransformComponent>().getPosition();
 				createBulletPlayer(GBulletPlayer_B, *s_char_input, dir);
 				//TODO : shooting audio
 				x->getComponent<TextComponent>().Typed();

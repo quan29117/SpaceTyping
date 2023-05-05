@@ -29,8 +29,8 @@ void PlayState::initButtons() {
 }
 
 void PlayState::initTime() {
-	s_char_input = '\0';
 	start = end = spawnTime = 0;
+	spawnCoolDown = 5;
 }
 
 void PlayState::initWordList() {
@@ -43,14 +43,14 @@ void PlayState::initWordList() {
 }
 
 void PlayState::initPlayer() {
-	m_player.addComponent<TransformComponent>(PLAYER_POS_X, PLAYER_POS_Y);
+	m_player.addComponent<TransformComponent>(PLAYER_POS);
 	m_player.addComponent<SpriteComponent>(player, PLAYER_WIDTH, PLAYER_HEIGHT);
 	// m_player.addComponent<ColliderComponent>("player");
 	m_player.addComponent<PlayerShootComponent>(&s_char_input);
 }
 
 PlayState::PlayState()
-	: rng(rd()), m_score(0)
+	: rng(rd()), m_score(0), s_char_input ('\0')
 {
 	initState(StateName::play);
 	initTime();
@@ -132,13 +132,16 @@ void PlayState::updateTime() {
 	spawnTime = end - start;
 }
 
-Entity& createEnemy(const int& pos_x, const int& pos_y, const std::string& text) {
+Entity& createEnemy(const int& start_pos_y, const std::string& text) {
 	auto& e_enemy (PlayState::getEntityManager()->addEntity());
 
-	e_enemy.addComponent<TransformComponent>(pos_x, pos_y, true, 10, 410, ENEMY_SPEED);
+	e_enemy.addComponent<TransformComponent>(Vector2D {ENEMY_START_POS_X, start_pos_y},
+											 true,
+											 PLAYER_CENTER,
+											 ENEMY_SPEED);
 	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
 	e_enemy.addComponent<TextComponent>(yoster, text, false);
-	// e_enemy.addComponent<EnemyShootComponent>();
+	// e_enemy.addComponent<EnemyShootComponent>();	//TODO  : add reference of rng
 
 	e_enemy.addGroup(GEnemy);
 
@@ -146,15 +149,26 @@ Entity& createEnemy(const int& pos_x, const int& pos_y, const std::string& text)
 }
 
 void PlayState::spawnEnemy() {
-	if (spawnTime >= 5 && PlayState::getEntityManager()->getEntitesByGroup(GEnemy).size() < 7) {
+	if (spawnTime >= spawnCoolDown && PlayState::getEntityManager()->getEntitesByGroup(GEnemy).size() < 7) {
 		std::uniform_int_distribution<int> uni(0, WINDOW_SIZE_HEIGHT);
 
+		int countWord = uni(rng) % 2 + 1;
+		switch (countWord) {
+			case 1:
+				spawnCoolDown = 2;
+				break;
+
+			case 2:
+				spawnCoolDown = 3;
+				break;
+		}
+
 		std::string text = "";
-		for (int i = 0; i <= uni(rng) % 2; i++)  
+		for (int i = 1; i <= countWord; i++)  
 			text += m_word_list[uni(rng) % m_word_list.size()] + " ";
 		text.erase(text.size() - 1, 1);
 		
-		createEnemy(WINDOW_SIZE_WIDTH, uni(rng), text);
+		createEnemy(uni(rng), text);
 
 	//reset the time
 		spawnTime = 0;
@@ -162,38 +176,11 @@ void PlayState::spawnEnemy() {
 	}
 }
 
-Entity& createBulletEnemy(const char& ch, const Vector2D& pos, const Vector2D& dir) {
-	auto& p_bullet (PlayState::getEntityManager()->addEntity());
-
-	p_bullet.addComponent<TransformComponent>(pos.x, pos.y, true, dir.x, dir.y, BULLET_ENEMY_SPEED);
-	p_bullet.addComponent<SpriteComponent>(bullet_enemy, BULLET_ENEMY_SIZE, BULLET_ENEMY_SIZE);
-
-	std::string str;	str += ch;
-	p_bullet.addComponent<TextComponent>(yoster, str, true, true, SDL_Color {255, 0, 0, 255});
-
-	p_bullet.addGroup(GBulletEnemy);
-
-	return p_bullet;
-}
-
-void PlayState::enemyShoot() {
-	for (auto& enemy : PlayState::getEntityManager()->getEntitesByGroup(GEnemy)) {
-		auto& rec = enemy->getComponent<TransformComponent>().position;
-		if (rec.x > WINDOW_SIZE_WIDTH / 2.0f) {
-			std::uniform_int_distribution<int> uni(0, ENEMY_FIRE_CHANCE);
-			if (uni(rng) == 0) {
-				char ch = char(uni(rng) % 26 + 65);
-				createBulletEnemy(ch, rec, Vector2D(PLAYER_POS_X, PLAYER_POS_Y));
-			}
-		}
-	}
-}
-
 void PlayState::shooting() {
-	// playerShoot(s_char_input, GBulletPlayer_E, GEnemy);
-	// playerShoot(s_char_input, GBulletPlayer_B, GBulletEnemy);
 	m_player.getComponent<PlayerShootComponent>().shoot();
-	enemyShoot();
+	for (auto& enemy : PlayState::getEntityManager()->getEntitesByGroup(GEnemy)) {
+		// enemy->getComponent<EnemyShootComponent>().shoot();
+	}
 }
 
 void collisionPlayer(const EntityGroup& group) {

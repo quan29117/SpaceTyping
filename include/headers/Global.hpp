@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <cmath>
+#include <headers/Vector2D.hpp>
 
 //------------------------------Constant Value------------------------------------
 //File path
@@ -34,13 +35,13 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define BUTTON_HEIGHT   100
 
 //Player
-#define PLAYER_POS_X    10
-#define PLAYER_POS_Y    410
-#define PLAYER_WIDTH    137.75
-#define PLAYER_HEIGHT   130.25
+#define PLAYER_POS          Vector2D {40, 410}
+#define PLAYER_WIDTH        137.75
+#define PLAYER_HEIGHT       130.25
+#define PLAYER_CENTER       Vector2D {73.875, 270.125}
 
 //Enemy
-#define ENEMY_START_POS_X   1920
+#define ENEMY_START_POS_X   1680
 #define ENEMY_WIDTH         243
 #define ENEMY_HEIGHT        130.5
 #define ENEMY_CENTER_X      120
@@ -49,8 +50,7 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define ENEMY_SPEED         3
 
 //Bullet
-#define BULLET_PLAYER_START_POS_X   40
-#define BULLET_PLAYER_START_POS_Y   410
+#define BULLET_PLAYER_START_POS     Vector2D {40, 410}
 #define BULLET_PLAYER_SIZE          35
 #define BULLET_PLAYER_SPEED         5
 #define BULLET_ENEMY_SIZE           50

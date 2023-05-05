@@ -1,22 +1,21 @@
 #include <headers/ECS/TransformComponent.hpp>
 
-TransformComponent::TransformComponent(const float& pos_x, const float& pos_y, const bool& move, const float& dir_x, const float& dir_y, const float& spd) {
-    position.x = pos_x;
-    position.y = pos_y;
+TransformComponent::TransformComponent(const Vector2D& start_pos, const bool& move, const Vector2D& dir, const float& speed) {
+    m_position  = start_pos;
+    m_movable   = move;
+    m_direction = dir;
+    m_speed     = speed;
+    m_velocity  = (m_direction - m_position).unitVector();
+}
 
-    movable = move;
-    speed = spd;
-
-    direction.x = dir_x;
-    direction.y = dir_y;
-
-    velocity = (direction - position).unitVector();
+Vector2D TransformComponent::getPosition() {
+    return m_position;
 }
 
 void TransformComponent::update() {
-    if (movable) {
-        position.x += velocity.x * speed;
-        position.y += velocity.y * speed;
+    if (m_movable) {
+        m_position.x += m_velocity.x * m_speed;
+        m_position.y += m_velocity.y * m_speed;
     }
 }
 
