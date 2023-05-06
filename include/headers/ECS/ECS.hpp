@@ -10,8 +10,8 @@ class Component;
 class Entity;
 class EntityManager;
 
-using ComponentID = std::size_t;
-using Group = std::size_t;
+using ComponentID = unsigned short;
+using Group = unsigned short;
 
 inline ComponentID getUniqueComponentTypeID() {
     static ComponentID lastID = 0;
@@ -25,11 +25,11 @@ inline ComponentID getComponentTypeID() noexcept {
     return typeID;
 }
 
-constexpr std::size_t maxComponents = 32;
+constexpr unsigned short maxComponents = 16;
 using ComponentBitSet = std::bitset <maxComponents>;
 using ComponentArray = std::array <Component*, maxComponents>;
 
-constexpr std::size_t maxGroups = 32;
+constexpr unsigned short maxGroups = 16;
 using GroupBitSet = std::bitset <maxGroups>;
 
 class Component {

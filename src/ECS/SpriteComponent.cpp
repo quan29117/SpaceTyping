@@ -23,15 +23,15 @@ SDL_FRect SpriteComponent::getHitBox() {
 void SpriteComponent::init() {
     if (entity->hasComponent<TransformComponent>()) {
         m_trans = &entity->getComponent<TransformComponent>();
-        m_destRect.x = m_trans->position.x;
-        m_destRect.y = m_trans->position.y;
+        m_destRect.x = m_trans->getPosition().x;
+        m_destRect.y = m_trans->getPosition().y;
     }
     else std::cout << "No TransformComponent\n";
 }
 
 void SpriteComponent::update() {
-    m_destRect.x = m_trans->position.x;
-    m_destRect.y = m_trans->position.y;
+    m_destRect.x = m_trans->getPosition().x;
+    m_destRect.y = m_trans->getPosition().y;
 }
 
 void SpriteComponent::render() {

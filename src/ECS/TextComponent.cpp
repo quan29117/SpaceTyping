@@ -22,12 +22,8 @@ char TextComponent::getCharNeedTyped() {
     return '\0';
 }
 
-std::string TextComponent::getTextDisplay() {
-    return m_text_display;
-}
-
 bool TextComponent::isFinished() {
-    return (m_text_display.size() == 0);
+    return (!entity->isAlive() || m_text_display.size() == 0);
 }
 
 void TextComponent::init() {
@@ -94,6 +90,7 @@ void TextComponent::Shot() {
         m_text_ref.erase(0,1);
 }
 
-void TextComponent::changeTextColor(const SDL_Color& color) {
+void TextComponent::setColor(const SDL_Color& color) {
     m_color = color;
+    setText();
 }

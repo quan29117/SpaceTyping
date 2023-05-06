@@ -9,9 +9,7 @@
 
 void PauseState::initBackground() {
     m_bg_texture = Application::getResourceManager()->getTexture(pause_bg);
-    m_bg_dest.x  = m_bg_dest.y = 0;
-    m_bg_dest.w  = BACKGROUND_WIDTH;
-    m_bg_dest.h  = BACKGROUND_HEIGHT;
+    m_bg_dest = SDL_FRect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
 }
 
 void PauseState::initButtons() {
@@ -24,7 +22,7 @@ void PauseState::initButtons() {
 }
 
 PauseState::PauseState() {
-    initState(StateName::pause);
+    initState(pause_state);
 }
 
 PauseState::~PauseState() {
@@ -54,12 +52,15 @@ void PauseState::pollEvent() {
                 if (event.button.button == SDL_BUTTON_LEFT) {
                     if (m_buttons[conti]->isSelected()) {
                         m_close = true;
-                        Application::getStateManager()->getCurrentState() = StateName::play;
+                        AudioManager::setVolume(100);
+                        Application::getStateManager()->changeCurrentState(play_state);
                     }
 
                     if (m_buttons[exit]->isSelected()) {
                         m_close = true;
-                        Application::getStateManager()->getCurrentState() = StateName::menu;
+                        AudioManager::setVolume(100);
+                        AudioManager::playMusic(menu_bgm);
+                        Application::getStateManager()->changeCurrentState(menu_state);
                     }
                 }
                 break;
@@ -68,16 +69,18 @@ void PauseState::pollEvent() {
 }
 
 void PauseState::update() {
-    m_mouse.update();
-    for (auto& button : m_buttons) button->update(m_mouse);
+    if (!m_pause)
+        updateInteraction();
 }
 
 void PauseState::render() {
     SDL_RenderClear(Application::getRenderer());
 
-    TextureManager::render(m_bg_texture, &m_bg_dest);
-    for (auto& button : m_buttons) button->render();
-    m_mouse.render();
+    if (!m_pause) {
+        TextureManager::render(m_bg_texture, &m_bg_dest);
+        for (auto& button : m_buttons) button->render();
+        m_mouse.render();
+    }
 
     SDL_RenderPresent(Application::getRenderer());
 }

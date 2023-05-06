@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL_image.h>
 #include <headers/Global.hpp>
+#include <headers/Structs.hpp>
 #include <headers/GameState/MenuState.hpp>
 #include <headers/GameState/PlayState.hpp>
 
@@ -21,7 +22,7 @@ void Application::initSDL() {
 }
 
 void Application::initWindow() {
-    m_window = SDL_CreateWindow("SpaceType Shooting",
+    m_window = SDL_CreateWindow("SpaceTyping",
                                 0, 0,
                                 WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT,
                                 SDL_WINDOW_MAXIMIZED);
@@ -40,14 +41,21 @@ void Application::initRenderer() {
 
 void Application::initLib() {
 // Setup and initialize the SDL2_Image library
-    int flags = IMG_INIT_PNG;
-    int initStatus = IMG_Init(flags);
-    if ((initStatus & flags) != flags)
-        std::cout << "SDL2_Image format not available\n";
+    int flag_IMG = IMG_INIT_PNG;
+    int IMG_Status = IMG_Init(flag_IMG);
+    if ((IMG_Status & flag_IMG) != flag_IMG)
+        std::cout << "SDL2_Image format is not available\n";
 
 // Setup and initialize the SDL2_TTF library
-    if (TTF_Init() == -1) 
-        std::cout <<"SDL2_TTF format not available\n";
+    if (TTF_Init() == -1)
+        std::cout <<"SDL2_TTF format is not available\n";
+
+// Setup and initialize the SDL2_Mixer library + Open Audio
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
+    int flag_MIX = MIX_INIT_OGG;
+    int MIX_Status = Mix_Init(flag_MIX);
+    if ((MIX_Status & flag_MIX) != flag_MIX)
+        std::cout <<"SDL2_Mixer format is not available\n";
 }
 
 void Application::initResMan() {
@@ -66,10 +74,19 @@ void Application::initResMan() {
 //Add Fonts
     s_resMan->addFont(yoster, "yoster.ttf", 30);
     s_resMan->addFont(mariana, "mariana.ttf", 30);
+
+//Add Musics
+    s_resMan->addMusic(menu_bgm, "Menu_BGM.ogg");
+    s_resMan->addMusic(play_bgm, "Play_BGM.ogg");
+
+//Add Sounds
+    s_resMan->addSound(player_shoot, "Player_Shoot.ogg");
+    s_resMan->addSound(enemy_shoot, "Enemy_Shoot.ogg");
+    s_resMan->addSound(button_hover, "Button_Hover.ogg");
 }
 
 void Application::initStateMan() {
-    s_stateMan->pushState(menu);
+    s_stateMan->pushState(menu_state);
 }
 
 void Application::initSpec() {
@@ -121,7 +138,7 @@ void Application::run() {
     }
 }
 
-void Application::clean() {
+void Application::clear() {
     s_resMan->clear();
     
     SDL_DestroyRenderer(s_renderer);
@@ -129,7 +146,8 @@ void Application::clean() {
     SDL_DestroyWindow(m_window);
     m_window = nullptr;
 
-    TTF_Quit();
     IMG_Quit();
+    TTF_Quit();
+    Mix_Quit();
     SDL_Quit();
 }

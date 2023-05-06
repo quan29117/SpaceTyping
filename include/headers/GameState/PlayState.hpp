@@ -21,12 +21,12 @@ private:
 	std::vector <std::string> m_word_list;
 
 //RNG - random number generator
-	std::random_device rd;
-	std::mt19937 rng;
+	std::random_device m_rd;
+	std::mt19937 m_rng;
 
 //Progress																
 	unsigned int m_score, m_wrong_type;
-    unsigned char s_char_input;
+    unsigned char m_char_input;
 	static EntityManager* s_manager;
 	//Display
 
@@ -37,6 +37,7 @@ private:
 	void initWordList();
 	void initPlayer();
 
+	std::string generatedWords();
 	void spawnEnemy();
 	void shooting();
 	void updateCollision();

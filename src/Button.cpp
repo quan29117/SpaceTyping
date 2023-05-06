@@ -23,10 +23,9 @@ bool Button::isSelected() {
 void Button::update(Mouse& mouse) {
     if (SDL_HasIntersectionF(&m_dest, &mouse.getPoint())) {
         selected = true;
-        //TODO : play sound
-    } else
-        selected = false;
-    
+        AudioManager::playSound(button_hover);
+    }
+    else selected = false;
 }
 
 void Button::render() {

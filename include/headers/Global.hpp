@@ -17,10 +17,11 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define WINDOW_SIZE_HEIGHT  1080
 #define FRAME_PER_SECOND    60
 
+//RNG
+#define MAX_RANDOM_NUMBER   2048
+
 //Background
 #define PLAYSTATE_BACKGROUND_WIDTH  3840
-#define BACKGROUND_WIDTH            1920
-#define BACKGROUND_HEIGHT           1080
 
 //Title
 #define TITLE_WIDTH     800
@@ -38,7 +39,6 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define PLAYER_POS          Vector2D {40, 410}
 #define PLAYER_WIDTH        137.75
 #define PLAYER_HEIGHT       130.25
-#define PLAYER_CENTER       Vector2D {73.875, 270.125}
 
 //Enemy
 #define ENEMY_START_POS_X   1680
@@ -46,8 +46,8 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define ENEMY_HEIGHT        130.5
 #define ENEMY_CENTER_X      120
 #define ENEMY_CENTER_Y      95
-#define ENEMY_FIRE_CHANCE   1024
 #define ENEMY_SPEED         3
+#define ENEMY_FIRE_CHANCE   1024
 
 //Bullet
 #define BULLET_PLAYER_START_POS     Vector2D {40, 410}

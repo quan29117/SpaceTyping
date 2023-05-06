@@ -1,16 +1,12 @@
 #include <headers/ECS/ECS.hpp>
 #include <iostream>
 
-//------------------------------------Entity------------------------------------
+//----------------------------------------Entity----------------------------------------
 Entity::Entity(EntityManager& man)
-    : manager(man)
-{
-    alive = true;
-}
+    : manager(man), alive (true)
+{}
 
-Entity::~Entity() {
-
-}
+Entity::~Entity() {}
 
 bool Entity::isAlive() {
     return alive;
@@ -47,10 +43,11 @@ void Entity::delGroup(const Group& mGroup) noexcept {
     groupBitSet[mGroup] = false;
 }
 
-//---------------------------------EntityManager---------------------------------
+//-------------------------------------EntityManager-------------------------------------
 void EntityManager::update() {
     for (auto& e : entities)
         e->update();
+    this->refresh();
 }
 
 void EntityManager::render() {

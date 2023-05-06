@@ -6,17 +6,18 @@
 #include <headers/Mouse.hpp>
 #include <headers/Button.hpp>
 
-enum StateName : short {
-	menu,
-	play,
-	pause,
+enum StateID : short {
+	none_state = -1,
+	menu_state,
+	play_state,
+	pause_state,
 };
 
 class State {
 protected:
-	StateName m_name;
-    bool 	  m_close;
-	bool 	  m_pause;
+	StateID m_id;
+    bool 	m_close;
+	bool 	m_pause;
 
 //Background
     SDL_Texture* m_bg_texture;
@@ -27,9 +28,11 @@ protected:
 	std::vector <Button*> m_buttons;
 
 //Functions
-	void initState(const StateName& stateName);
 	virtual void initBackground() = 0;
 	virtual void initButtons() 	  = 0;
+
+	void initState(const StateID& stateID);
+	void updateInteraction();
 	
 public:
 	State() {}
@@ -47,16 +50,17 @@ public:
 
 class StateManager {
 private:
-	std::stack <State*> states;
-	short currentState;
+	std::stack <State*> m_states;
+	StateID m_currentState;
 
 public:
 	StateManager();
 	virtual ~StateManager();
 
 	bool isExit();
-	short& getCurrentState();
+	StateID getCurrentState();
 
 	void run();
-	void pushState(const short& stateEnum);
+	void pushState(const StateID& stateID);
+	void changeCurrentState(const StateID& stateID);
 };

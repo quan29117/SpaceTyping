@@ -36,5 +36,5 @@ public:
     static StateManager*    getStateManager();
 
     void run();
-    void clean();
+    void clear();
 };

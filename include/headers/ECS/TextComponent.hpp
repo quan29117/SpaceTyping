@@ -26,8 +26,6 @@ public:
     char getFirstChar();
     char getCharNeedTyped();
 
-    std::string getTextDisplay();
-
     bool isFinished();
 
     void init() override;
@@ -36,5 +34,5 @@ public:
 
     void Typed();
     void Shot();
-    void changeTextColor(const SDL_Color& color);
+    void setColor(const SDL_Color& color);
 };

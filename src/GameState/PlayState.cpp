@@ -13,15 +13,8 @@ Entity& m_player = PlayState::getEntityManager()->addEntity();
 void PlayState::initBackground() {
 	m_bg_texture = Application::getResourceManager()->getTexture(play_bg);
 
-	m_camera.x = 0;
-    m_camera.y = 0;
-    m_camera.w = WINDOW_SIZE_WIDTH;
-    m_camera.h = WINDOW_SIZE_HEIGHT;
-
-	m_bg_dest.x = 0;
-    m_bg_dest.y = 0;
-    m_bg_dest.w = 1920;
-    m_bg_dest.h = 1080;
+	m_camera = SDL_Rect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
+	m_bg_dest = SDL_FRect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
 }
 
 void PlayState::initButtons() {
@@ -46,13 +39,13 @@ void PlayState::initPlayer() {
 	m_player.addComponent<TransformComponent>(PLAYER_POS);
 	m_player.addComponent<SpriteComponent>(player, PLAYER_WIDTH, PLAYER_HEIGHT);
 	// m_player.addComponent<ColliderComponent>("player");
-	m_player.addComponent<PlayerShootComponent>(&s_char_input);
+	m_player.addComponent<PlayerShootComponent>(&m_char_input);
 }
 
 PlayState::PlayState()
-	: rng(rd()), m_score(0), s_char_input ('\0')
+	: m_rng(m_rd()), m_score(0), m_char_input ('\0')
 {
-	initState(StateName::play);
+	initState(play_state);
 	initTime();
 	initWordList();
 	initPlayer();
@@ -63,7 +56,7 @@ PlayState::~PlayState() {
 }
 
 unsigned char& PlayState::getCharInput() {
-	return s_char_input;
+	return m_char_input;
 }
 
 EntityManager* PlayState::getEntityManager() {
@@ -73,7 +66,7 @@ EntityManager* PlayState::getEntityManager() {
 void PlayState::run()
 {
 	pollEvent();
-	if (!m_pause) update();
+	update();
 	render();
 
 	updateTime();
@@ -92,28 +85,33 @@ void PlayState::pollEvent() {
 				if (event.key.keysym.sym == SDLK_ESCAPE)
 					if (!m_close) {
 						m_pause = true;
-						Application::getStateManager()->pushState(StateName::pause);
+						Application::getStateManager()->pushState(pause_state);
 					}
 				break;
 			
 			case SDL_TEXTINPUT:
 				if (!m_pause)
-					s_char_input = event.text.text[0];
+					m_char_input = event.text.text[0];
 				break;
 		}
 	}
 }
 
 void PlayState::update() {
-	PlayState::getEntityManager()->update();
-	PlayState::getEntityManager()->refresh();
+	if (!m_pause) {
+		updateInteraction();
 
-	spawnEnemy();
-	shooting();
-	updateCollision();
-	scrollBackground();
+		s_manager->update();
+
+		spawnEnemy();
+		shooting();
+		updateCollision();
+		scrollBackground();
+		AudioManager::loopMusic();
+
+		m_char_input = '\0';
+	}
 	
-	s_char_input = '\0';
 }
 
 void PlayState::render() {
@@ -121,7 +119,9 @@ void PlayState::render() {
 
 	if (!m_pause) {
 		TextureManager::render(m_bg_texture, &m_bg_dest, &m_camera);
-		PlayState::getEntityManager()->render();
+		for (auto& button : m_buttons) button->render();
+		m_mouse.render();
+		s_manager->render();
 	}
 
 	SDL_RenderPresent(Application::getRenderer());
@@ -132,43 +132,51 @@ void PlayState::updateTime() {
 	spawnTime = end - start;
 }
 
-Entity& createEnemy(const int& start_pos_y, const std::string& text) {
+Entity& createEnemy(std::mt19937& m_rng, const std::string& text) {
+	std::uniform_int_distribution<int> uni(0, MAX_RANDOM_NUMBER);
+	float start_pos_y = uni(m_rng) % WINDOW_SIZE_HEIGHT;
+
 	auto& e_enemy (PlayState::getEntityManager()->addEntity());
 
 	e_enemy.addComponent<TransformComponent>(Vector2D {ENEMY_START_POS_X, start_pos_y},
 											 true,
-											 PLAYER_CENTER,
+											 PLAYER_POS,
 											 ENEMY_SPEED);
 	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
 	e_enemy.addComponent<TextComponent>(yoster, text, false);
-	// e_enemy.addComponent<EnemyShootComponent>();	//TODO  : add reference of rng
+	e_enemy.addComponent<EnemyShootComponent>(&m_rng);
 
 	e_enemy.addGroup(GEnemy);
 
 	return e_enemy;
 }
 
+std::string PlayState::generatedWords() {
+	std::uniform_int_distribution<int> uni(0, MAX_RANDOM_NUMBER);
+
+	int countWord = uni(m_rng) % 2 + 1;
+	switch (countWord) {
+		case 1:
+			spawnCoolDown = 3;
+			break;
+
+		case 2:
+			spawnCoolDown = 5;
+			break;
+	}
+
+	std::string text = "";
+	for (int i = 1; i <= countWord; i++)
+		text += m_word_list[uni(m_rng) % m_word_list.size()] + " ";
+	text.erase(text.size() - 1, 1);
+
+	return text;
+}
+
 void PlayState::spawnEnemy() {
 	if (spawnTime >= spawnCoolDown && PlayState::getEntityManager()->getEntitesByGroup(GEnemy).size() < 7) {
-		std::uniform_int_distribution<int> uni(0, WINDOW_SIZE_HEIGHT);
-
-		int countWord = uni(rng) % 2 + 1;
-		switch (countWord) {
-			case 1:
-				spawnCoolDown = 2;
-				break;
-
-			case 2:
-				spawnCoolDown = 3;
-				break;
-		}
-
-		std::string text = "";
-		for (int i = 1; i <= countWord; i++)  
-			text += m_word_list[uni(rng) % m_word_list.size()] + " ";
-		text.erase(text.size() - 1, 1);
-		
-		createEnemy(uni(rng), text);
+		std::string text = generatedWords();
+		createEnemy(m_rng, text);
 
 	//reset the time
 		spawnTime = 0;
@@ -178,9 +186,8 @@ void PlayState::spawnEnemy() {
 
 void PlayState::shooting() {
 	m_player.getComponent<PlayerShootComponent>().shoot();
-	for (auto& enemy : PlayState::getEntityManager()->getEntitesByGroup(GEnemy)) {
-		// enemy->getComponent<EnemyShootComponent>().shoot();
-	}
+	for (auto& enemy : PlayState::getEntityManager()->getEntitesByGroup(GEnemy))
+		enemy->getComponent<EnemyShootComponent>().shoot();
 }
 
 void collisionPlayer(const EntityGroup& group) {
