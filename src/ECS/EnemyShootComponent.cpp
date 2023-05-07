@@ -21,8 +21,8 @@ Entity& createBulletEnemy(const char& ch, const Vector2D& start_pos, const Vecto
 	p_bullet.addComponent<TransformComponent>(start_pos,
                                               true,
                                               direction,
-                                              BULLET_ENEMY_SPEED);
-	p_bullet.addComponent<SpriteComponent>(bullet_enemy, BULLET_ENEMY_SIZE, BULLET_ENEMY_SIZE);
+                                              BULLET_SPEED);
+	p_bullet.addComponent<SpriteComponent>(bullet_enemy, BULLET_SRC, BULLET_ENEMY_SIZE);
 
 	std::string str;	str += ch;
 	p_bullet.addComponent<TextComponent>(yoster, str, true, true, SDL_Color {255, 0, 0, 255});

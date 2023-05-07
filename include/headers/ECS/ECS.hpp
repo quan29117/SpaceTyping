@@ -19,7 +19,7 @@ inline ComponentID getUniqueComponentTypeID() {
 }
 
 template <typename T>
-inline ComponentID getComponentTypeID() noexcept {
+inline ComponentID getComponentTypeID() {
     static_assert (std::is_base_of<Component, T>::value, "Doesn't inherit from Component\n");
     static ComponentID typeID = getUniqueComponentTypeID();
     return typeID;
@@ -92,9 +92,9 @@ public:
         return *static_cast<T*> (ptr);
     }
 
-    bool hasGroup(const Group& mGroup) noexcept;
-    void addGroup(const Group& mGroup) noexcept;
-    void delGroup(const Group& mGroup) noexcept;
+    bool hasGroup(const Group& mGroup);
+    void addGroup(const Group& mGroup);
+    void delGroup(const Group& mGroup);
 };
 
 class EntityManager {

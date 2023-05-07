@@ -30,16 +30,16 @@ void Entity::render() {
         c->render();
 }
 
-bool Entity::hasGroup(const Group& mGroup) noexcept {
+bool Entity::hasGroup(const Group& mGroup) {
     return groupBitSet[mGroup];
 }
 
-void Entity::addGroup(const Group& mGroup) noexcept {
+void Entity::addGroup(const Group& mGroup) {
     groupBitSet[mGroup] = true;
     manager.addToGroup(this, mGroup);
 }
 
-void Entity::delGroup(const Group& mGroup) noexcept {
+void Entity::delGroup(const Group& mGroup) {
     groupBitSet[mGroup] = false;
 }
 
@@ -51,8 +51,8 @@ void EntityManager::update() {
 }
 
 void EntityManager::render() {
-    for (auto& e : entities)
-        e->render();
+    for (auto it = entities.rbegin(); it != entities.rend(); it++)
+        it->get()->render();
 }
 
 void EntityManager::refresh() {

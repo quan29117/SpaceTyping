@@ -7,13 +7,17 @@
 
 class SpriteComponent : public Component {
 private:
-    TransformComponent* m_trans;
-    SDL_Texture* m_texture;
-    SDL_FRect m_destRect;
+    TransformComponent* transform;
+    SDL_Texture*        m_texture;
+    SDL_Rect            m_src;
+    SDL_FRect           m_dest;
+
+    bool                m_animated;
+    short               m_animation_speed;
 
 public:
-    SpriteComponent(const TextureID& id, const float& dest_w, const float& dest_h);
-    virtual ~SpriteComponent();
+    SpriteComponent(const TextureID& id, const SDL_Rect& src, const Vector2D& destSize, const bool& animated = false);
+    virtual ~SpriteComponent() {}
 
     SDL_FRect getHitBox();
 

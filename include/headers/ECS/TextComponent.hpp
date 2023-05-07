@@ -5,26 +5,27 @@
 
 class TextComponent : public Component {
 private:
-    SpriteComponent*    m_sprite;
+    SpriteComponent*    sprite;
     SDL_Texture*        m_texture;
     SDL_Rect            m_destRect;
     bool                m_render,
                         m_center;
     std::string         m_text_display,
                         m_text_ref;
-    FontID              m_id;
+    FontID              m_font_id;
     SDL_Color           m_color;
 
     void setText();
-    virtual void setPos();
+    void setPos();
 
 public:
     TextComponent() = default;
     TextComponent(const FontID& id, const std::string& text, const bool& center = true, const bool& render = true, const SDL_Color& color = SDL_Color {255, 255, 255, 255});
-    virtual ~TextComponent();
+    virtual ~TextComponent() {}
 
     char getFirstChar();
     char getCharNeedTyped();
+    int  remainingSize();
 
     bool isFinished();
 

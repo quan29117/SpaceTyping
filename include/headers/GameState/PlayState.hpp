@@ -25,7 +25,7 @@ private:
 	std::mt19937 m_rng;
 
 //Progress																
-	unsigned int m_score, m_wrong_type;
+	
     unsigned char m_char_input;
 	static EntityManager* s_manager;
 	//Display
@@ -42,17 +42,17 @@ private:
 	void shooting();
 	void updateCollision();
 	void scrollBackground();
+	void resetCharInput();
 
 	void pollEvent() override;
 	void update()	 override;
 	void render()	 override;
 	void updateTime();
-
+	
 public:			
     PlayState();
     virtual ~PlayState();
 
-	unsigned char& getCharInput();
 	static EntityManager* getEntityManager();
 
     void run()		 override;

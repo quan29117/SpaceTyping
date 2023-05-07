@@ -3,38 +3,39 @@
 #include <headers/Application.hpp>
 #include <headers/Structs.hpp>
 
-SpriteComponent::SpriteComponent(const TextureID& id, const float& dest_w, const float& dest_h) {
+SpriteComponent::SpriteComponent(const TextureID& id, const SDL_Rect& src, const Vector2D& destSize, const bool& animated) {
     m_texture = Application::getResourceManager()->getTexture(id);
 
-    m_destRect.w = dest_w;
-    m_destRect.h = dest_h;
-}
-
-SpriteComponent::~SpriteComponent() {
-    m_texture = nullptr;
-    m_trans = nullptr;
+    m_src = src;
+    m_dest.w = destSize.x;
+    m_dest.h = destSize.y;
+    
+    m_animated = animated;
 }
 
 SDL_FRect SpriteComponent::getHitBox() {
-    
-    return m_destRect;
+    return m_dest;
 }
 
 void SpriteComponent::init() {
     if (entity->hasComponent<TransformComponent>()) {
-        m_trans = &entity->getComponent<TransformComponent>();
-        m_destRect.x = m_trans->getPosition().x;
-        m_destRect.y = m_trans->getPosition().y;
+        transform = &entity->getComponent<TransformComponent>();
+        m_dest.x = transform->getPosition().x;
+        m_dest.y = transform->getPosition().y;
     }
     else std::cout << "No TransformComponent\n";
 }
 
 void SpriteComponent::update() {
-    m_destRect.x = m_trans->getPosition().x;
-    m_destRect.y = m_trans->getPosition().y;
+    if (m_animated) {
+        // m_src.x = m_src
+    }
+
+    m_dest.x = transform->getPosition().x;
+    m_dest.y = transform->getPosition().y;
 }
 
 void SpriteComponent::render() {
     if (m_texture != nullptr)
-        TextureManager::render(m_texture, &m_destRect);
+        TextureManager::render(m_texture, &m_src, &m_dest);
 }

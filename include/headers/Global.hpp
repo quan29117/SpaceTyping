@@ -37,24 +37,31 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 
 //Player
 #define PLAYER_POS          Vector2D {40, 410}
+#define PLAYER_SRC          SDL_Rect {0, 0, 521, 551}
+#define PLAYER_SIZE         Vector2D {137.75, 130.25}
 #define PLAYER_WIDTH        137.75
 #define PLAYER_HEIGHT       130.25
 
 //Enemy
 #define ENEMY_START_POS_X   1680
-#define ENEMY_WIDTH         243
-#define ENEMY_HEIGHT        130.5
+#define ENEMY_SRC           SDL_Rect {0, 0, 540, 290}
+#define ENEMY_SIZE          Vector2D {243, 130.5}
 #define ENEMY_CENTER_X      120
 #define ENEMY_CENTER_Y      95
 #define ENEMY_SPEED         3
 #define ENEMY_FIRE_CHANCE   1024
 
 //Bullet
-#define BULLET_PLAYER_START_POS     Vector2D {40, 410}
-#define BULLET_PLAYER_SIZE          35
-#define BULLET_PLAYER_SPEED         5
-#define BULLET_ENEMY_SIZE           50
-#define BULLET_ENEMY_SPEED          5
+#define BULLET_SRC                SDL_Rect {0, 0, 1350, 1350}
+#define BULLET_PLAYER_START_POS   Vector2D {40, 410}
+#define BULLET_PLAYER_SIZE        Vector2D {35, 35}
+#define BULLET_SPEED              5
+#define BULLET_ENEMY_SIZE         Vector2D {50, 50}
+
+//Progress
+#define TEXT_DEST_X         30
+#define SCORE_TEXT_DEST_Y   20
+#define WT_TEXT_DEST_Y      60
 
 //--------------------------------Functions---------------------------------------
 std::string NumToString(const unsigned int& i_num);

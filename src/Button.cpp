@@ -23,14 +23,14 @@ bool Button::isSelected() {
 void Button::update(Mouse& mouse) {
     if (SDL_HasIntersectionF(&m_dest, &mouse.getPoint())) {
         selected = true;
-        AudioManager::playSound(button_hover);
+        // AudioManager::playSound(button_hover);   TODO
     }
     else selected = false;
 }
 
 void Button::render() {
     if (!selected)
-        TextureManager::render(m_texture, &m_dest, &m_src_idle);
+        TextureManager::render(m_texture, &m_src_idle, &m_dest);
     else 
-        TextureManager::render(m_texture, &m_dest, &m_src_hover);
+        TextureManager::render(m_texture, &m_src_hover, &m_dest);
 }

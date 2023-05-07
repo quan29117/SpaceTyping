@@ -26,5 +26,5 @@ void Mouse::update() {
 }
 
 void Mouse::render() {
-    TextureManager::render(m_texture, &m_rect);
+    TextureManager::render(m_texture, nullptr, &m_rect);
 }

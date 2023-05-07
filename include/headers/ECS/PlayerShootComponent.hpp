@@ -5,8 +5,8 @@
 
 class PlayerShootComponent : public Component {
 private:
-    Entity* m_lock_enemy;
-    unsigned char* s_char_input;
+    Entity*                m_lock_enemy;
+    unsigned char*         s_char_input;
     std::vector <Entity*>* s_enemyGroup;
     std::vector <Entity*>* s_bulletEnemyGroup;
 
@@ -16,7 +16,7 @@ private:
 
 public: 
     PlayerShootComponent(unsigned char* char_input);
-    virtual ~PlayerShootComponent();
+    virtual ~PlayerShootComponent() {}
 
     void init()   override {}
     void update() override;

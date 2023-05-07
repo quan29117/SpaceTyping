@@ -77,8 +77,8 @@ void MenuState::render() {
     SDL_RenderClear(Application::getRenderer());
 
     if (!m_pause) {
-        TextureManager::render(m_bg_texture, &m_bg_dest);
-        TextureManager::render(m_title_texture, &m_title_dest);
+        TextureManager::render(m_bg_texture, nullptr, &m_bg_dest);
+        TextureManager::render(m_title_texture, nullptr, &m_title_dest);
         for (auto& button : m_buttons) button->render();
         m_mouse.render();
     }

@@ -10,7 +10,7 @@ struct Collision {
 
 struct TextureManager {
     static SDL_Texture* loadTexture(const std::string& fileName);
-    static void render(SDL_Texture* texture, const SDL_FRect* dest, const SDL_Rect* src = nullptr);
+    static void render(SDL_Texture* texture, const SDL_Rect* src, const SDL_FRect* dest);
 };
 
 struct FontManager {

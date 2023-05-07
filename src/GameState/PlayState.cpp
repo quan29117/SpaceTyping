@@ -37,13 +37,14 @@ void PlayState::initWordList() {
 
 void PlayState::initPlayer() {
 	m_player.addComponent<TransformComponent>(PLAYER_POS);
-	m_player.addComponent<SpriteComponent>(player, PLAYER_WIDTH, PLAYER_HEIGHT);
+	m_player.addComponent<SpriteComponent>(player, PLAYER_SRC, PLAYER_SIZE, true);
 	// m_player.addComponent<ColliderComponent>("player");
 	m_player.addComponent<PlayerShootComponent>(&m_char_input);
+	m_player.addComponent<ProgressComponent>();
 }
 
 PlayState::PlayState()
-	: m_rng(m_rd()), m_score(0), m_char_input ('\0')
+	: m_rng(m_rd()), m_char_input ('\0')
 {
 	initState(play_state);
 	initTime();
@@ -53,10 +54,6 @@ PlayState::PlayState()
 
 PlayState::~PlayState() {
 	
-}
-
-unsigned char& PlayState::getCharInput() {
-	return m_char_input;
 }
 
 EntityManager* PlayState::getEntityManager() {
@@ -107,18 +104,17 @@ void PlayState::update() {
 		shooting();
 		updateCollision();
 		scrollBackground();
+		resetCharInput();
+		
 		AudioManager::loopMusic();
-
-		m_char_input = '\0';
 	}
-	
 }
 
 void PlayState::render() {
 	SDL_RenderClear(Application::getRenderer());
 
 	if (!m_pause) {
-		TextureManager::render(m_bg_texture, &m_bg_dest, &m_camera);
+		TextureManager::render(m_bg_texture, &m_camera, &m_bg_dest);
 		for (auto& button : m_buttons) button->render();
 		m_mouse.render();
 		s_manager->render();
@@ -142,7 +138,7 @@ Entity& createEnemy(std::mt19937& m_rng, const std::string& text) {
 											 true,
 											 PLAYER_POS,
 											 ENEMY_SPEED);
-	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_WIDTH, ENEMY_HEIGHT);
+	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_SRC, ENEMY_SIZE);
 	e_enemy.addComponent<TextComponent>(yoster, text, false);
 	e_enemy.addComponent<EnemyShootComponent>(&m_rng);
 
@@ -197,7 +193,9 @@ void collisionPlayer(const EntityGroup& group) {
 
 	for (auto& x : PlayState::getEntityManager()->getEntitesByGroup(group)) {
 		if (Collision::AABB(m_player, *x)) {
-			// m_player.destroy();
+			int char_count = x->getComponent<TextComponent>().remainingSize();
+			m_player.getComponent<ProgressComponent>().decreaseScore(char_count * 10);
+			m_player.getComponent<ProgressComponent>().increaseWT(char_count);
 			x->destroy();
 		}
 	}
@@ -235,3 +233,9 @@ void PlayState::scrollBackground() {
 	}
 }
 
+void PlayState::resetCharInput() {
+	if (m_char_input != '\0') {
+		m_player.getComponent<ProgressComponent>().increaseWT(1);
+		m_char_input = '\0';
+	}
+}

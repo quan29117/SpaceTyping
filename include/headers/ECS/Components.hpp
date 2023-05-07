@@ -7,3 +7,4 @@
 #include <headers/ECS/TextComponent.hpp>
 #include <headers/ECS/PlayerShootComponent.hpp>
 #include <headers/ECS/EnemyShootComponent.hpp>
+#include <headers/ECS/ProgressComponent.hpp>
