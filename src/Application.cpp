@@ -25,7 +25,7 @@ void Application::initWindow() {
     m_window = SDL_CreateWindow("SpaceTyping",
                                 0, 0,
                                 WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT,
-                                SDL_WINDOW_MAXIMIZED);
+                                SDL_WINDOW_FULLSCREEN_DESKTOP);
 
     if (m_window == nullptr)
         std::cout << "SDL window created failed\n";
@@ -69,7 +69,8 @@ void Application::initResMan() {
     s_resMan->addTexture(menu_bg, "Menu_Background.png");
     s_resMan->addTexture(play_bg, "Play_Background.png");
     s_resMan->addTexture(pause_bg, "Pause_Background.png");
-    s_resMan->addTexture(title, "Title.png");
+    s_resMan->addTexture(game_name, "Game_Name.png");
+    s_resMan->addTexture(pause_title, "Pause_Title.png");
     
 //Add Fonts
     s_resMan->addFont(yoster, "yoster.ttf", 30);
@@ -89,7 +90,7 @@ void Application::initStateMan() {
     s_stateMan->pushState(menu_state);
 }
 
-void Application::initSpec() {
+void Application::initParam() {
     frameDelay = 1000 / FRAME_PER_SECOND;
     frameTime = frameStart = 0;
 }
@@ -102,7 +103,7 @@ Application::Application() {
     initSDL();
     initResMan();
     initStateMan();
-    initSpec();
+    initParam();
     customApp();
 }
 
@@ -143,8 +144,11 @@ void Application::clear() {
     
     SDL_DestroyRenderer(s_renderer);
     s_renderer = nullptr;
+
     SDL_DestroyWindow(m_window);
     m_window = nullptr;
+
+    Mix_CloseAudio();
 
     IMG_Quit();
     TTF_Quit();

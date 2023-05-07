@@ -28,7 +28,7 @@ void SpriteComponent::init() {
 
 void SpriteComponent::update() {
     if (m_animated) {
-        // m_src.x = m_src
+        m_src.x = m_src.w * static_cast<int> ((SDL_GetTicks() / 60) % 5);
     }
 
     m_dest.x = transform->getPosition().x;

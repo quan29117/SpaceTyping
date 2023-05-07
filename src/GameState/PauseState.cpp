@@ -10,6 +10,9 @@
 void PauseState::initBackground() {
     m_bg_texture = Application::getResourceManager()->getTexture(pause_bg);
     m_bg_dest = SDL_FRect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
+
+    m_title_texture = Application::getResourceManager()->getTexture(pause_title);
+    m_title_dest = TITLE_DEST;
 }
 
 void PauseState::initButtons() {
@@ -50,13 +53,13 @@ void PauseState::pollEvent() {
                 
             case SDL_MOUSEBUTTONUP:
                 if (event.button.button == SDL_BUTTON_LEFT) {
-                    if (m_buttons[conti]->isSelected()) {
+                    if (m_buttons[conti]->isHovered()) {
                         m_close = true;
                         AudioManager::setVolume(100);
                         Application::getStateManager()->changeCurrentState(play_state);
                     }
 
-                    if (m_buttons[exit]->isSelected()) {
+                    if (m_buttons[exit]->isHovered()) {
                         m_close = true;
                         AudioManager::setVolume(100);
                         AudioManager::playMusic(menu_bgm);
@@ -78,6 +81,7 @@ void PauseState::render() {
 
     if (!m_pause) {
         TextureManager::render(m_bg_texture, nullptr, &m_bg_dest);
+        TextureManager::render(m_title_texture, nullptr, &m_title_dest);
         for (auto& button : m_buttons) button->render();
         m_mouse.render();
     }

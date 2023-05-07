@@ -7,10 +7,11 @@
 class EnemyShootComponent : public Component {
 private:
     std::mt19937* s_rng;
+    bool m_has_shot;
 
 public:
     EnemyShootComponent(std::mt19937* rng);
-    virtual ~EnemyShootComponent();
+    virtual ~EnemyShootComponent() {}
 
     void init()   override {}
     void update() override {}

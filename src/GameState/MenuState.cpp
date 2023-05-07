@@ -11,8 +11,8 @@ void MenuState::initBackground() {
     m_bg_texture = Application::getResourceManager()->getTexture(menu_bg);
     m_bg_dest = SDL_FRect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
 
-    m_title_texture = Application::getResourceManager()->getTexture(title);
-    m_title_dest = SDL_FRect {450, 150, TITLE_WIDTH, TITLE_HEIGHT};
+    m_title_texture = Application::getResourceManager()->getTexture(game_name);
+    m_title_dest = TITLE_DEST;
 }
 
 void MenuState::initButtons() {
@@ -53,12 +53,12 @@ void MenuState::pollEvent() {
                 
             case SDL_MOUSEBUTTONUP:
                 if (event.button.button == SDL_BUTTON_LEFT) {
-                    if (m_buttons[start]->isSelected()) {
+                    if (m_buttons[start]->isHovered()) {
                         m_pause = true;
                         Application::getStateManager()->pushState(play_state);
                     }
 
-                    if (m_buttons[exit]->isSelected())
+                    if (m_buttons[exit]->isHovered())
                         m_close = true;
                 }
                 break;

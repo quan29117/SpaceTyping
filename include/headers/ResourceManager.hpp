@@ -16,25 +16,26 @@ enum TextureID : short {
     menu_bg,
     play_bg,
     pause_bg,
-    title,
+    game_name,
+    pause_title
 };
 
 enum FontID : short {
     yoster = 0,
-    mariana,
+    mariana
 };
 
 enum MusicID : short {
     none_music = -1,
     menu_bgm = 0,
-    play_bgm,
+    play_bgm
 };
 
 enum SoundID : short {
     player_shoot = 0,
     enemy_shoot,
     destroy,
-    button_hover,
+    button_hover
 };
 
 class ResourceManager {

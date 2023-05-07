@@ -78,7 +78,7 @@ void StateManager::pushState(const StateID& stateID) {
 
 			case pause_state:
 				m_states.push(new PauseState());
-				AudioManager::setVolume(70);
+				AudioManager::setVolume(50);
 				break;
 		}
 		m_currentState = stateID;

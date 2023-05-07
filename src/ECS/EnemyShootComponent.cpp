@@ -9,10 +9,7 @@
 
 EnemyShootComponent::EnemyShootComponent(std::mt19937* rng) {
     s_rng = rng;
-}
-
-EnemyShootComponent::~EnemyShootComponent() {
-
+    m_has_shot = false;
 }
 
 Entity& createBulletEnemy(const char& ch, const Vector2D& start_pos, const Vector2D& direction) {
@@ -33,13 +30,18 @@ Entity& createBulletEnemy(const char& ch, const Vector2D& start_pos, const Vecto
 }
 
 void EnemyShootComponent::shoot() {
-    Vector2D rec = this->entity->getComponent<TransformComponent>().getPosition();
-    if (rec.x > WINDOW_SIZE_WIDTH / 2.0f) {
+    if (!m_has_shot) {
         std::uniform_int_distribution<int> uni(0, MAX_RANDOM_NUMBER);
         if (uni(*s_rng) % ENEMY_FIRE_CHANCE == 0) {
             char ch = char(uni(*s_rng) % 26 + 65);
+
+            Vector2D rec = this->entity->getComponent<TransformComponent>().getPosition();
             createBulletEnemy(ch, rec, PLAYER_POS);
+
             AudioManager::playSound(SoundID::enemy_shoot);
+
+            m_has_shot = true;
         }
     }
+    
 }

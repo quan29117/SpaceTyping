@@ -24,8 +24,7 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define PLAYSTATE_BACKGROUND_WIDTH  3840
 
 //Title
-#define TITLE_WIDTH     720
-#define TITLE_HEIGHT    120
+#define TITLE_DEST      SDL_FRect {430, 150, 720, 120}
 
 //Mouse
 #define MOUSE_WIDTH     15
@@ -36,11 +35,11 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define BUTTON_HEIGHT   100
 
 //Player
-#define PLAYER_POS          Vector2D {40, 410}
-#define PLAYER_SRC          SDL_Rect {0, 0, 521, 551}
-#define PLAYER_SIZE         Vector2D {137.75, 130.25}
-#define PLAYER_WIDTH        137.75
-#define PLAYER_HEIGHT       130.25
+#define PLAYER_POS      Vector2D {40, 410}
+#define PLAYER_SRC      SDL_Rect {0, 0, 431, 170}
+#define PLAYER_SIZE     Vector2D {144, 57}
+#define PLAYER_WIDTH    137.75
+#define PLAYER_HEIGHT   130.25
 
 //Enemy
 #define ENEMY_START_POS_X   1680
@@ -53,15 +52,15 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 
 //Bullet
 #define BULLET_SRC                SDL_Rect {0, 0, 1350, 1350}
-#define BULLET_PLAYER_START_POS   Vector2D {40, 410}
-#define BULLET_PLAYER_SIZE        Vector2D {35, 35}
+#define BULLET_PLAYER_START_POS   Vector2D {184, 432.5}
+#define BULLET_PLAYER_SIZE        Vector2D {25, 25}
 #define BULLET_SPEED              5
 #define BULLET_ENEMY_SIZE         Vector2D {50, 50}
 
 //Progress
-#define TEXT_DEST_X         30
-#define SCORE_TEXT_DEST_Y   20
-#define WT_TEXT_DEST_Y      60
+#define TEXT_DEST_X         40
+#define SCORE_TEXT_DEST_Y   30
+#define WT_TEXT_DEST_Y      80
 
 //--------------------------------Functions---------------------------------------
 std::string NumToString(const unsigned int& i_num);

@@ -5,9 +5,10 @@
 
 class MenuState : public State {
 private:
+    enum ButtonNames {start, exit};
+
     SDL_Texture* m_title_texture;
     SDL_FRect m_title_dest;
-    enum ButtonNames {start, exit};
 
 //Functions
     void initBackground() override;

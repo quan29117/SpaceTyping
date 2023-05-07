@@ -17,13 +17,12 @@ void PlayState::initBackground() {
 	m_bg_dest = SDL_FRect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
 }
 
-void PlayState::initButtons() {
-
-}
+void PlayState::initButtons() {}
 
 void PlayState::initTime() {
-	start = end = spawnTime = 0;
-	spawnCoolDown = 5;
+	start = SDL_GetTicks() / 1000.f;
+	spawnTime = 0;
+	spawnCoolDown = 3;
 }
 
 void PlayState::initWordList() {
@@ -77,19 +76,17 @@ void PlayState::pollEvent() {
 				m_close = true;
 				Application::closeApp();
 				break;
-
-			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_ESCAPE)
-					if (!m_close) {
-						m_pause = true;
-						Application::getStateManager()->pushState(pause_state);
-					}
-				break;
 			
 			case SDL_TEXTINPUT:
 				if (!m_pause)
 					m_char_input = event.text.text[0];
 				break;
+			
+			case SDL_MOUSEBUTTONUP:
+				if (!m_close) {
+					m_pause = !m_pause;
+					Application::getStateManager()->pushState(pause_state);
+				}
 		}
 	}
 }
@@ -115,9 +112,8 @@ void PlayState::render() {
 
 	if (!m_pause) {
 		TextureManager::render(m_bg_texture, &m_camera, &m_bg_dest);
-		for (auto& button : m_buttons) button->render();
-		m_mouse.render();
 		s_manager->render();
+		m_mouse.render();
 	}
 
 	SDL_RenderPresent(Application::getRenderer());
@@ -125,7 +121,10 @@ void PlayState::render() {
 
 void PlayState::updateTime() {
 	end = SDL_GetTicks() / 1000.f;
-	spawnTime = end - start;
+
+	if (!m_pause)
+		spawnTime = end - start;
+	else start = end - spawnTime;
 }
 
 Entity& createEnemy(std::mt19937& m_rng, const std::string& text) {
@@ -153,11 +152,11 @@ std::string PlayState::generatedWords() {
 	int countWord = uni(m_rng) % 2 + 1;
 	switch (countWord) {
 		case 1:
-			spawnCoolDown = 3;
+			spawnCoolDown = 2;
 			break;
 
 		case 2:
-			spawnCoolDown = 5;
+			spawnCoolDown = 3;
 			break;
 	}
 

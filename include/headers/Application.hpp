@@ -23,7 +23,7 @@ private:
     void initLib();
     void initResMan();
     void initStateMan();
-    void initSpec();
+    void initParam();
     void customApp();
 
 public:
