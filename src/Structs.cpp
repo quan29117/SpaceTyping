@@ -73,9 +73,10 @@ void AudioManager::playMusic(const MusicID& musicID) {
 }
 
 void AudioManager::stopMusic() {
-    if (Mix_PlayingMusic() != 0)
+    if (Mix_PlayingMusic() != 0) {
         Mix_HaltMusic();
-    m_currentMusic = none_music;
+        m_currentMusic = none_music;
+    }
 }
 
 void AudioManager::loopMusic() {

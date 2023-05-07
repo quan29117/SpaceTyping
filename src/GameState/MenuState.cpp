@@ -12,16 +12,16 @@ void MenuState::initBackground() {
     m_bg_dest = SDL_FRect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
 
     m_title_texture = Application::getResourceManager()->getTexture(title);
-    m_title_dest = SDL_FRect {100, 150, TITLE_WIDTH, TITLE_HEIGHT};
+    m_title_dest = SDL_FRect {450, 150, TITLE_WIDTH, TITLE_HEIGHT};
 }
 
 void MenuState::initButtons() {
     m_buttons.push_back (new Button (SDL_Rect {80, 0, 240, 100},
                                      SDL_Rect {480, 0, 240, 100},
-                                     SDL_FRect {150, 400, 240, 100}));
+                                     SDL_FRect {650, 400, 240, 100}));
     m_buttons.push_back (new Button (SDL_Rect {100, 200, 200, 100},
                                      SDL_Rect {500, 200, 200, 100},
-                                     SDL_FRect {150, 550, 200, 100}));
+                                     SDL_FRect {660, 550, 200, 100}));
 }
 
 MenuState::MenuState() {

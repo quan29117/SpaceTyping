@@ -10,6 +10,7 @@ private:
 
 public:
     Mouse();
+    virtual ~Mouse() {};
 
     SDL_FRect& getPoint();
     

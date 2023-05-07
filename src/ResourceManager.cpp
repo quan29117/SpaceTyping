@@ -61,14 +61,9 @@ Mix_Chunk* ResourceManager::getSound(const SoundID& id) {
 }
 
 void ResourceManager::clear() {
-    for (auto &x : textures) {
-        SDL_DestroyTexture(x.second);
-        if (x.second == nullptr) std::cout << "nope ";
-        x.second = nullptr;
-    }
     while (!textures.empty()) {
-        // SDL_DestroyTexture(textures.begin()->second);
-        // textures.begin()->second = nullptr;
+        SDL_DestroyTexture(textures.begin()->second);
+        textures.begin()->second = nullptr;
         textures.erase(textures.begin());
     }
 

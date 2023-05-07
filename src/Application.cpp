@@ -6,10 +6,10 @@
 #include <headers/GameState/MenuState.hpp>
 #include <headers/GameState/PlayState.hpp>
 
-bool             Application::s_isRunning  = true;
-SDL_Renderer*    Application::s_renderer   = nullptr;
-ResourceManager* Application::s_resMan     = new ResourceManager;
-StateManager*    Application::s_stateMan   = new StateManager;
+bool             Application::s_isRunning = true;
+SDL_Renderer*    Application::s_renderer  = nullptr;
+ResourceManager* Application::s_resMan    = new ResourceManager;
+StateManager*    Application::s_stateMan  = new StateManager;
 
 void Application::initSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)

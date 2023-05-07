@@ -11,8 +11,8 @@ private:
     static SDL_Renderer*    s_renderer;
     static ResourceManager* s_resMan;
     static StateManager*    s_stateMan;
-    
-//Spec
+
+//Param
     static bool s_isRunning;
     int frameDelay, frameTime, frameStart;
 

@@ -24,8 +24,8 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define PLAYSTATE_BACKGROUND_WIDTH  3840
 
 //Title
-#define TITLE_WIDTH     800
-#define TITLE_HEIGHT    225
+#define TITLE_WIDTH     720
+#define TITLE_HEIGHT    120
 
 //Mouse
 #define MOUSE_WIDTH     15
