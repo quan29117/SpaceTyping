@@ -17,7 +17,8 @@ enum TextureID : short {
     play_bg,
     pause_bg,
     game_name,
-    pause_title
+    pause_title,
+    board
 };
 
 enum FontID : short {

@@ -13,6 +13,10 @@ class PlayState : public State {
 private:
 //Background camera
 	SDL_Rect m_camera;
+
+//Board score
+	SDL_Texture* m_board_texture;
+	SDL_FRect	 m_board_dest;
 	
 //Time
 	float start, end, spawnTime, spawnCoolDown;
@@ -24,15 +28,14 @@ private:
 	std::random_device m_rd;
 	std::mt19937 m_rng;
 
-//Progress																
-	
+//Gameplay																
     unsigned char m_char_input;
 	static EntityManager* s_manager;
-	//Display
 
 //Functions
 	void initBackground() override;
 	void initButtons()	  override;
+	void initBoard();
 	void initTime();
 	void initWordList();
 	void initPlayer();

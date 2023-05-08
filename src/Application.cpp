@@ -71,6 +71,7 @@ void Application::initResMan() {
     s_resMan->addTexture(pause_bg, "Pause_Background.png");
     s_resMan->addTexture(game_name, "Game_Name.png");
     s_resMan->addTexture(pause_title, "Pause_Title.png");
+    s_resMan->addTexture(board, "Board.png");
     
 //Add Fonts
     s_resMan->addFont(yoster, "yoster.ttf", 30);

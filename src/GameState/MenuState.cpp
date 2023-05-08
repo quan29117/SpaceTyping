@@ -1,11 +1,8 @@
 #include <headers/GameState/MenuState.hpp>
 
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_mouse.h>
 #include <headers/Global.hpp>
 #include <headers/Application.hpp>
 #include <headers/Structs.hpp>
-#include <headers/GameState/PlayState.hpp>
 
 void MenuState::initBackground() {
     m_bg_texture = Application::getResourceManager()->getTexture(menu_bg);

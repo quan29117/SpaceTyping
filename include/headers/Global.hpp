@@ -22,6 +22,9 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 
 //Background
 #define PLAYSTATE_BACKGROUND_WIDTH  3840
+#define CAMERA_RECT         SDL_Rect {0, 0, 1920, 1080}
+#define BACKGROUND_DEST     SDL_FRect {0, 0, 1920, 1080}
+#define BOARD_DEST          SDL_FRect {10, 10, 270, 125}
 
 //Title
 #define TITLE_DEST      SDL_FRect {430, 150, 720, 120}

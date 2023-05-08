@@ -1,15 +1,12 @@
 #include <headers/GameState/PauseState.hpp>
 
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_mouse.h>
 #include <headers/Global.hpp>
 #include <headers/Application.hpp>
 #include <headers/Structs.hpp>
-#include <headers/GameState/PlayState.hpp>
 
 void PauseState::initBackground() {
     m_bg_texture = Application::getResourceManager()->getTexture(pause_bg);
-    m_bg_dest = SDL_FRect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
+    m_bg_dest = BACKGROUND_DEST;
 
     m_title_texture = Application::getResourceManager()->getTexture(pause_title);
     m_title_dest = TITLE_DEST;

@@ -13,11 +13,16 @@ Entity& m_player = PlayState::getEntityManager()->addEntity();
 void PlayState::initBackground() {
 	m_bg_texture = Application::getResourceManager()->getTexture(play_bg);
 
-	m_camera = SDL_Rect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
-	m_bg_dest = SDL_FRect {0, 0, WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT};
+	m_camera  = CAMERA_RECT;
+	m_bg_dest = BACKGROUND_DEST;
 }
 
 void PlayState::initButtons() {}
+
+void PlayState::initBoard() {
+	m_board_texture = Application::getResourceManager()->getTexture(board);
+	m_board_dest	= BOARD_DEST;
+}
 
 void PlayState::initTime() {
 	start = SDL_GetTicks() / 1000.f;
@@ -46,6 +51,7 @@ PlayState::PlayState()
 	: m_rng(m_rd()), m_char_input ('\0')
 {
 	initState(play_state);
+	initBoard();
 	initTime();
 	initWordList();
 	initPlayer();
@@ -112,6 +118,7 @@ void PlayState::render() {
 
 	if (!m_pause) {
 		TextureManager::render(m_bg_texture, &m_camera, &m_bg_dest);
+		TextureManager::render(m_board_texture, nullptr, &m_board_dest);
 		s_manager->render();
 		m_mouse.render();
 	}
