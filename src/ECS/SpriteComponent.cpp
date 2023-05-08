@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Implementation of the SpriteComponent class.
+ *
+ *********************************************************************/
+
 #include <headers/ECS/SpriteComponent.hpp>
 
 #include <headers/Application.hpp>

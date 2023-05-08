@@ -1,10 +1,13 @@
+/*******************************************************************//*
+ * Implementation of the PlayerShootComponent class.
+ *
+ *********************************************************************/
+
 #include <headers/ECS/PlayerShootComponent.hpp>
 
 #include <headers/Global.hpp>
 #include <headers/Structs.hpp>
-#include <headers/GameState/PlayState.hpp>
-#include <headers/ECS/TransformComponent.hpp>
-#include <headers/ECS/SpriteComponent.hpp>
+#include <headers/ApplicationState/PlayState.hpp>
 #include <headers/ECS/TextComponent.hpp>
 #include <headers/ECS/ProgressComponent.hpp>
 

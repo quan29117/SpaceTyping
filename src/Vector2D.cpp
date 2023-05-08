@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Implementation of the Vector2D class.
+ *
+ *********************************************************************/
+
 #include <headers/Vector2D.hpp>
 
 Vector2D::Vector2D() {
@@ -75,9 +80,3 @@ Vector2D Vector2D::unitVector() {
     float l = sqrt(x * x + y * y);
     return Vector2D(x / l, y / l);
 }
-
-
-
-
-
-

@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Component for Player Shooting when typing correctly
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <headers/ECS/ECS.hpp>

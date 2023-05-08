@@ -1,9 +1,21 @@
+/*******************************************************************//*
+ * Vector class models the mathematical concept of a vector in two
+ * dimensions.
+ * This class supports adding, subtracting, multiplying, and dividing
+ * operations through overload.
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <iostream>
 #include <cmath>
 
-struct Vector2D {
+class Vector2D {
+private:
+
+
+public:
     float x, y;
 
     Vector2D();

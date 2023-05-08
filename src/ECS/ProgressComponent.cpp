@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Implementation of the ProgressComponent class.
+ *
+ *********************************************************************/
+
 #include <headers/ECS/ProgressComponent.hpp>
 
 #include <headers/Global.hpp>
@@ -47,10 +52,6 @@ void ProgressComponent::init() {
     setScoreText();
     setWrongText();
     setPos();
-}
-
-void ProgressComponent::update() {
-
 }
 
 void ProgressComponent::render() {

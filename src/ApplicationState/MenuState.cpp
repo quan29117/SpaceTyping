@@ -1,4 +1,9 @@
-#include <headers/GameState/MenuState.hpp>
+/*******************************************************************//*
+ * Implementation of the MenuState class.
+ *
+ *********************************************************************/
+
+#include <headers/ApplicationState/MenuState.hpp>
 
 #include <headers/Global.hpp>
 #include <headers/Application.hpp>

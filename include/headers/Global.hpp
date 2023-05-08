@@ -1,3 +1,9 @@
+/*******************************************************************//*
+ * Global const and functions for understanding and changing parameters
+ * more easily
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <sstream>
@@ -30,8 +36,9 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define TITLE_DEST      SDL_FRect {430, 150, 720, 120}
 
 //Mouse
-#define MOUSE_WIDTH     15
-#define MOUSE_HEIGHT    25.5
+#define MOUSE_WIDTH         15
+#define MOUSE_HEIGHT        25.5
+#define MOUSE_POINT_SIZE    1
 
 //Button
 #define BUTTON_WIDTH    400

@@ -1,4 +1,9 @@
-#include <headers/GameState/PlayState.hpp>
+/*******************************************************************//*
+ * Implementation of the PlayState class.
+ *
+ *********************************************************************/
+
+#include <headers/ApplicationState/PlayState.hpp>
 
 #include <fstream>
 #include <headers/Application.hpp>
@@ -6,7 +11,7 @@
 #include <headers/ECS/Components.hpp>
 #include <headers/Structs.hpp>
 
-// EntityManager manager;
+//Define static members and Player as the first Entity
 EntityManager* PlayState::s_manager = new EntityManager;
 Entity& m_player = PlayState::getEntityManager()->addEntity();
 
@@ -88,11 +93,12 @@ void PlayState::pollEvent() {
 					m_char_input = event.text.text[0];
 				break;
 			
-			case SDL_MOUSEBUTTONUP:
-				if (!m_close) {
-					m_pause = !m_pause;
-					Application::getStateManager()->pushState(pause_state);
-				}
+			case SDL_KEYDOWN:
+				if (event.key.keysym.sym == SDLK_ESCAPE)
+					if (!m_close) {
+						m_pause = true;
+						Application::getStateManager()->pushState(pause_state);
+					}
 		}
 	}
 }

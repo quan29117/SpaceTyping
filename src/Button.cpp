@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Implementation of the Button class.
+ *
+ *********************************************************************/
+
 #include <headers/Button.hpp>
 
 #include <headers/Global.hpp>

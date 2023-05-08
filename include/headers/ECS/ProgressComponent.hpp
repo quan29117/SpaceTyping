@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Component for Score and Wrong Typing Count.
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <SDL2/SDL_render.h>
@@ -27,7 +32,7 @@ public:
     virtual ~ProgressComponent() {};
 
     void init()   override;
-    void update() override;
+    void update() override {}
     void render() override;
 
     void increaseScore(const std::size_t& score);

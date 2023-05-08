@@ -1,36 +1,15 @@
-#include <headers/GameState/State.hpp>
+/*******************************************************************//*
+ * Implementation of the StateManager class.
+ *
+ *********************************************************************/
 
-#include <SDL2/SDL_mouse.h>
+#include <headers/ApplicationState/StateManager.hpp>
+
 #include <headers/Structs.hpp>
-#include <headers/Application.hpp>
-#include <headers/GameState/MenuState.hpp>
-#include <headers/GameState/PlayState.hpp>
-#include <headers/GameState/PauseState.hpp>
+#include <headers/ApplicationState/MenuState.hpp>
+#include <headers/ApplicationState/PlayState.hpp>
+#include <headers/ApplicationState/PauseState.hpp>
 
-//--------------------------------------------State--------------------------------------------
-void State::initState(const StateID& stateID) {
-	m_id = stateID;
-	m_close = m_pause = false;
-	initBackground();
-	initButtons();
-}
-
-void State::updateInteraction() {
-	m_mouse.update();
-	for (auto& button : m_buttons) button->update(m_mouse);
-}
-
-bool State::isClosed() {
-	return m_close;
-}
-
-void State::checkCurrentState() {
-	if (m_id == Application::getStateManager()->getCurrentState())
-		m_close = m_pause = false;
-	else m_close = true;
-}
-
-//----------------------------------------StateManager-----------------------------------------
 StateManager::StateManager() {
 	m_currentState = none_state;
 }

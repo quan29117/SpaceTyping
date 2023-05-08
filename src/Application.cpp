@@ -1,11 +1,17 @@
+/*******************************************************************//*
+ * Implementation of the Application class.
+ *
+ *********************************************************************/
+
 #include <headers/Application.hpp>
 
 #include <SDL2/SDL_image.h>
 #include <headers/Global.hpp>
 #include <headers/Structs.hpp>
-#include <headers/GameState/MenuState.hpp>
-#include <headers/GameState/PlayState.hpp>
+#include <headers/ApplicationState/MenuState.hpp>
+#include <headers/ApplicationState/PlayState.hpp>
 
+//Define static members
 bool             Application::s_isRunning = true;
 SDL_Renderer*    Application::s_renderer  = nullptr;
 ResourceManager* Application::s_resMan    = new ResourceManager;
@@ -51,11 +57,11 @@ void Application::initLib() {
         std::cout <<"SDL2_TTF format is not available\n";
 
 // Setup and initialize the SDL2_Mixer library + Open Audio
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
     int flag_MIX = MIX_INIT_OGG;
     int MIX_Status = Mix_Init(flag_MIX);
     if ((MIX_Status & flag_MIX) != flag_MIX)
         std::cout <<"SDL2_Mixer format is not available\n";
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
 }
 
 void Application::initResMan() {

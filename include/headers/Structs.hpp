@@ -1,6 +1,11 @@
+/*******************************************************************//*
+ * Simple structs include static functions to manage more easily
+ *
+ *********************************************************************/
+
 #pragma once
 
-#include <SDL2/SDL_rect.h>
+// #include <SDL2/SDL_rect.h> //TODO
 #include <headers/ResourceManager.hpp>
 #include <headers/ECS/ECS.hpp>
 

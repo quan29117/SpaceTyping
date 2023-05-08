@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Implementation of the ResourceManager class.
+ *
+ *********************************************************************/
+
 #include <headers/ResourceManager.hpp>
 
 #include <iostream>

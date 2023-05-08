@@ -1,8 +1,14 @@
+/*******************************************************************//*
+ * Abstract ApplicationState class.
+ * ApplicationState subclasses must override the pure virtual methods 
+ * to satisfy the main game loop
+ *
+ *********************************************************************/
+
 #pragma once
 
-#include <stack>
 #include <vector>
-#include <SDL2/SDL_video.h>
+#include <SDL2/SDL_render.h>
 #include <headers/Mouse.hpp>
 #include <headers/Button.hpp>
 
@@ -46,21 +52,4 @@ public:
 	virtual void pollEvent() 	  = 0;
 	virtual void update()	 	  = 0;
 	virtual void render()	 	  = 0;
-};
-
-class StateManager {
-private:
-	std::stack <State*> m_states;
-	StateID m_currentState;
-
-public:
-	StateManager();
-	virtual ~StateManager();
-
-	bool isExit();
-	StateID getCurrentState();
-
-	void run();
-	void pushState(const StateID& stateID);
-	void changeCurrentState(const StateID& stateID);
 };

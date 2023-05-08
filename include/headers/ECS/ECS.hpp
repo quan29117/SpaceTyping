@@ -1,3 +1,10 @@
+/*******************************************************************//*
+ * Core component bag class for Entity Component System (ECS).
+ * Including EntityManager class, Entity class and Component Class
+ * 
+ * Reference: https://viblo.asia/p/entity-component-system-la-gi-oOVlYLPBZ8W
+ *********************************************************************/
+
 #pragma once
 
 #include <vector>
@@ -32,15 +39,20 @@ using ComponentArray = std::array <Component*, maxComponents>;
 constexpr unsigned short maxGroups = 16;
 using GroupBitSet = std::bitset <maxGroups>;
 
+//Abstract Component class
 class Component {
+private:
+
+
 public:
     Entity* entity;
 
-    virtual void init() {}
-    virtual void update() {}
-    virtual void render() {}
-
+    Component() {}
     virtual ~Component() {}
+
+    virtual void init()   = 0;
+    virtual void update() = 0;
+    virtual void render() = 0;
 };
 
 class Entity {

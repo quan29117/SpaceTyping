@@ -1,7 +1,14 @@
+/*******************************************************************//*
+ * ApplicationState class for the main menu screen.
+ * This state is entered at the beginning and can be navigated
+ * from the pause state.
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <SDL2/SDL_render.h>
-#include <headers/GameState/State.hpp>
+#include <headers/ApplicationState/State.hpp>
 
 class MenuState : public State {
 private:

@@ -1,7 +1,13 @@
+/*******************************************************************//*
+ * ApplicationState class for the pause screen.
+ * This state is entered after pressing ESC key at the PlayState.
+ * 
+ *********************************************************************/
+
 #pragma once
 
 #include <SDL2/SDL_render.h>
-#include <headers/GameState/State.hpp>
+#include <headers/ApplicationState/State.hpp>
 #include <headers/Mouse.hpp>
 #include <headers/Button.hpp>
 

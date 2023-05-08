@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Transform Component for Position and Movement.
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <headers/ECS/ECS.hpp>

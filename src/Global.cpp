@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Implementation of Global methods.
+ *
+ *********************************************************************/
+
 #include <headers/Global.hpp>
 
 std::string NumToString(const unsigned int& i_num) {

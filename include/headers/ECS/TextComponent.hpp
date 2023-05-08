@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Text Component for Enemy and Bullet Enemy to "destroy" those.
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <headers/ECS/SpriteComponent.hpp>

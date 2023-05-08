@@ -1,8 +1,15 @@
+/*******************************************************************//*
+ * Core Application class.
+ * Initializing Application elements, containing the main game loop
+ * and closing SDL
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <iostream>
 #include <headers/ResourceManager.hpp>
-#include <headers/GameState/State.hpp>
+#include <headers/ApplicationState/StateManager.hpp>
 
 class Application {
 private:

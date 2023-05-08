@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Implementation of the Mouse class.
+ *
+ *********************************************************************/
+
 #include <headers/Mouse.hpp>
 
 #include <SDL2/SDL_mouse.h>
@@ -8,10 +13,10 @@
 Mouse::Mouse() {
     m_texture = Application::getResourceManager()->getTexture(mouse);
 
-    m_rect.h = MOUSE_HEIGHT;
-    m_rect.w = MOUSE_WIDTH;
+    m_dest.w = MOUSE_WIDTH;
+    m_dest.h = MOUSE_HEIGHT;
 
-    m_point.h = m_point.w = 1;
+    m_point.w = m_point.h = MOUSE_POINT_SIZE;
 }
 
 SDL_FRect& Mouse::getPoint() {
@@ -21,10 +26,10 @@ SDL_FRect& Mouse::getPoint() {
 void Mouse::update() {
     int x, y;
     SDL_GetMouseState(&x, &y);
-    m_rect.x = m_point.x = x;
-    m_rect.y = m_point.y = y;
+    m_dest.x = m_point.x = x;
+    m_dest.y = m_point.y = y;
 }
 
 void Mouse::render() {
-    TextureManager::render(m_texture, nullptr, &m_rect);
+    TextureManager::render(m_texture, nullptr, &m_dest);
 }

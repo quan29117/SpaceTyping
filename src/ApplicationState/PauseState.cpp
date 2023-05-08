@@ -1,4 +1,9 @@
-#include <headers/GameState/PauseState.hpp>
+/*******************************************************************//*
+ * Implementation of the PauseState class.
+ *
+ *********************************************************************/
+
+#include <headers/ApplicationState/PauseState.hpp>
 
 #include <headers/Global.hpp>
 #include <headers/Application.hpp>

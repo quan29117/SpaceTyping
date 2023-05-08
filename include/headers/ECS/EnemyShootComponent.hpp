@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Component for Enemy Shooting to make gameplay a bit more difficult.
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <random>

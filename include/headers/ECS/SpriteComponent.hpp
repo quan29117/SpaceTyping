@@ -1,9 +1,13 @@
+/*******************************************************************//*
+ * Sprite Component for Graphic.
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <SDL2/SDL_render.h>
-#include <SDL2/SDL_rect.h>
-#include <headers/ECS/TransformComponent.hpp>
 #include <headers/ResourceManager.hpp>
+#include <headers/ECS/TransformComponent.hpp>
 
 class SpriteComponent : public Component {
 private:

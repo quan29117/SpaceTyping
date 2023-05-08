@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Implementation of the Entity class & EntityManager class.
+ *
+ *********************************************************************/
+
 #include <headers/ECS/ECS.hpp>
 #include <iostream>
 

@@ -1,3 +1,9 @@
+/*******************************************************************//*
+ * Class to archive and manage resources
+ * Including: images, fonts, musics and sounds
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <map>

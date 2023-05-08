@@ -1,9 +1,13 @@
+/*******************************************************************//*
+ * Implementation of "static methods" Structs.
+ *
+ *********************************************************************/
+
 #include <headers/Structs.hpp>
 
 #include <SDL2/SDL_image.h>
 #include <headers/Global.hpp>
 #include <headers/Application.hpp>
-
 #include <headers/ECS/SpriteComponent.hpp>
 
 //---------------------------------------Collision----------------------------------------

@@ -1,12 +1,16 @@
+/*******************************************************************//*
+ * ApplicationState class for the game.
+ * This state is entered after clicking the "Start" button
+ * from the menu state
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <random>
 #include <vector>
 #include <string>
-#include <SDL2/SDL_render.h>
-#include <headers/GameState/State.hpp>
-#include <headers/Button.hpp>
-
+#include <headers/ApplicationState/State.hpp>
 #include <headers/ECS/Components.hpp>
 
 class PlayState : public State {

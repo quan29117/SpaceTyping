@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Mouse class for interaction
+ *
+ *********************************************************************/
+
 #pragma once
 
 #include <SDL2/SDL_render.h>
@@ -6,7 +11,7 @@
 class Mouse {
 private:
     SDL_Texture* m_texture;
-    SDL_FRect m_rect, m_point;
+    SDL_FRect m_dest, m_point;
 
 public:
     Mouse();

@@ -1,7 +1,11 @@
+/*******************************************************************//*
+ * Implementation of the TextComponent class.
+ *
+ *********************************************************************/
+
 #include <headers/ECS/TextComponent.hpp>
 
 #include <headers/Application.hpp>
-#include <headers/Structs.hpp>
 #include <headers/Global.hpp>
 
 TextComponent::TextComponent(const FontID& id, const std::string& text, const bool& center, const bool& render, const SDL_Color& color)

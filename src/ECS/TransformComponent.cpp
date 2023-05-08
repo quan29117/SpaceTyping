@@ -1,3 +1,8 @@
+/*******************************************************************//*
+ * Implementation of the TransformComponent class.
+ *
+ *********************************************************************/
+
 #include <headers/ECS/TransformComponent.hpp>
 
 TransformComponent::TransformComponent(const Vector2D& start_pos, const bool& move, const Vector2D& dir, const float& speed) {
