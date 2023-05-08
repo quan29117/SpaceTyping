@@ -18,8 +18,5 @@ LINKER_FLAGS	=	-lmingw32 		\
 					-lSDL2_ttf 		\
 					-lSDL2			\
 
-COMPILER_FLAGS	=	-g -Wall -Wextra
-
-
 all:
-	$(CC) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(CPP_FILES) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
+	$(CC) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(CPP_FILES) $(LINKER_FLAGS) -o $(OBJ_NAME)

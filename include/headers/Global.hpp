@@ -13,7 +13,8 @@
 
 //------------------------------Constant Value------------------------------------
 //File path
-const std::string PATH_BEGIN        = "D:/Project/SDL/SpaceTyping/res/";
+//TODO : Edit the PATH_BEGIN for directing to folder "res" of this game
+const std::string PATH_BEGIN        = "./res/";
 const std::string PATH_BEGIN_IMAGE  = PATH_BEGIN + "img/";
 const std::string PATH_BEGIN_FONT   = PATH_BEGIN + "font/";
 const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
