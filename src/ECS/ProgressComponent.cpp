@@ -18,6 +18,8 @@ ProgressComponent::ProgressComponent() {
     m_font_id = yoster;
 }
 
+ProgressComponent::~ProgressComponent() {}
+
 void ProgressComponent::setScoreText() {
     SDL_Surface* surface = TTF_RenderText_Blended(Application::getResourceManager()->getFont(m_font_id), m_score_str.c_str(), SDL_Color {255, 255, 255, 255});
     m_score_texture = SDL_CreateTextureFromSurface(Application::getRenderer(), surface);

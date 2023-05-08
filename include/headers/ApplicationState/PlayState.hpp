@@ -34,7 +34,7 @@ private:
 
 //Gameplay																
     unsigned char m_char_input;
-	static EntityManager* s_manager;
+	static EntityManager* s_entityMan;
 
 //Functions
 	void initBackground() override;

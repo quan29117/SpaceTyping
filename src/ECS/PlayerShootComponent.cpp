@@ -18,6 +18,8 @@ PlayerShootComponent::PlayerShootComponent(unsigned char* char_input) {
 	s_bulletEnemyGroup = &PlayState::getEntityManager()->getEntitesByGroup(GBulletEnemy);
 }
 
+PlayerShootComponent::~PlayerShootComponent() {}
+
 void PlayerShootComponent::update() {
 	if (m_lock_enemy == nullptr && s_enemyGroup->size() > 0)
         for (auto& x : *s_enemyGroup) {

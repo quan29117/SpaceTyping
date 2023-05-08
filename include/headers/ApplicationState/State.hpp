@@ -41,8 +41,8 @@ protected:
 	void updateInteraction();
 	
 public:
-	State() {}
-	virtual ~State() {}
+	State();
+	virtual ~State();
 
 	bool isClosed();
 

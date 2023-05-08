@@ -15,6 +15,8 @@ EnemyShootComponent::EnemyShootComponent(std::mt19937* rng) {
     m_has_shot = false;
 }
 
+EnemyShootComponent::~EnemyShootComponent() {}
+
 Entity& createBulletEnemy(const char& ch, const Vector2D& start_pos, const Vector2D& direction) {
 	auto& p_bullet (PlayState::getEntityManager()->addEntity());
 
@@ -46,5 +48,4 @@ void EnemyShootComponent::shoot() {
             m_has_shot = true;
         }
     }
-    
 }

@@ -148,7 +148,10 @@ void Application::run() {
 
 void Application::clear() {
     s_resMan->clear();
-    
+    delete s_resMan;
+
+    delete s_stateMan;
+
     SDL_DestroyRenderer(s_renderer);
     s_renderer = nullptr;
 

@@ -8,6 +8,10 @@
 #include <SDL2/SDL_mouse.h>
 #include <headers/Application.hpp>
 
+State::State() {}
+
+State::~State() {}
+
 void State::initState(const StateID& stateID) {
 	m_id = stateID;
 	m_close = m_pause = false;

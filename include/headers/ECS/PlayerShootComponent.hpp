@@ -21,7 +21,7 @@ private:
 
 public: 
     PlayerShootComponent(unsigned char* char_input);
-    virtual ~PlayerShootComponent() {}
+    virtual ~PlayerShootComponent();
 
     void init()   override {}
     void update() override;

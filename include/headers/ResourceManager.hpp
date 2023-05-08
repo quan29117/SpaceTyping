@@ -53,8 +53,8 @@ private:
     std::map <SoundID, Mix_Chunk*> sounds;
 
 public:
-    ResourceManager() {}
-    virtual ~ResourceManager() {}
+    ResourceManager();
+    virtual ~ResourceManager();
 
     void addTexture(const TextureID& id, const std::string& fileName);
     SDL_Texture* getTexture(const TextureID& id);

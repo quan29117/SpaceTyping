@@ -24,9 +24,8 @@ private:
     void setPos();
 
 public:
-    TextComponent() = default;
     TextComponent(const FontID& id, const std::string& text, const bool& center = true, const bool& render = true, const SDL_Color& color = SDL_Color {255, 255, 255, 255});
-    virtual ~TextComponent() {}
+    virtual ~TextComponent();
 
     char getFirstChar();
     char getCharNeedTyped();

@@ -29,7 +29,7 @@ private:
 
 public:
     ProgressComponent();
-    virtual ~ProgressComponent() {};
+    virtual ~ProgressComponent();
 
     void init()   override;
     void update() override {}

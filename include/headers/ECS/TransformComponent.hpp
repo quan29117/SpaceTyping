@@ -16,7 +16,7 @@ private:
     
 public:
     TransformComponent(const Vector2D& start_pos, const bool& move = false, const Vector2D& dir = Vector2D {0, 0}, const float& speed = 0);
-    virtual ~TransformComponent() {}
+    virtual ~TransformComponent();
 
     Vector2D getPosition();
 

@@ -9,6 +9,10 @@
 #include <headers/Structs.hpp>
 #include <headers/Global.hpp>
 
+ResourceManager::ResourceManager() {}
+
+ResourceManager::~ResourceManager() {}
+
 void ResourceManager::addTexture(const TextureID& id, const std::string& fileName) {
     if (textures.find(id) == textures.end())
         textures[id] = TextureManager::loadTexture(fileName);

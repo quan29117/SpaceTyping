@@ -16,7 +16,7 @@ private:
 
 public:
     EnemyShootComponent(std::mt19937* rng);
-    virtual ~EnemyShootComponent() {}
+    virtual ~EnemyShootComponent();
 
     void init()   override {}
     void update() override {}

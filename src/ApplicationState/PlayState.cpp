@@ -12,7 +12,7 @@
 #include <headers/Structs.hpp>
 
 //Define static members and Player as the first Entity
-EntityManager* PlayState::s_manager = new EntityManager;
+EntityManager* PlayState::s_entityMan = new EntityManager;
 Entity& m_player = PlayState::getEntityManager()->addEntity();
 
 void PlayState::initBackground() {
@@ -62,12 +62,10 @@ PlayState::PlayState()
 	initPlayer();
 }
 
-PlayState::~PlayState() {
-	
-}
+PlayState::~PlayState() {}
 
 EntityManager* PlayState::getEntityManager() {
-	return s_manager;
+	return s_entityMan;
 }
 
 void PlayState::run()
@@ -107,7 +105,7 @@ void PlayState::update() {
 	if (!m_pause) {
 		updateInteraction();
 
-		s_manager->update();
+		s_entityMan->update();
 
 		spawnEnemy();
 		shooting();
@@ -125,7 +123,7 @@ void PlayState::render() {
 	if (!m_pause) {
 		TextureManager::render(m_bg_texture, &m_camera, &m_bg_dest);
 		TextureManager::render(m_board_texture, nullptr, &m_board_dest);
-		s_manager->render();
+		s_entityMan->render();
 		m_mouse.render();
 	}
 

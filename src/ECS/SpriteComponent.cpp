@@ -18,6 +18,8 @@ SpriteComponent::SpriteComponent(const TextureID& id, const SDL_Rect& src, const
     m_animated = animated;
 }
 
+SpriteComponent::~SpriteComponent() {}
+
 SDL_FRect SpriteComponent::getHitBox() {
     return m_dest;
 }

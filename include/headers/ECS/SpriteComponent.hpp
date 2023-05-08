@@ -21,7 +21,7 @@ private:
 
 public:
     SpriteComponent(const TextureID& id, const SDL_Rect& src, const Vector2D& destSize, const bool& animated = false);
-    virtual ~SpriteComponent() {}
+    virtual ~SpriteComponent();
 
     SDL_FRect getHitBox();
 

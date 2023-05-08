@@ -13,6 +13,8 @@ TransformComponent::TransformComponent(const Vector2D& start_pos, const bool& mo
     m_velocity  = (m_direction - m_position).unitVector();
 }
 
+TransformComponent::~TransformComponent() {}
+
 Vector2D TransformComponent::getPosition() {
     return m_position;
 }

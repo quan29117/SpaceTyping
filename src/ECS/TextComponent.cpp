@@ -9,8 +9,10 @@
 #include <headers/Global.hpp>
 
 TextComponent::TextComponent(const FontID& id, const std::string& text, const bool& center, const bool& render, const SDL_Color& color)
-    : m_font_id (id), m_text_display (text), m_text_ref (text), m_center (center), m_render (render), m_color (color)
+    : m_render (render), m_center (center), m_text_display (text), m_text_ref (text), m_font_id (id), m_color (color)
 {}
+
+TextComponent::~TextComponent() {}
 
 void TextComponent::setText() {
     SDL_Surface* surface = TTF_RenderText_Blended(Application::getResourceManager()->getFont(m_font_id), m_text_display.c_str(), m_color);

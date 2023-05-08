@@ -19,6 +19,8 @@ Mouse::Mouse() {
     m_point.w = m_point.h = MOUSE_POINT_SIZE;
 }
 
+Mouse::~Mouse() {}
+
 SDL_FRect& Mouse::getPoint() {
     return m_point;
 }
