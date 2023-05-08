@@ -9,7 +9,7 @@ CC 	= 	g++ -std=c++17
 
 INCLUDE_PATHS	=	-I include
 
-LIBRARY_PATHS	=	-L lib -static-libgcc -static-libstdc++
+LIBRARY_PATHS	=	-L lib -lwinpthread -static-libgcc -static-libstdc++
 
 LINKER_FLAGS	=	-lmingw32 		\
 					-lSDL2main 		\
