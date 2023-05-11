@@ -34,7 +34,7 @@ private:
 //Gameplay																
     unsigned char m_char_input;
 	static EntityManager* s_entityMan;
-	static CollisionManager* s_collisionMan;
+	CollisionManager* m_collisionMan;
 	Entity* m_player;
 
 //Functions
@@ -44,11 +44,11 @@ private:
 	void initTime();
 	void initWordList();
 	void initPlayer();
+	void initCollsionManager();
 
 	std::string generatedWords();
 	void spawnEnemy();
 	void shooting();
-	void updateCollision();
 	void scrollBackground();
 	void resetCharInput();
 
@@ -62,7 +62,6 @@ public:
     virtual ~PlayState();
 
 	static EntityManager* 	 getEntityManager();
-	static CollisionManager* getCollisionManager();
 
     void run()		 override;
 };

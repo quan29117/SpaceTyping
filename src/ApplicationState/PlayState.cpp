@@ -13,7 +13,6 @@
 
 //Define static members
 EntityManager* 	  PlayState::s_entityMan    = new EntityManager;
-CollisionManager* PlayState::s_collisionMan = new CollisionManager;
 
 void PlayState::initBackground() {
 	m_bg_texture = Application::getResourceManager()->getTexture(play_bg);
@@ -53,6 +52,10 @@ void PlayState::initPlayer() {
 	m_player->addComponent<PlayerCollisionComponent>(PLAYER_SIZE);
 }
 
+void PlayState::initCollsionManager() {
+	m_collisionMan = new CollisionManager(m_player);
+}
+
 PlayState::PlayState()
 	: m_rng(m_rd()), m_char_input ('\0')
 {
@@ -61,6 +64,7 @@ PlayState::PlayState()
 	initTime();
 	initWordList();
 	initPlayer();
+	initCollsionManager();
 }
 
 PlayState::~PlayState() {
@@ -69,10 +73,6 @@ PlayState::~PlayState() {
 
 EntityManager* PlayState::getEntityManager() {
 	return s_entityMan;
-}
-
-CollisionManager* PlayState::getCollisionManager() {
-	return s_collisionMan;
 }
 
 void PlayState::run()
@@ -111,12 +111,13 @@ void PlayState::pollEvent() {
 void PlayState::update() {
 	if (!m_pause) {
 		updateInteraction();
-
+		
+		m_collisionMan->update();
 		s_entityMan->update();
-		s_collisionMan->update();
-		// s_entityMan->refresh();
+		
+		s_entityMan->refresh();
 
-		if (m_char_input == 'm') spawnEnemy();
+		spawnEnemy();
 		shooting();
 		
 		scrollBackground();
@@ -204,10 +205,6 @@ void PlayState::shooting() {
 	m_player->getComponent<PlayerShootComponent>().shoot();
 	for (auto& enemy : PlayState::getEntityManager()->getEntitesByGroup(GEnemy))
 		enemy->getComponent<EnemyShootComponent>().shoot();
-}
-
-void PlayState::updateCollision() {
-	s_collisionMan->update();
 }
 
 void PlayState::scrollBackground() {

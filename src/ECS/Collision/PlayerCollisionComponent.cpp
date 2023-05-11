@@ -11,8 +11,6 @@
 PlayerCollisionComponent::PlayerCollisionComponent(const Vector2D& destSize) {
     m_collision.w = destSize.x;
     m_collision.h = destSize.y;
-
-    m_destroyed = false;
 }
 
 PlayerCollisionComponent::~PlayerCollisionComponent() {
@@ -32,9 +30,6 @@ void PlayerCollisionComponent::init() {
     if (entity->hasComponent<ProgressComponent>())
         progress = &entity->getComponent<ProgressComponent>();
     else std::cout << "No ProgressComponent in Player\n";
-
-//Add collision to CollisionManager
-    PlayState::getCollisionManager()->addCollision(player_collision, this);
 }
 
 void PlayerCollisionComponent::onHit(const CollisionID& id) {}

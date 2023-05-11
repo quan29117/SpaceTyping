@@ -10,12 +10,10 @@
 EnemyCollisionComponent::EnemyCollisionComponent(const Vector2D& destSize) {
     m_collision.w = destSize.x;
     m_collision.h = destSize.y;
-
-    m_destroyed = false;
 }
 
 EnemyCollisionComponent::~EnemyCollisionComponent() {
-
+    std::cout << "Delete enemy\n";
 }
 
 void EnemyCollisionComponent::init() {
@@ -30,17 +28,12 @@ void EnemyCollisionComponent::init() {
     if (entity->hasComponent<EnemyTextComponent>())
         text = &entity->getComponent<EnemyTextComponent>();
     else std::cout << "No TextComponent in Enemy\n";
-
-//Add collision to CollisionManager
-    PlayState::getCollisionManager()->addCollision(enemy_collision, this);
 }
 
 void EnemyCollisionComponent::onHit(const CollisionID& id) {
     switch(id) {
         case player_collision:
-            m_destroyed = true;
             entity->destroy();
-            std::cout << "Enemy " << m_destroyed << "\n";
             break;
 
         case BP_E_collision:

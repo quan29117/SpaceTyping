@@ -10,6 +10,7 @@
 #include <headers/ECS/Text/BulletPlayerTextComponent.hpp>
 #include <headers/ECS/Text/EnemyTextComponent.hpp>
 #include <headers/ECS/Text/BulletEnemyTextComponent.hpp>
+#include <headers/ECS/Collision/BulletPlayerCollisionComponent.hpp>
 #include <headers/ECS/ProgressComponent.hpp>
 
 PlayerShootComponent::PlayerShootComponent(unsigned char* char_input) {
@@ -52,6 +53,7 @@ Entity& PlayerShootComponent::createBulletPlayer(const EntityGroup& EG, const ch
 
 	std::string str; str += ch;
 	p_bullet.addComponent<BulletPlayerTextComponent>(str);
+	p_bullet.addComponent<BulletPlayerCollisionComponent>(BULLET_PLAYER_SIZE, BP_E_collision);
 
 	p_bullet.addGroup(EG);
 

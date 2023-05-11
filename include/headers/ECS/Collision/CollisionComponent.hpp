@@ -27,23 +27,22 @@ class CollisionComponent : public Component {
 protected:
     TransformComponent* transform;
     SDL_FRect m_collision;
-    bool m_destroyed;
     
 public:
     CollisionComponent();
     virtual ~CollisionComponent();
 
     SDL_FRect getHitBox();
-    bool isDestroyed();
-
+ 
     void init()   override;
     void update() override;
     void render() override;
-
-    void destroy();
 
     virtual void onHit(const CollisionID& id) = 0;
 
 //This abstract method is only for PlayerCollisionComponent as need to get char_count
     virtual void onHitP(Entity* enemy) = 0;
+
+    
+    void momomo() {std::cout << "HAHAHA ";}
 };

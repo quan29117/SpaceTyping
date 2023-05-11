@@ -6,105 +6,55 @@
 #include <headers/ApplicationManager/CollisionManager.hpp>
 
 #include <headers/Math/Collision.hpp>
-//Collision
-//Text
+#include <headers/ECS/Collision/PlayerCollisionComponent.hpp>
+#include <headers/ECS/Collision/EnemyCollisionComponent.hpp>
+#include <headers/ECS/Collision/BulletPlayerCollisionComponent.hpp>
+#include <headers/ECS/Collision/BulletEnemyCollisionComponent.hpp>
 #include <headers/ECS/ProgressComponent.hpp>
 
-CollisionManager::CollisionManager() {
-    player = nullptr;
+CollisionManager::CollisionManager(Entity* p) {
+    player = p;
+
+    enemy_group = &p->getManager().getEntitesByGroup(GEnemy);
+    BP_E_group  = &p->getManager().getEntitesByGroup(GBulletPlayer_E);
+    BP_B_group  = &p->getManager().getEntitesByGroup(GBulletPlayer_B);
+    BE_group    = &p->getManager().getEntitesByGroup(GBulletEnemy);
 }
 
-CollisionManager::~CollisionManager() {
-
-}
+CollisionManager::~CollisionManager() {}
 
 void CollisionManager::update() {
-    CollisionPlayer(enemy_group);
-    // CollisionPlayer(BE_group);
-    // CollisionBulletPlayer(BP_E_collision);
-    // CollisionBulletPlayer(BP_E_collision);
-
-    refresh(enemy_group);
+    CollisionPlayer();
+    CollisionBulletPlayer();
 }
 
-void CollisionManager::refresh(CollisionGroup& group) {
-    group.erase(std::remove_if(group.begin(), group.end(),
-        [](CollisionComponent* component)
-    {
-        return component->isDestroyed();
-    }),
-        group.end());
-}
-
-void CollisionManager::addCollision(const CollisionID& id, CollisionComponent* component) {
-    switch (id) {
-        case player_collision:
-            if (player == nullptr)
-                player = component;
-            else std::cout << "PlayerCollisionComponent has been existed in CollisionManager\n";
-            break;
-
-        case enemy_collision:
-            enemy_group.push_back(component);
-            break;
-
-        case BP_E_collision:
-            BP_E_group.push_back(component);
-            break;
-
-        case BP_B_collision:
-            BP_B_group.push_back(component);
-            break;
-
-        case BE_collision:
-            BE_group.push_back(component);
-            break;
-    }
-}
-
-void CollisionManager::CollisionPlayer(CollisionGroup& group) {
-    for (CollisionComponent* e : group) {
-        if (checkCollisionBoundingRect(player, e)) {
-            player->onHitP(e->entity);
-			e->onHit(player_collision);
+void CollisionManager::CollisionPlayer() {
+    for (Entity* e : *enemy_group) {
+        if (Collision::AABB(player->getComponent<PlayerCollisionComponent>().getHitBox(), 
+                            e->getComponent<EnemyCollisionComponent>().getHitBox())) 
+        {
+            player->getComponent<PlayerCollisionComponent>().onHitP(e);
+			e->getComponent<EnemyCollisionComponent>().onHit(player_collision);
         }
     }
 }
 
-void CollisionManager::CollisionBulletPlayer(const CollisionID& id_enemy) {
-    CollisionGroup groupSrc, groupDest;
-    CollisionID id_bullet_player;
-
-    switch (id_enemy) {
-        case enemy_collision:
-            groupSrc  = BP_E_group;
-            groupDest = enemy_group;
-            id_bullet_player = BP_E_collision;
-            break;
-        
-        case BE_collision:
-            groupSrc  = BP_B_group;
-            groupDest = BE_group;
-            id_bullet_player = BP_B_collision;
-            break;
-        
-        default:
-            break;
-    }
-
-    for (CollisionComponent* eSrc : groupSrc) 
-        for (CollisionComponent* eDest : groupDest)
-            if (checkCollisionBoundingRect(eSrc, eDest)) {
-                eSrc->onHit(id_enemy);
-                eDest->onHit(id_bullet_player);
+void CollisionManager::CollisionBulletPlayer() {
+    for (Entity* eSrc : *BP_E_group) 
+        for (Entity* eDest : *enemy_group)
+            if (Collision::AABB(eSrc->getComponent<BulletPlayerCollisionComponent>().getHitBox(), 
+                                eDest->getComponent<EnemyCollisionComponent>().getHitBox()))
+            {
+                eSrc->getComponent<BulletPlayerCollisionComponent>().onHit(enemy_collision);
+                eDest->getComponent<EnemyCollisionComponent>().onHit(BP_E_collision);
             }
-}
-
-bool CollisionManager::checkCollisionBoundingRect(CollisionComponent* checkSrc, CollisionComponent* checkDest) {
-    SDL_FRect srcRect = checkSrc->getHitBox();
-    SDL_FRect destRect = checkDest->getHitBox();
-
-    if (Collision::AABB(srcRect, destRect))
-        return true;
-    return false;
+    
+    for (Entity* eSrc : *BP_B_group) 
+        for (Entity* eDest : *BE_group)
+            if (Collision::AABB(eSrc->getComponent<BulletPlayerCollisionComponent>().getHitBox(),
+                                eDest->getComponent<BulletEnemyCollisionComponent>().getHitBox()))
+            {
+                // eSrc->getComponent<BulletPlayerCollisionComponent>().onHit(BE_collision);
+                // eDest->getComponent<BulletEnemyCollisionComponent>().onHit(BP_B_collision);
+            }
 }

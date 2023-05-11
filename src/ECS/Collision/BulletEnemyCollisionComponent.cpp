@@ -10,8 +10,6 @@
 BulletEnemyCollisionComponent::BulletEnemyCollisionComponent(const Vector2D& destSize) {
     m_collision.w = destSize.x;
     m_collision.h = destSize.y;
-
-    m_destroyed = false;
 }
 
 BulletEnemyCollisionComponent::~BulletEnemyCollisionComponent() {}
@@ -29,16 +27,12 @@ void BulletEnemyCollisionComponent::init() {
     if (entity->hasComponent<BulletEnemyTextComponent>())
         text = &entity->getComponent<BulletEnemyTextComponent>();
     else std::cout << "No TextComponent in BulletEnemy\n";
-
-//Add collision to CollisionManager
-    PlayState::getCollisionManager()->addCollision(BE_collision, this);
 }
 
 void BulletEnemyCollisionComponent::onHit(const CollisionID& id) {
     switch (id)
     {
     case player_collision:
-        m_destroyed = true;
         entity->destroy();
         break;
     

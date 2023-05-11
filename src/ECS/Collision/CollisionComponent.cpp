@@ -13,10 +13,6 @@ SDL_FRect CollisionComponent::getHitBox() {
     return m_collision;
 }
 
-bool CollisionComponent::isDestroyed() {
-    return m_destroyed;
-}
-
 void CollisionComponent::init() {}
 
 void CollisionComponent::update() {
@@ -25,7 +21,3 @@ void CollisionComponent::update() {
 }
 
 void CollisionComponent::render () {}
-
-void CollisionComponent::destroy() {
-    m_destroyed = true;
-}

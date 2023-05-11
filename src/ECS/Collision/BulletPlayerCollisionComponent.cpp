@@ -11,7 +11,6 @@ BulletPlayerCollisionComponent::BulletPlayerCollisionComponent(const Vector2D& d
     m_collision.w = destSize.x;
     m_collision.h = destSize.y;
 
-    m_destroyed = false;
     m_id = id;
 }
 
@@ -30,9 +29,6 @@ void BulletPlayerCollisionComponent::init() {
     if (entity->hasComponent<BulletPlayerTextComponent>())
         text = &entity->getComponent<BulletPlayerTextComponent>();
     else std::cout << "No TextComponent in BulletPlayer\n";
-
-//Add collision to CollisionManager
-    PlayState::getCollisionManager()->addCollision(m_id, this);
 }
 
 void BulletPlayerCollisionComponent::onHit(const CollisionID& id) {
