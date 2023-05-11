@@ -3,9 +3,9 @@
  *
  *********************************************************************/
 
-#include <headers/ApplicationState/StateManager.hpp>
+#include <headers/ApplicationManager/StateManager.hpp>
 
-#include <headers/Structs.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
 #include <headers/ApplicationState/MenuState.hpp>
 #include <headers/ApplicationState/PlayState.hpp>
 #include <headers/ApplicationState/PauseState.hpp>

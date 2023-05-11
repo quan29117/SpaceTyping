@@ -9,11 +9,11 @@
 #include <headers/Application.hpp>
 #include <headers/Global.hpp>
 #include <headers/ECS/Components.hpp>
-#include <headers/Structs.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
-//Define static members and Player as the first Entity
-EntityManager* PlayState::s_entityMan = new EntityManager;
-Entity& m_player = PlayState::getEntityManager()->addEntity();
+//Define static members
+EntityManager* 	  PlayState::s_entityMan    = new EntityManager;
+CollisionManager* PlayState::s_collisionMan = new CollisionManager;
 
 void PlayState::initBackground() {
 	m_bg_texture = Application::getResourceManager()->getTexture(play_bg);
@@ -45,11 +45,12 @@ void PlayState::initWordList() {
 }
 
 void PlayState::initPlayer() {
-	m_player.addComponent<TransformComponent>(PLAYER_POS);
-	m_player.addComponent<SpriteComponent>(player, PLAYER_SRC, PLAYER_SIZE, true);
-	// m_player.addComponent<ColliderComponent>("player");
-	m_player.addComponent<PlayerShootComponent>(&m_char_input);
-	m_player.addComponent<ProgressComponent>();
+	m_player = &s_entityMan->addEntity();
+	m_player->addComponent<TransformComponent>(PLAYER_POS);
+	m_player->addComponent<SpriteComponent>(player, PLAYER_SRC, PLAYER_SIZE, true);
+	m_player->addComponent<PlayerShootComponent>(&m_char_input);
+	m_player->addComponent<ProgressComponent>();
+	m_player->addComponent<PlayerCollisionComponent>(PLAYER_SIZE);
 }
 
 PlayState::PlayState()
@@ -62,10 +63,16 @@ PlayState::PlayState()
 	initPlayer();
 }
 
-PlayState::~PlayState() {}
+PlayState::~PlayState() {
+	s_entityMan->clear();
+}
 
 EntityManager* PlayState::getEntityManager() {
 	return s_entityMan;
+}
+
+CollisionManager* PlayState::getCollisionManager() {
+	return s_collisionMan;
 }
 
 void PlayState::run()
@@ -106,10 +113,12 @@ void PlayState::update() {
 		updateInteraction();
 
 		s_entityMan->update();
+		s_collisionMan->update();
+		// s_entityMan->refresh();
 
-		spawnEnemy();
+		if (m_char_input == 'm') spawnEnemy();
 		shooting();
-		updateCollision();
+		
 		scrollBackground();
 		resetCharInput();
 		
@@ -149,8 +158,9 @@ Entity& createEnemy(std::mt19937& m_rng, const std::string& text) {
 											 PLAYER_POS,
 											 ENEMY_SPEED);
 	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_SRC, ENEMY_SIZE);
-	e_enemy.addComponent<TextComponent>(yoster, text, false);
+	e_enemy.addComponent<EnemyTextComponent>(text, yoster);
 	e_enemy.addComponent<EnemyShootComponent>(&m_rng);
+	e_enemy.addComponent<EnemyCollisionComponent>(ENEMY_SIZE);
 
 	e_enemy.addGroup(GEnemy);
 
@@ -191,48 +201,13 @@ void PlayState::spawnEnemy() {
 }
 
 void PlayState::shooting() {
-	m_player.getComponent<PlayerShootComponent>().shoot();
+	m_player->getComponent<PlayerShootComponent>().shoot();
 	for (auto& enemy : PlayState::getEntityManager()->getEntitesByGroup(GEnemy))
 		enemy->getComponent<EnemyShootComponent>().shoot();
 }
 
-void collisionPlayer(const EntityGroup& group) {
-	/**
-		Collision between Player and Enemy & BulletEnemy
-	  */
-
-	for (auto& x : PlayState::getEntityManager()->getEntitesByGroup(group)) {
-		if (Collision::AABB(m_player, *x)) {
-			int char_count = x->getComponent<TextComponent>().remainingSize();
-			m_player.getComponent<ProgressComponent>().decreaseScore(char_count * 10);
-			m_player.getComponent<ProgressComponent>().increaseWT(char_count);
-			x->destroy();
-		}
-	}
-}
-
-void collisionBulletPlayer(const EntityGroup& bulletGroup, const EntityGroup& enemyGroup) {
-	/**
-		Collision between BulletPlayer and Enemy / BulletEnemy
-	  */
-
-	for (auto& bullet : PlayState::getEntityManager()->getEntitesByGroup(bulletGroup)) {
-		for (auto& x : PlayState::getEntityManager()->getEntitesByGroup(enemyGroup)) {
-			if (bullet->getComponent<TextComponent>().getFirstChar() == x->getComponent<TextComponent>().getFirstChar()
-				&& Collision::AABB(*bullet, *x))
-			{
-				bullet->destroy();
-				x->getComponent<TextComponent>().Shot();
-			}
-		}
-	}
-}
-
 void PlayState::updateCollision() {
-	collisionPlayer(GEnemy);
-	collisionPlayer(GBulletEnemy);
-	collisionBulletPlayer(GBulletPlayer_E, GEnemy);
-	collisionBulletPlayer(GBulletPlayer_B, GBulletEnemy);
+	s_collisionMan->update();
 }
 
 void PlayState::scrollBackground() {
@@ -245,7 +220,7 @@ void PlayState::scrollBackground() {
 
 void PlayState::resetCharInput() {
 	if (m_char_input != '\0') {
-		m_player.getComponent<ProgressComponent>().increaseWT(1);
+		m_player->getComponent<ProgressComponent>().increaseWT(1);
 		m_char_input = '\0';
 	}
 }

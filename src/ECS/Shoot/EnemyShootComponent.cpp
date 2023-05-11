@@ -3,12 +3,11 @@
  *
  *********************************************************************/
 
-#include <headers/ECS/EnemyShootComponent.hpp>
+#include <headers/ECS/Shoot/EnemyShootComponent.hpp>
 
 #include <headers/Global.hpp>
-#include <headers/Structs.hpp>
-#include <headers/ApplicationState/PlayState.hpp>
-#include <headers/ECS/TextComponent.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
+#include <headers/ECS/Text/BulletEnemyTextComponent.hpp>
 
 EnemyShootComponent::EnemyShootComponent(std::mt19937* rng) {
     s_rng = rng;
@@ -17,8 +16,14 @@ EnemyShootComponent::EnemyShootComponent(std::mt19937* rng) {
 
 EnemyShootComponent::~EnemyShootComponent() {}
 
-Entity& createBulletEnemy(const char& ch, const Vector2D& start_pos, const Vector2D& direction) {
-	auto& p_bullet (PlayState::getEntityManager()->addEntity());
+void EnemyShootComponent::init() {}
+
+void EnemyShootComponent::update() {}
+
+void EnemyShootComponent::render() {}
+
+Entity& EnemyShootComponent::createBulletEnemy(const char& ch, const Vector2D& start_pos, const Vector2D& direction) {
+	auto& p_bullet (entity->getManager().addEntity());
 
 	p_bullet.addComponent<TransformComponent>(start_pos,
                                               true,
@@ -27,7 +32,7 @@ Entity& createBulletEnemy(const char& ch, const Vector2D& start_pos, const Vecto
 	p_bullet.addComponent<SpriteComponent>(bullet_enemy, BULLET_SRC, BULLET_ENEMY_SIZE);
 
 	std::string str;	str += ch;
-	p_bullet.addComponent<TextComponent>(yoster, str, true, true, SDL_Color {255, 0, 0, 255});
+	p_bullet.addComponent<BulletEnemyTextComponent>(str, yoster);
 
 	p_bullet.addGroup(GBulletEnemy);
 

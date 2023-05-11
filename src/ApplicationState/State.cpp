@@ -31,5 +31,5 @@ bool State::isClosed() {
 void State::checkCurrentState() {
 	if (m_id == Application::getStateManager()->getCurrentState())
 		m_close = m_pause = false;
-	else m_close = true;
+	else m_close = m_pause = true;
 }

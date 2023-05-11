@@ -7,7 +7,7 @@
 
 #include <headers/Global.hpp>
 #include <headers/Application.hpp>
-#include <headers/Structs.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
 void PauseState::initBackground() {
     m_bg_texture = Application::getResourceManager()->getTexture(pause_bg);
@@ -20,10 +20,10 @@ void PauseState::initBackground() {
 void PauseState::initButtons() {
     m_buttons.push_back (new Button (SDL_Rect {0, 100, 400, 100},
                                      SDL_Rect {400, 100, 400, 100},
-                                     SDL_FRect {580, 400, 400, 100}));
+                                     SDL_FRect {760, 550, 400, 100}));
     m_buttons.push_back (new Button (SDL_Rect {100, 200, 200, 100},
                                      SDL_Rect {500, 200, 200, 100},
-                                     SDL_FRect {660, 550, 200, 100}));
+                                     SDL_FRect {860, 750, 200, 100}));
 }
 
 PauseState::PauseState() {

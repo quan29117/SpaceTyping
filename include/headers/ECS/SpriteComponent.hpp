@@ -5,8 +5,7 @@
 
 #pragma once
 
-#include <SDL2/SDL_render.h>
-#include <headers/ResourceManager.hpp>
+#include <headers/ApplicationManager/ResourceManager.hpp>
 #include <headers/ECS/TransformComponent.hpp>
 
 class SpriteComponent : public Component {
@@ -23,7 +22,7 @@ public:
     SpriteComponent(const TextureID& id, const SDL_Rect& src, const Vector2D& destSize, const bool& animated = false);
     virtual ~SpriteComponent();
 
-    SDL_FRect getHitBox();
+    SDL_FRect getRect();
 
     void init()   override;
     void update() override;

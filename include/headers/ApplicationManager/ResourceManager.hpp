@@ -1,5 +1,5 @@
 /*******************************************************************//*
- * Class to archive and manage resources
+ * Class for archiving and managing resources
  * Including: images, fonts, musics and sounds
  *
  *********************************************************************/

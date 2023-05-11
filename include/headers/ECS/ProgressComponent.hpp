@@ -5,9 +5,8 @@
 
 #pragma once
 
-#include <SDL2/SDL_render.h>
 #include <headers/ECS/ECS.hpp>
-#include <headers/ResourceManager.hpp>
+#include <headers/ApplicationManager/ResourceManager.hpp>
 
 class ProgressComponent : public Component {
 private:
@@ -32,7 +31,7 @@ public:
     virtual ~ProgressComponent();
 
     void init()   override;
-    void update() override {}
+    void update() override;
     void render() override;
 
     void increaseScore(const std::size_t& score);

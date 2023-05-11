@@ -8,10 +8,9 @@
 #pragma once
 
 #include <random>
-#include <vector>
-#include <string>
 #include <headers/ApplicationState/State.hpp>
-#include <headers/ECS/Components.hpp>
+#include <headers/ECS/ECS.hpp>
+#include <headers/ApplicationManager/CollisionManager.hpp>
 
 class PlayState : public State {
 private:
@@ -35,6 +34,8 @@ private:
 //Gameplay																
     unsigned char m_char_input;
 	static EntityManager* s_entityMan;
+	static CollisionManager* s_collisionMan;
+	Entity* m_player;
 
 //Functions
 	void initBackground() override;
@@ -60,7 +61,8 @@ public:
     PlayState();
     virtual ~PlayState();
 
-	static EntityManager* getEntityManager();
+	static EntityManager* 	 getEntityManager();
+	static CollisionManager* getCollisionManager();
 
     void run()		 override;
 };

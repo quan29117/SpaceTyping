@@ -1,5 +1,6 @@
 # SPACETYPING
 
+## Preview
 
 ## Installing
 >**For Linux, please follow [this link](https://www.paulbarrick.com/game-devlopment/game-development-on-linux-using-vscode-sdl2-and-opengl/) to install.**
@@ -16,8 +17,6 @@
 
 **Step 1:** **Download** and **extract** source code
 
-**Step 2:** Open file **Global.hpp** in folder **include/headers**, change the `PATH_BEGIN` at line **17**
+**Step 2:** Open **Command Prompt** (cmd), **direct** to the extracted folder and type command `mingw32-make` (Window) or `make.sh` (Linux)
 
-**Step 3:** Open **Command Prompt** (cmd), **direct** to the extracted folder and type command `mingw32-make` (Window) or `make` (Linux)
-
-**Step 4:** Run game by typing command `SpaceTyping`
+**Step 3:** Run game by typing command `SpaceTyping`

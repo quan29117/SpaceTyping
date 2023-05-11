@@ -3,11 +3,11 @@
  *
  *********************************************************************/
 
-#include <headers/Button.hpp>
+#include <headers/UI/Button.hpp>
 
 #include <headers/Global.hpp>
 #include <headers/Application.hpp>
-#include <headers/Structs.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
 Button::Button(const SDL_Rect& src_idle, const SDL_Rect& src_hover , const SDL_FRect& dest) {
     m_texture = Application::getResourceManager()->getTexture(button);

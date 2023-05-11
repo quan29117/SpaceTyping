@@ -1,9 +1,15 @@
 OBJ_NAME	=	SpaceTyping
 
-CPP_FILES	=	main.cpp					\
-				src/*.cpp					\
-				src/ECS/*.cpp				\
-				src/ApplicationState/*.cpp	\
+CPP_FILES	=	main.cpp						\
+				src/*.cpp						\
+				src/ECS/*.cpp					\
+				src/ECS/Collision/*.cpp			\
+				src/ECS/Text/*.cpp				\
+				src/ECS/Shoot/*.cpp				\
+				src/ApplicationState/*.cpp		\
+				src/ApplicationManager/*.cpp	\
+				src/UI/*.cpp					\
+				src/Math/*.cpp					\
 
 CC 	= 	g++ -std=c++17
 
@@ -20,3 +26,4 @@ LINKER_FLAGS	=	-lmingw32 		\
 
 all:
 	$(CC) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(CPP_FILES) $(LINKER_FLAGS) -o $(OBJ_NAME)
+	$(OBJ_NAME)

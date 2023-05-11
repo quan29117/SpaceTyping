@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <headers/Mouse.hpp>
+#include <headers/UI/Mouse.hpp>
 
 class Button {
 private:

@@ -56,6 +56,8 @@ void ProgressComponent::init() {
     setPos();
 }
 
+void ProgressComponent::update() {}
+
 void ProgressComponent::render() {
     SDL_RenderCopy(Application::getRenderer(), m_score_texture, nullptr, &m_score_dest);
     SDL_RenderCopy(Application::getRenderer(), m_WT_texture, nullptr, &m_WT_dest);

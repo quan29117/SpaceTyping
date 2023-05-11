@@ -6,7 +6,7 @@
 #pragma once
 
 #include <headers/ECS/ECS.hpp>
-#include <headers/Vector2D.hpp>
+#include <headers/Math/Vector2D.hpp>
 
 class TransformComponent : public Component {
 private:
@@ -20,8 +20,8 @@ public:
 
     Vector2D getPosition();
 
-    void init()   override {}
+    void init()   override;
     void update() override;
-    void render() override {}
+    void render() override;
     
 };

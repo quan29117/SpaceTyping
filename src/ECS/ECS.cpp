@@ -52,7 +52,6 @@ void Entity::delGroup(const Group& mGroup) {
 void EntityManager::update() {
     for (auto& e : entities)
         e->update();
-    this->refresh();
 }
 
 void EntityManager::render() {
@@ -93,4 +92,9 @@ void EntityManager::addToGroup(Entity* mEntity, const Group& mGroup) {
 
 std::vector<Entity*>& EntityManager::getEntitesByGroup(const Group& mGroup) {
     return groupedEntities[mGroup];
+}
+
+void EntityManager::clear() {
+    for (auto& e : entities)
+        e->destroy();
 }

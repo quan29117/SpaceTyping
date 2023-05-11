@@ -1,17 +1,12 @@
 /*******************************************************************//*
- * Simple structs include static functions to manage more easily
+ * Structs for containing static methods to load and "run" Resources
+ * Including: texture, font and audio
  *
  *********************************************************************/
 
 #pragma once
 
-// #include <SDL2/SDL_rect.h> //TODO
-#include <headers/ResourceManager.hpp>
-#include <headers/ECS/ECS.hpp>
-
-struct Collision {
-    static bool AABB(Entity& e1, Entity& e2);
-};
+#include <headers/ApplicationManager/ResourceManager.hpp>
 
 struct TextureManager {
     static SDL_Texture* loadTexture(const std::string& fileName);

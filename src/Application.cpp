@@ -7,9 +7,7 @@
 
 #include <SDL2/SDL_image.h>
 #include <headers/Global.hpp>
-#include <headers/Structs.hpp>
-#include <headers/ApplicationState/MenuState.hpp>
-#include <headers/ApplicationState/PlayState.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
 //Define static members
 bool             Application::s_isRunning = true;
@@ -31,7 +29,7 @@ void Application::initWindow() {
     m_window = SDL_CreateWindow("SpaceTyping",
                                 0, 0,
                                 WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT,
-                                SDL_WINDOW_FULLSCREEN_DESKTOP);
+                                0);
 
     if (m_window == nullptr)
         std::cout << "SDL window created failed\n";
@@ -80,8 +78,8 @@ void Application::initResMan() {
     s_resMan->addTexture(board, "Board.png");
     
 //Add Fonts
-    s_resMan->addFont(yoster, "yoster.ttf", 30);
-    s_resMan->addFont(mariana, "mariana.ttf", 30);
+    s_resMan->addFont(yoster, "yoster.ttf", 40);
+    s_resMan->addFont(mariana, "mariana.ttf", 40);
 
 //Add Musics
     s_resMan->addMusic(menu_bgm, "Menu_BGM.ogg");

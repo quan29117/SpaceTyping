@@ -6,10 +6,7 @@
 
 #pragma once
 
-#include <SDL2/SDL_render.h>
 #include <headers/ApplicationState/State.hpp>
-#include <headers/Mouse.hpp>
-#include <headers/Button.hpp>
 
 class PauseState : public State {
 private:

@@ -7,7 +7,7 @@
 
 #include <headers/Global.hpp>
 #include <headers/Application.hpp>
-#include <headers/Structs.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
 void MenuState::initBackground() {
     m_bg_texture = Application::getResourceManager()->getTexture(menu_bg);
@@ -20,10 +20,10 @@ void MenuState::initBackground() {
 void MenuState::initButtons() {
     m_buttons.push_back (new Button (SDL_Rect {80, 0, 240, 100},
                                      SDL_Rect {480, 0, 240, 100},
-                                     SDL_FRect {650, 400, 240, 100}));
+                                     SDL_FRect {840, 550, 240, 100}));
     m_buttons.push_back (new Button (SDL_Rect {100, 200, 200, 100},
                                      SDL_Rect {500, 200, 200, 100},
-                                     SDL_FRect {660, 550, 200, 100}));
+                                     SDL_FRect {860, 750, 200, 100}));
 }
 
 MenuState::MenuState() {

@@ -1,5 +1,11 @@
 /*******************************************************************//*
  * Abstract ApplicationState class.
+ * 
+ * Include: 	Background
+ * 				Mouse, Button for interaction
+ * 				"close, pause" check
+ * 				Methods for run game
+ * 
  * ApplicationState subclasses must override the pure virtual methods 
  * to satisfy the main game loop
  *
@@ -8,9 +14,8 @@
 #pragma once
 
 #include <vector>
-#include <SDL2/SDL_render.h>
-#include <headers/Mouse.hpp>
-#include <headers/Button.hpp>
+#include <headers/UI/Mouse.hpp>
+#include <headers/UI/Button.hpp>
 
 enum StateID : short {
 	none_state = -1,

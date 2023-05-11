@@ -17,6 +17,13 @@ class Component;
 class Entity;
 class EntityManager;
 
+enum EntityGroup : short {
+	GEnemy,
+	GBulletPlayer_B,	//BulletPlayer to defeat BulletEnemy
+	GBulletPlayer_E,	//BulletPlayer to defeat Enemy
+	GBulletEnemy,
+};
+
 using ComponentID = unsigned short;
 using Group = unsigned short;
 
@@ -123,11 +130,6 @@ public:
 
     void addToGroup(Entity* mEntity, const Group& mGroup);
     std::vector<Entity*>& getEntitesByGroup(const Group& mGroup);
-};
 
-enum EntityGroup : short {
-	GEnemy,
-	GBulletPlayer_B,	//BulletPlayer to defeat BulletEnemy
-	GBulletPlayer_E,	//BulletPlayer to defeat Enemy
-	GBulletEnemy,
+    void clear();
 };

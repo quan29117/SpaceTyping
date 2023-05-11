@@ -8,8 +8,8 @@
 #pragma once
 
 #include <iostream>
-#include <headers/ResourceManager.hpp>
-#include <headers/ApplicationState/StateManager.hpp>
+#include <headers/ApplicationManager/ResourceManager.hpp>
+#include <headers/ApplicationManager/StateManager.hpp>
 
 class Application {
 private:

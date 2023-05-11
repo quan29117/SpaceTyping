@@ -3,10 +3,10 @@
  *
  *********************************************************************/
 
-#include <headers/ResourceManager.hpp>
+#include <headers/ApplicationManager/ResourceManager.hpp>
 
 #include <iostream>
-#include <headers/Structs.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
 #include <headers/Global.hpp>
 
 ResourceManager::ResourceManager() {}

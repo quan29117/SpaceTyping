@@ -6,7 +6,7 @@
 #include <headers/ECS/SpriteComponent.hpp>
 
 #include <headers/Application.hpp>
-#include <headers/Structs.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
 SpriteComponent::SpriteComponent(const TextureID& id, const SDL_Rect& src, const Vector2D& destSize, const bool& animated) {
     m_texture = Application::getResourceManager()->getTexture(id);
@@ -20,7 +20,7 @@ SpriteComponent::SpriteComponent(const TextureID& id, const SDL_Rect& src, const
 
 SpriteComponent::~SpriteComponent() {}
 
-SDL_FRect SpriteComponent::getHitBox() {
+SDL_FRect SpriteComponent::getRect() {
     return m_dest;
 }
 

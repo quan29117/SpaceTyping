@@ -3,7 +3,7 @@
  *
  *********************************************************************/
 
-#include <headers/Vector2D.hpp>
+#include <headers/Math/Vector2D.hpp>
 
 Vector2D::Vector2D() {
     x = y = 0.f;

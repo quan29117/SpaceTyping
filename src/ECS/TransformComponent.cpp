@@ -19,6 +19,8 @@ Vector2D TransformComponent::getPosition() {
     return m_position;
 }
 
+void TransformComponent::init() {}
+
 void TransformComponent::update() {
     if (m_movable) {
         m_position.x += m_velocity.x * m_speed;
@@ -26,4 +28,4 @@ void TransformComponent::update() {
     }
 }
 
-
+void TransformComponent::render() {}
