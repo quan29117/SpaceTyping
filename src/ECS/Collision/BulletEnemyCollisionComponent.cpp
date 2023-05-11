@@ -14,6 +14,10 @@ BulletEnemyCollisionComponent::BulletEnemyCollisionComponent(const Vector2D& des
 
 BulletEnemyCollisionComponent::~BulletEnemyCollisionComponent() {}
 
+int BulletEnemyCollisionComponent::getRemainingSize() {
+    return text->remainingSize();
+}
+
 void BulletEnemyCollisionComponent::init() {
 //Transform reference
     if (entity->hasComponent<TransformComponent>()) {
@@ -41,8 +45,9 @@ void BulletEnemyCollisionComponent::onHit(const CollisionID& id) {
         break;
 
     default:
+        std::cout << "Wrong Collision " << id << " to BulletEnemy\n";
         break;
     }
 }
 
-void BulletEnemyCollisionComponent::onHitP(Entity* enemy) {}
+void BulletEnemyCollisionComponent::onHitP(const int& cnt) {}

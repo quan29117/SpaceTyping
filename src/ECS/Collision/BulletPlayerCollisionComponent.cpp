@@ -36,4 +36,4 @@ void BulletPlayerCollisionComponent::onHit(const CollisionID& id) {
         text->Shot();
 }
 
-void BulletPlayerCollisionComponent::onHitP(Entity* enemy) {}
+void BulletPlayerCollisionComponent::onHitP(const int& cnt) {}

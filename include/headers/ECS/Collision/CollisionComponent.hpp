@@ -41,8 +41,5 @@ public:
     virtual void onHit(const CollisionID& id) = 0;
 
 //This abstract method is only for PlayerCollisionComponent as need to get char_count
-    virtual void onHitP(Entity* enemy) = 0;
-
-    
-    void momomo() {std::cout << "HAHAHA ";}
+    virtual void onHitP(const int& cnt) = 0;
 };

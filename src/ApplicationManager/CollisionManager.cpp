@@ -11,14 +11,10 @@
 #include <headers/ECS/Collision/BulletPlayerCollisionComponent.hpp>
 #include <headers/ECS/Collision/BulletEnemyCollisionComponent.hpp>
 #include <headers/ECS/ProgressComponent.hpp>
+#include <headers/ApplicationState/PlayState.hpp>
 
 CollisionManager::CollisionManager(Entity* p) {
     player = p;
-
-    enemy_group = &p->getManager().getEntitesByGroup(GEnemy);
-    BP_E_group  = &p->getManager().getEntitesByGroup(GBulletPlayer_E);
-    BP_B_group  = &p->getManager().getEntitesByGroup(GBulletPlayer_B);
-    BE_group    = &p->getManager().getEntitesByGroup(GBulletEnemy);
 }
 
 CollisionManager::~CollisionManager() {}
@@ -29,32 +25,43 @@ void CollisionManager::update() {
 }
 
 void CollisionManager::CollisionPlayer() {
-    for (Entity* e : *enemy_group) {
+    for (Entity* E : PlayState::getEntityManager()->getEntitesByGroup(GEnemy)) {
         if (Collision::AABB(player->getComponent<PlayerCollisionComponent>().getHitBox(), 
-                            e->getComponent<EnemyCollisionComponent>().getHitBox())) 
+                                 E->getComponent<EnemyCollisionComponent>().getHitBox())) 
         {
-            player->getComponent<PlayerCollisionComponent>().onHitP(e);
-			e->getComponent<EnemyCollisionComponent>().onHit(player_collision);
+            int char_count = E->getComponent<EnemyCollisionComponent>().getRemainingSize();
+            player->getComponent<PlayerCollisionComponent>().onHitP(char_count);
+			E->getComponent<EnemyCollisionComponent>().onHit(player_collision);
+        }
+    }
+
+    for (Entity* BE : PlayState::getEntityManager()->getEntitesByGroup(GBulletEnemy)) {
+        if (Collision::AABB(player->getComponent<PlayerCollisionComponent>().getHitBox(), 
+                                BE->getComponent<BulletEnemyCollisionComponent>().getHitBox()))
+        {
+            int char_count = BE->getComponent<BulletEnemyCollisionComponent>().getRemainingSize();
+            player->getComponent<PlayerCollisionComponent>().onHitP(char_count);
+			BE->getComponent<BulletEnemyCollisionComponent>().onHit(player_collision);
         }
     }
 }
 
 void CollisionManager::CollisionBulletPlayer() {
-    for (Entity* eSrc : *BP_E_group) 
-        for (Entity* eDest : *enemy_group)
-            if (Collision::AABB(eSrc->getComponent<BulletPlayerCollisionComponent>().getHitBox(), 
-                                eDest->getComponent<EnemyCollisionComponent>().getHitBox()))
+    for (Entity* BP : PlayState::getEntityManager()->getEntitesByGroup(GBulletPlayer_E)) 
+        for (Entity* E : PlayState::getEntityManager()->getEntitesByGroup(GEnemy))
+            if (Collision::AABB(BP->getComponent<BulletPlayerCollisionComponent>().getHitBox(), 
+                                 E->getComponent<EnemyCollisionComponent>().getHitBox()))
             {
-                eSrc->getComponent<BulletPlayerCollisionComponent>().onHit(enemy_collision);
-                eDest->getComponent<EnemyCollisionComponent>().onHit(BP_E_collision);
+                BP->getComponent<BulletPlayerCollisionComponent>().onHit(enemy_collision);
+                E->getComponent<EnemyCollisionComponent>().onHit(BP_E_collision);
             }
     
-    for (Entity* eSrc : *BP_B_group) 
-        for (Entity* eDest : *BE_group)
-            if (Collision::AABB(eSrc->getComponent<BulletPlayerCollisionComponent>().getHitBox(),
-                                eDest->getComponent<BulletEnemyCollisionComponent>().getHitBox()))
+    for (Entity* BP : PlayState::getEntityManager()->getEntitesByGroup(GBulletPlayer_B))
+        for (Entity* BE : PlayState::getEntityManager()->getEntitesByGroup(GBulletEnemy))
+            if (Collision::AABB(BP->getComponent<BulletPlayerCollisionComponent>().getHitBox(),
+                                BE->getComponent<BulletEnemyCollisionComponent>().getHitBox()))
             {
-                // eSrc->getComponent<BulletPlayerCollisionComponent>().onHit(BE_collision);
-                // eDest->getComponent<BulletEnemyCollisionComponent>().onHit(BP_B_collision);
+                BP->getComponent<BulletPlayerCollisionComponent>().onHit(BE_collision);
+                BE->getComponent<BulletEnemyCollisionComponent>().onHit(BP_B_collision);
             }
 }

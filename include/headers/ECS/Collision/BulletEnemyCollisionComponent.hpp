@@ -19,8 +19,10 @@ public:
     BulletEnemyCollisionComponent(const Vector2D& destSize);
     virtual ~BulletEnemyCollisionComponent();
 
+    int getRemainingSize();
+
     void init()                       override;
     void onHit(const CollisionID& id) override;
 
-    void onHitP(Entity* enemy) override;
+    void onHitP(const int& cnt) override;
 };

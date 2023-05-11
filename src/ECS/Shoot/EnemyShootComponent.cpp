@@ -8,6 +8,7 @@
 #include <headers/Global.hpp>
 #include <headers/ApplicationManager/ResourceMethodManager.hpp>
 #include <headers/ECS/Text/BulletEnemyTextComponent.hpp>
+#include <headers/ECS/Collision/BulletEnemyCollisionComponent.hpp>
 
 EnemyShootComponent::EnemyShootComponent(std::mt19937* rng) {
     s_rng = rng;
@@ -33,6 +34,7 @@ Entity& EnemyShootComponent::createBulletEnemy(const char& ch, const Vector2D& s
 
 	std::string str;	str += ch;
 	p_bullet.addComponent<BulletEnemyTextComponent>(str, yoster);
+    p_bullet.addComponent<BulletEnemyCollisionComponent>(BULLET_ENEMY_SIZE);
 
 	p_bullet.addGroup(GBulletEnemy);
 

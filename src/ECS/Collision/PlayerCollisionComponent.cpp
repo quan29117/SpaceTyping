@@ -34,9 +34,8 @@ void PlayerCollisionComponent::init() {
 
 void PlayerCollisionComponent::onHit(const CollisionID& id) {}
 
-void PlayerCollisionComponent::onHitP(Entity* enemy) {
-    std::size_t char_count = 10; /* enemy->getComponent<TextComponent>().remainingSize(); */  //TODO rewrite this
-    progress->decreaseScore(char_count * 10);
-    progress->increaseWT(char_count);
+void PlayerCollisionComponent::onHitP(const int& cnt) {
+    progress->decreaseScore(cnt * 10);
+    progress->increaseWT(cnt);
 }
 

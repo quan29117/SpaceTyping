@@ -22,5 +22,5 @@ public:
     void init()   override;
     void onHit(const CollisionID& id)  override;
     
-    void onHitP(Entity* enemy) override;
+    void onHitP(const int& cnt) override;
 };

@@ -42,7 +42,7 @@ void PlayerShootComponent::update() {
 
 void PlayerShootComponent::render() {}
 
-Entity& PlayerShootComponent::createBulletPlayer(const EntityGroup& EG, const char& ch, const Vector2D& direction) {
+Entity& PlayerShootComponent::createBulletPlayer(const EntityGroup& EG, const CollisionID& id, const char& ch, const Vector2D& direction) {
 	auto& p_bullet (entity->getManager().addEntity());
 
 	p_bullet.addComponent<TransformComponent>(BULLET_PLAYER_START_POS,
@@ -53,7 +53,7 @@ Entity& PlayerShootComponent::createBulletPlayer(const EntityGroup& EG, const ch
 
 	std::string str; str += ch;
 	p_bullet.addComponent<BulletPlayerTextComponent>(str);
-	p_bullet.addComponent<BulletPlayerCollisionComponent>(BULLET_PLAYER_SIZE, BP_E_collision);
+	p_bullet.addComponent<BulletPlayerCollisionComponent>(BULLET_PLAYER_SIZE, id);
 
 	p_bullet.addGroup(EG);
 
@@ -64,7 +64,7 @@ void PlayerShootComponent::shootEnemy() {
 	if (m_lock_target != nullptr)
 		if (*s_char_input == m_lock_target->getComponent<EnemyTextComponent>().getCharNeedTyped()) {
 			Vector2D dir = m_lock_target->getComponent<TransformComponent>().getPosition();
-			createBulletPlayer(GBulletPlayer_E, *s_char_input, dir);
+			createBulletPlayer(GBulletPlayer_E, BP_E_collision, *s_char_input, dir);
 
 			AudioManager::playSound(SoundID::player_shoot);
 
@@ -80,7 +80,7 @@ void PlayerShootComponent::shootBulletEnemy() {
 		for (auto& bullet_enemy : *s_bulletEnemyGroup) {
 			if (*s_char_input == bullet_enemy->getComponent<BulletEnemyTextComponent>().getCharNeedTyped()) {
 				Vector2D dir = bullet_enemy->getComponent<TransformComponent>().getPosition();
-				createBulletPlayer(GBulletPlayer_B, *s_char_input, dir);
+				createBulletPlayer(GBulletPlayer_B, BP_B_collision, *s_char_input, dir);
 
 				AudioManager::playSound(SoundID::player_shoot);
 

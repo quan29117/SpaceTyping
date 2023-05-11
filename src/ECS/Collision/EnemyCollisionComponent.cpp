@@ -12,8 +12,10 @@ EnemyCollisionComponent::EnemyCollisionComponent(const Vector2D& destSize) {
     m_collision.h = destSize.y;
 }
 
-EnemyCollisionComponent::~EnemyCollisionComponent() {
-    std::cout << "Delete enemy\n";
+EnemyCollisionComponent::~EnemyCollisionComponent() {}
+
+int EnemyCollisionComponent::getRemainingSize() {
+    return text->remainingSize();
 }
 
 void EnemyCollisionComponent::init() {
@@ -41,8 +43,9 @@ void EnemyCollisionComponent::onHit(const CollisionID& id) {
             break;
         
         default:
+            std::cout << "Wrong Collision " << id << " to Enemy\n";
             break;
     }    
 }
 
-void EnemyCollisionComponent::onHitP(Entity* enemy) {}
+void EnemyCollisionComponent::onHitP(const int& cnt) {}
