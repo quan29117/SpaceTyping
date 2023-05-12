@@ -24,7 +24,8 @@ enum TextureID : short {
     pause_bg,
     game_name,
     pause_title,
-    board
+    board,
+    explosion
 };
 
 enum FontID : short {
@@ -41,8 +42,8 @@ enum MusicID : short {
 enum SoundID : short {
     player_shoot = 0,
     enemy_shoot,
-    destroy,
-    button_hover
+    button_hover,
+    explosion_sound
 };
 
 class ResourceManager {

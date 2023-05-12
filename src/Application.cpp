@@ -76,6 +76,7 @@ void Application::initResMan() {
     s_resMan->addTexture(game_name, "Game_Name.png");
     s_resMan->addTexture(pause_title, "Pause_Title.png");
     s_resMan->addTexture(board, "Board.png");
+    s_resMan->addTexture(explosion, "Explosion.png");
     
 //Add Fonts
     s_resMan->addFont(yoster, "yoster.ttf", 40);
@@ -89,6 +90,7 @@ void Application::initResMan() {
     s_resMan->addSound(player_shoot, "Player_Shoot.ogg");
     s_resMan->addSound(enemy_shoot, "Enemy_Shoot.ogg");
     s_resMan->addSound(button_hover, "Button_Hover.ogg");
+    s_resMan->addSound(explosion_sound, "Explosion_Sound.ogg");
 }
 
 void Application::initStateMan() {

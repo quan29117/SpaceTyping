@@ -50,6 +50,9 @@ void PlayState::initPlayer() {
 	m_player->addComponent<PlayerShootComponent>(&m_char_input);
 	m_player->addComponent<ProgressComponent>();
 	m_player->addComponent<PlayerCollisionComponent>(PLAYER_SIZE);
+
+	m_player->getComponent<SpriteComponent>().addAnimation("Idle", 0, 5, 60);
+	m_player->getComponent<SpriteComponent>().playAnimation("Idle");
 }
 
 void PlayState::initCollsionManager() {
@@ -115,11 +118,8 @@ void PlayState::update() {
 		m_collisionMan->update();
 		s_entityMan->update();
 		
-		s_entityMan->refresh();
-
 		spawnEnemy();
 		shooting();
-		
 		scrollBackground();
 		resetCharInput();
 		
@@ -162,6 +162,7 @@ Entity& createEnemy(std::mt19937& m_rng, const std::string& text) {
 	e_enemy.addComponent<EnemyTextComponent>(text, yoster);
 	e_enemy.addComponent<EnemyShootComponent>(&m_rng);
 	e_enemy.addComponent<EnemyCollisionComponent>(ENEMY_SIZE);
+	e_enemy.addComponent<ExplosionComponent>();
 
 	e_enemy.addGroup(GEnemy);
 

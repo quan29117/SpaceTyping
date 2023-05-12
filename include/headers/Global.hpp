@@ -68,6 +68,10 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define BULLET_SPEED              7
 #define BULLET_ENEMY_SIZE         Vector2D {50, 50}
 
+//Explosion
+#define EXPLOSION_SRC       SDL_Rect {0, 0, 150, 150}
+#define EXPLOSION_SIZE      Vector2D {150, 150}
+
 //Progress
 #define TEXT_DEST_X         40
 #define SCORE_TEXT_DEST_Y   30

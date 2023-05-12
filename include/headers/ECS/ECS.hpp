@@ -22,6 +22,7 @@ enum EntityGroup : short {
 	GBulletPlayer_B,	//BulletPlayer to defeat BulletEnemy
 	GBulletPlayer_E,	//BulletPlayer to defeat Enemy
 	GBulletEnemy,
+    GExplosion,
 };
 
 using ComponentID = unsigned short;

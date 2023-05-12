@@ -57,6 +57,7 @@ void EntityManager::update() {
 void EntityManager::render() {
     for (auto& e : entities)
         e->render();
+    this->refresh();
 }
 
 void EntityManager::refresh() {

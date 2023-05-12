@@ -24,6 +24,10 @@ SDL_FRect SpriteComponent::getRect() {
     return m_dest;
 }
 
+bool SpriteComponent::isEndAnimation() {
+    return (m_src.x == m_src.w * (m_frames - 1));
+}
+
 void SpriteComponent::init() {
     if (entity->hasComponent<TransformComponent>()) {
         transform = &entity->getComponent<TransformComponent>();
@@ -35,7 +39,8 @@ void SpriteComponent::init() {
 
 void SpriteComponent::update() {
     if (m_animated) {
-        m_src.x = m_src.w * static_cast<int> ((SDL_GetTicks() / 60) % 5);
+        m_src.y = m_dest.h * m_anim_index;
+        m_src.x = m_src.w * static_cast<int> ((SDL_GetTicks() / m_speed) % m_frames);
     }
 
     m_dest.x = transform->getPosition().x;
@@ -45,4 +50,15 @@ void SpriteComponent::update() {
 void SpriteComponent::render() {
     if (m_texture != nullptr)
         TextureManager::render(m_texture, &m_src, &m_dest);
+}
+
+void SpriteComponent::addAnimation(const std::string& name, const unsigned int& i, const unsigned int& f, const unsigned int& s) {
+    Animation anim = Animation (i,f,s);
+    animations.emplace(name, anim);
+}
+
+void SpriteComponent::playAnimation(const std::string& name) {
+    m_anim_index = animations[name].getIndex();
+    m_frames     = animations[name].getFrames();
+    m_speed      = animations[name].getSpeed();
 }

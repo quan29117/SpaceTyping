@@ -5,13 +5,14 @@
 
 #include <headers/ApplicationManager/CollisionManager.hpp>
 
+#include <headers/ApplicationState/PlayState.hpp>
+#include <headers/ApplicationManager/ExplosionManager.hpp>
+
 #include <headers/Math/Collision.hpp>
 #include <headers/ECS/Collision/PlayerCollisionComponent.hpp>
 #include <headers/ECS/Collision/EnemyCollisionComponent.hpp>
 #include <headers/ECS/Collision/BulletPlayerCollisionComponent.hpp>
 #include <headers/ECS/Collision/BulletEnemyCollisionComponent.hpp>
-#include <headers/ECS/ProgressComponent.hpp>
-#include <headers/ApplicationState/PlayState.hpp>
 
 CollisionManager::CollisionManager(Entity* p) {
     player = p;
