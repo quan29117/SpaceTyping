@@ -3,7 +3,8 @@
  *
  *********************************************************************/
 
-#include <headers/ECS/ExplosionComponent.hpp>
+#include <headers/ECS/Draw/ExplosionComponent.hpp>
+
 #include <headers/ApplicationManager/ExplosionManager.hpp>
 
 ExplosionComponent::ExplosionComponent() {}

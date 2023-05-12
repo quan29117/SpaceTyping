@@ -6,7 +6,7 @@
 #pragma once
 
 #include <headers/ApplicationManager/ResourceManager.hpp>
-#include <headers/ECS/TransformComponent.hpp>
+#include <headers/ECS/Draw/TransformComponent.hpp>
 #include <headers/Animation.hpp>
 
 class SpriteComponent : public Component {

@@ -1,9 +1,13 @@
 OBJ_NAME	=	SpaceTyping
 
-CPP_FILES	=	main.cpp					\
-				src/*.cpp					\
-				src/ECS/*.cpp				\
-				src/ApplicationState/*.cpp	\
+CPP_FILES	=	main.cpp						\
+				src/*.cpp						\
+				src/ECS/*.cpp					\
+				src/ECS/Draw/*.cpp				\
+				src/ECS/Collision/*.cpp			\
+				src/ECS/Text/*.cpp				\
+				src/ECS/Shoot/*.cpp				\
+				src/ApplicationState/*.cpp		\
 				src/ApplicationManager/*.cpp	\
 				src/UI/*.cpp					\
 				src/Math/*.cpp					\

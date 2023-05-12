@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <headers/ECS/TransformComponent.hpp>
+#include <headers/ECS/Draw/TransformComponent.hpp>
 
 class ExplosionComponent : public Component {
 private:

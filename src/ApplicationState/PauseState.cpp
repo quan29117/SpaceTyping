@@ -21,9 +21,10 @@ void PauseState::initButtons() {
     m_buttons.push_back (new Button (SDL_Rect {0, 100, 400, 100},
                                      SDL_Rect {400, 100, 400, 100},
                                      SDL_FRect {760, 550, 400, 100}));
-    m_buttons.push_back (new Button (SDL_Rect {100, 200, 200, 100},
-                                     SDL_Rect {500, 200, 200, 100},
-                                     SDL_FRect {860, 750, 200, 100}));
+                                     
+    m_buttons.push_back (new Button (SDL_Rect {15, 300, 620, 100},
+                                     SDL_Rect {665, 300, 620, 100},
+                                     SDL_FRect {655, 750, 620, 100}));
 }
 
 PauseState::PauseState() {
@@ -61,7 +62,7 @@ void PauseState::pollEvent() {
                         Application::getStateManager()->changeCurrentState(play_state);
                     }
 
-                    if (m_buttons[exit]->isHovered()) {
+                    if (m_buttons[menu_back]->isHovered()) {
                         m_close = true;
                         AudioManager::setVolume(100);
                         AudioManager::playMusic(menu_bgm);

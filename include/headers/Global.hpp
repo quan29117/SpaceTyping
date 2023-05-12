@@ -57,7 +57,7 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 #define ENEMY_SRC           SDL_Rect {0, 0, 540, 290}
 #define ENEMY_SIZE          Vector2D {270, 130.5}
 #define ENEMY_CENTER_X      135
-#define ENEMY_CENTER_Y      105
+#define ENEMY_CENTER_Y      100
 #define ENEMY_SPEED         5
 #define ENEMY_FIRE_CHANCE   1024
 

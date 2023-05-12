@@ -13,7 +13,7 @@
 #pragma once
 
 #include <SDL2/SDL_rect.h>
-#include <headers/ECS/TransformComponent.hpp>
+#include <headers/ECS/Draw/TransformComponent.hpp>
 
 enum CollisionID : short {
     player_collision = 0,

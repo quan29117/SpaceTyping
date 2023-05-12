@@ -1,4 +1,9 @@
-#include <headers/ECS/DeadAnimationComponent.hpp>
+/*******************************************************************//*
+ * Implementation of the DeadAnimationComponent class.
+ *
+ *********************************************************************/
+
+#include <headers/ECS//Draw/DeadAnimationComponent.hpp>
 
 DeadAnimationComponent::DeadAnimationComponent() {}
 

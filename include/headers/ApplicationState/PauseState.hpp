@@ -10,7 +10,7 @@
 
 class PauseState : public State {
 private:
-    enum ButtonNames {conti = 0, exit};
+    enum ButtonNames {conti = 0, menu_back};
 
     SDL_Texture* m_title_texture;
     SDL_FRect    m_title_dest;

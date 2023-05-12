@@ -7,7 +7,7 @@
 
 #include <headers/Global.hpp>
 #include <headers/ApplicationState/PlayState.hpp>
-#include <headers/ECS/DeadAnimationComponent.hpp>
+#include <headers/ECS/Draw/DeadAnimationComponent.hpp>
 #include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
 Entity& ExplosionManager::createExplosion(const Vector2D& pos) {

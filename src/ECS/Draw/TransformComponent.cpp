@@ -3,7 +3,7 @@
  *
  *********************************************************************/
 
-#include <headers/ECS/TransformComponent.hpp>
+#include <headers/ECS/Draw/TransformComponent.hpp>
 
 TransformComponent::TransformComponent(const Vector2D& start_pos, const bool& move, const Vector2D& dir, const float& speed) {
     m_position  = start_pos;

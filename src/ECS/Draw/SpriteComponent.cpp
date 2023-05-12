@@ -3,7 +3,7 @@
  *
  *********************************************************************/
 
-#include <headers/ECS/SpriteComponent.hpp>
+#include <headers/ECS/Draw/SpriteComponent.hpp>
 
 #include <headers/Application.hpp>
 #include <headers/ApplicationManager/ResourceMethodManager.hpp>

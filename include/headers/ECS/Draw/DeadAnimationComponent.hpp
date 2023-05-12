@@ -5,8 +5,7 @@
 
 #pragma once
 
-#include <headers/ECS/SpriteComponent.hpp>
-
+#include <headers/ECS/Draw/SpriteComponent.hpp>
 
 class DeadAnimationComponent : public Component {
 private:

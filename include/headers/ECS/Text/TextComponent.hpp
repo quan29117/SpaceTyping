@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <headers/ECS/SpriteComponent.hpp>
+#include <headers/ECS/Draw/SpriteComponent.hpp>
 
 class TextComponent : public Component {
 protected:
