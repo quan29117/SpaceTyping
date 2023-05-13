@@ -31,3 +31,7 @@ Type the **red-char** bullets before they hit you.
 **Step 2:** Open **Command Prompt** (cmd), **direct** to the extracted folder and type command `mingw32-make` (Window) or `make.sh` (Linux)
 
 **Step 3:** Run game by typing command `SpaceTyping`
+
+**Step 4:** Enjoy the game :3
+
+![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/yanfei_emoji.png)
