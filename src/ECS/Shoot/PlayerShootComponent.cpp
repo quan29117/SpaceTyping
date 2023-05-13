@@ -7,11 +7,10 @@
 
 #include <headers/Global.hpp>
 #include <headers/ApplicationManager/ResourceMethodManager.hpp>
-#include <headers/ECS/Text/BulletPlayerTextComponent.hpp>
+#include <headers/ECS/ProgressComponent.hpp>
+#include <headers/ECS/HPP/BulletPlayerComponents.hpp>
 #include <headers/ECS/Text/EnemyTextComponent.hpp>
 #include <headers/ECS/Text/BulletEnemyTextComponent.hpp>
-#include <headers/ECS/Collision/BulletPlayerCollisionComponent.hpp>
-#include <headers/ECS/ProgressComponent.hpp>
 
 PlayerShootComponent::PlayerShootComponent(unsigned char* char_input) {
 	m_lock_target = nullptr;

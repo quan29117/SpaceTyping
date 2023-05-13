@@ -28,21 +28,6 @@ void PlayState::initBoard() {
 	m_board_dest	= BOARD_DEST;
 }
 
-void PlayState::initTime() {
-	start = SDL_GetTicks() / 1000.f;
-	spawnTime = 0;
-	spawnCoolDown = 3;
-}
-
-void PlayState::initWordList() {
-	std::ifstream file(PATH_BEGIN + "words.txt");
-	std::string word;
-	if (file.is_open())
-		while (file >> word)
-			m_word_list.push_back(word);
-	file.close();
-}
-
 void PlayState::initPlayer() {
 	m_player = &s_entityMan->addEntity();
 	m_player->addComponent<TransformComponent>(PLAYER_POS);
@@ -57,15 +42,14 @@ void PlayState::initPlayer() {
 
 void PlayState::initCollsionManager() {
 	m_collisionMan = new CollisionManager(m_player);
+	m_spawnMan = new SpawnManager;
 }
 
 PlayState::PlayState()
-	: m_rng(m_rd()), m_char_input ('\0')
+	: m_char_input ('\0')
 {
 	initState(play_state);
 	initBoard();
-	initTime();
-	initWordList();
 	initPlayer();
 	initCollsionManager();
 }
@@ -83,8 +67,6 @@ void PlayState::run()
 	pollEvent();
 	update();
 	render();
-
-	updateTime();
 }
 
 void PlayState::pollEvent() {
@@ -114,11 +96,8 @@ void PlayState::pollEvent() {
 void PlayState::update() {
 	if (!m_pause) {
 		updateInteraction();
-		
-		m_collisionMan->update();
-		s_entityMan->update();
-		
-		spawnEnemy();
+
+		updateManager();
 		shooting();
 		scrollBackground();
 		resetCharInput();
@@ -140,66 +119,10 @@ void PlayState::render() {
 	SDL_RenderPresent(Application::getRenderer());
 }
 
-void PlayState::updateTime() {
-	end = SDL_GetTicks() / 1000.f;
-
-	if (!m_pause)
-		spawnTime = end - start;
-	else start = end - spawnTime;
-}
-
-Entity& createEnemy(std::mt19937& m_rng, const std::string& text) {
-	std::uniform_int_distribution<int> uni(0, MAX_RANDOM_NUMBER);
-	float start_pos_y = uni(m_rng) % WINDOW_SIZE_HEIGHT;
-
-	auto& e_enemy (PlayState::getEntityManager()->addEntity());
-
-	e_enemy.addComponent<TransformComponent>(Vector2D {ENEMY_START_POS_X, start_pos_y},
-											 true,
-											 PLAYER_POS,
-											 ENEMY_SPEED);
-	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_SRC, ENEMY_SIZE);
-	e_enemy.addComponent<EnemyTextComponent>(text, yoster);
-	e_enemy.addComponent<EnemyShootComponent>(&m_rng);
-	e_enemy.addComponent<EnemyCollisionComponent>(ENEMY_SIZE);
-	e_enemy.addComponent<ExplosionComponent>();
-
-	e_enemy.addGroup(GEnemy);
-
-	return e_enemy;
-}
-
-std::string PlayState::generatedWords() {
-	std::uniform_int_distribution<int> uni(0, MAX_RANDOM_NUMBER);
-
-	int countWord = uni(m_rng) % 2 + 1;
-	switch (countWord) {
-		case 1:
-			spawnCoolDown = 2;
-			break;
-
-		case 2:
-			spawnCoolDown = 3;
-			break;
-	}
-
-	std::string text = "";
-	for (int i = 1; i <= countWord; i++)
-		text += m_word_list[uni(m_rng) % m_word_list.size()] + " ";
-	text.erase(text.size() - 1, 1);
-
-	return text;
-}
-
-void PlayState::spawnEnemy() {
-	if (spawnTime >= spawnCoolDown && PlayState::getEntityManager()->getEntitesByGroup(GEnemy).size() < 7) {
-		std::string text = generatedWords();
-		createEnemy(m_rng, text);
-
-	//reset the time
-		spawnTime = 0;
-		start = end;
-	}
+void PlayState::updateManager() {
+	m_collisionMan->update();
+	m_spawnMan->update();
+	s_entityMan->update();
 }
 
 void PlayState::shooting() {

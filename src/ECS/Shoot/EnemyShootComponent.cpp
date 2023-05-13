@@ -7,8 +7,7 @@
 
 #include <headers/Global.hpp>
 #include <headers/ApplicationManager/ResourceMethodManager.hpp>
-#include <headers/ECS/Text/BulletEnemyTextComponent.hpp>
-#include <headers/ECS/Collision/BulletEnemyCollisionComponent.hpp>
+#include <headers/ECS/HPP/BulletEnemyComponents.hpp>
 
 EnemyShootComponent::EnemyShootComponent(std::mt19937* rng) {
     s_rng = rng;

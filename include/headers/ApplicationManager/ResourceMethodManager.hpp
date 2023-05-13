@@ -1,5 +1,5 @@
 /*******************************************************************//*
- * Structs for containing static methods to load and "run" Resources
+ * Structs contains static methods to load and "run" Resources
  * Including: texture, font and audio
  *
  *********************************************************************/
