@@ -5,7 +5,11 @@ This is a game that I used C++ and SDL2 to make as a personal project. It's easy
 
 These are preview game images:
 
+You have to type **blue-char** enemy because it's locked target.
+
 ![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/Untitled1.png)
+
+Type the **red-char** bullets before they hit you.
 
 ![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/Untitled2.png)
 
