@@ -24,10 +24,14 @@ struct AudioManager {
     static void playMusic(const MusicID& musicID);
     static void stopMusic();
     static void loopMusic();
+    static void turnMusic();
     
     static Mix_Chunk* loadSound(const std::string& fileName);
     static void playSound(const SoundID& soundID);
+    static void turnSound();
 
 private:
-    static MusicID m_currentMusic;
+    static MusicID s_currentMusic;
+    static bool    s_canPlayMusic;
+    static bool    s_canPlaySound; 
 };

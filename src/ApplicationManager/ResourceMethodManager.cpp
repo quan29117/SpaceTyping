@@ -38,7 +38,9 @@ TTF_Font* FontManager::loadFont(const std::string& fileName, const int& size) {
 }
 
 //--------------------------------------AudioManager--------------------------------------
-MusicID AudioManager::m_currentMusic = none_music;
+MusicID AudioManager::s_currentMusic = none_music;
+bool    AudioManager::s_canPlayMusic = true;
+bool    AudioManager::s_canPlaySound = true;
 
 void AudioManager::setVolume(const int& volume) {
     Mix_VolumeMusic(volume);
@@ -54,20 +56,29 @@ Mix_Music* AudioManager::loadMusic(const std::string& fileName) {
 
 void AudioManager::playMusic(const MusicID& musicID) {
     stopMusic();
-    m_currentMusic = musicID;
-    Mix_PlayMusic(Application::getResourceManager()->getMusic(musicID), 0);
+    s_currentMusic = musicID;
+    if (s_canPlayMusic) 
+        Mix_PlayMusic(Application::getResourceManager()->getMusic(musicID), 0);
 }
 
 void AudioManager::stopMusic() {
     if (Mix_PlayingMusic() != 0) {
         Mix_HaltMusic();
-        m_currentMusic = none_music;
+        s_currentMusic = none_music;
     }
 }
 
 void AudioManager::loopMusic() {
-    if (Mix_PlayingMusic() == 0 && m_currentMusic != none_music)
-        playMusic(m_currentMusic);
+    if (Mix_PlayingMusic() == 0 && s_currentMusic != none_music)
+        playMusic(s_currentMusic);
+}
+
+void AudioManager::turnMusic() {
+    s_canPlayMusic = !s_canPlayMusic;
+
+    if (s_canPlayMusic)
+        Mix_PlayMusic(Application::getResourceManager()->getMusic(s_currentMusic), 0);
+    else Mix_HaltMusic();
 }
 
 Mix_Chunk* AudioManager::loadSound(const std::string& fileName) {
@@ -79,5 +90,10 @@ Mix_Chunk* AudioManager::loadSound(const std::string& fileName) {
 }
 
 void AudioManager::playSound(const SoundID& soundID) {
-    Mix_PlayChannel(-1, Application::getResourceManager()->getSound(soundID), 0);
+    if (s_canPlaySound)
+        Mix_PlayChannel(-1, Application::getResourceManager()->getSound(soundID), 0);
+}
+
+void AudioManager::turnSound() {
+    s_canPlaySound = !s_canPlaySound;
 }

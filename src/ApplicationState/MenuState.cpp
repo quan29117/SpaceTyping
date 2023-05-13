@@ -18,12 +18,21 @@ void MenuState::initBackground() {
 }
 
 void MenuState::initButtons() {
-    m_buttons.push_back (new Button (SDL_Rect {80, 0, 240, 100},
-                                     SDL_Rect {480, 0, 240, 100},
-                                     SDL_FRect {840, 550, 240, 100}));
-    m_buttons.push_back (new Button (SDL_Rect {100, 200, 200, 100},
-                                     SDL_Rect {500, 200, 200, 100},
-                                     SDL_FRect {860, 750, 200, 100}));
+    m_buttons.push_back (new Button (SDL_Rect  {80, 0, 240, 100},
+                                     SDL_Rect  {480, 0, 240, 100},
+                                     SDL_FRect {845, 450, 240, 100}));
+
+    m_buttons.push_back (new Button (SDL_Rect  {100, 200, 200, 100},
+                                     SDL_Rect  {500, 200, 200, 100},
+                                     SDL_FRect {860, 650, 200, 100}));
+
+    m_buttons.push_back (new Button (SDL_Rect  {58, 400, 288, 100},
+                                     SDL_Rect  {458, 400, 288, 100},
+                                     SDL_FRect {624, 850, 288, 100}));
+
+    m_buttons.push_back (new Button (SDL_Rect  {58, 500, 284, 100},
+                                     SDL_Rect  {458, 500, 284, 100},
+                                     SDL_FRect {1012, 850, 284, 100}));                                
 }
 
 MenuState::MenuState() {
@@ -62,6 +71,12 @@ void MenuState::pollEvent() {
 
                     if (m_buttons[exit]->isHovered())
                         m_close = true;
+
+                    if (m_buttons[music]->isHovered())
+                        AudioManager::turnMusic();
+
+                    if (m_buttons[sound]->isHovered())
+                        AudioManager::turnSound();
                 }
                 break;
 		}

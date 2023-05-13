@@ -18,10 +18,11 @@ class Entity;
 class EntityManager;
 
 enum EntityGroup : short {
-	GEnemy,
+	GEnemy = 0,
 	GBulletPlayer_B,	//BulletPlayer to defeat BulletEnemy
 	GBulletPlayer_E,	//BulletPlayer to defeat Enemy
 	GBulletEnemy,
+    GBoss,
     GExplosion,
 };
 

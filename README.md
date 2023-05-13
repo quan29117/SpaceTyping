@@ -3,7 +3,7 @@
 ## Preview
 This is a game that I used C++ and SDL2 to make as a personal project. It's easy and used for typing-skill-fun.
 
-These are preview game images:
+These are gameplay images:
 
 You have to type **blue-char** enemy because it's locked target.
 
@@ -35,3 +35,7 @@ Type the **red-char** bullets before they hit you.
 **Step 4:** Enjoy the game :3
 
 ![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/yanfei_emoji.png)
+
+## Support
+
+If you encounter any issues with the game or have any questions, please contact <dangminhquan29117@gmail.com>. I'll do my best to help you!

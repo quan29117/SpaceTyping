@@ -12,7 +12,7 @@
 
 class MenuState : public State {
 private:
-    enum ButtonNames {start, exit};
+    enum ButtonNames {start = 0, exit, music, sound};
 
     SDL_Texture* m_title_texture;
     SDL_FRect m_title_dest;
