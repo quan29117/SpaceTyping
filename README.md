@@ -1,6 +1,11 @@
 # SPACETYPING
 
 ## Preview
+This is a game that I used C++ and SDL2 to make as a personal project. It's easy and used for typing-skill-fun.
+
+These are preview game images:
+
+![Image](https://drive.google.com/file/d/19Btku3jamresMYl3oBncyZYDzwQOQShx/view?usp=sharing)
 
 ## Installing
 >**For Linux, please follow [this link](https://www.paulbarrick.com/game-devlopment/game-development-on-linux-using-vscode-sdl2-and-opengl/) to install.**
