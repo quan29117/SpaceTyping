@@ -5,7 +5,9 @@ This is a game that I used C++ and SDL2 to make as a personal project. It's easy
 
 These are preview game images:
 
-![Image](https://drive.google.com/file/d/19Btku3jamresMYl3oBncyZYDzwQOQShx/view?usp=sharing)
+![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/Untitled1.png)
+
+![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/Untitled2.png)
 
 ## Installing
 >**For Linux, please follow [this link](https://www.paulbarrick.com/game-devlopment/game-development-on-linux-using-vscode-sdl2-and-opengl/) to install.**
