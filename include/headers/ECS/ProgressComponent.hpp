@@ -30,6 +30,9 @@ public:
     ProgressComponent();
     virtual ~ProgressComponent();
 
+    std::size_t getScore();
+    std::size_t getWrongCount();
+
     void init()   override;
     void update() override;
     void render() override;

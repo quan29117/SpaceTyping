@@ -17,7 +17,7 @@ Entity& ExplosionManager::createExplosion(const Vector2D& pos) {
 	e_explosion.addComponent<SpriteComponent>(explosion, EXPLOSION_SRC, EXPLOSION_SIZE, true);
     e_explosion.addComponent<DeadAnimationComponent>();
 
-    e_explosion.getComponent<SpriteComponent>().addAnimation("explosion", 0, 8, 60);
+    e_explosion.getComponent<SpriteComponent>().addAnimation("explosion", 0, 8, 40);
     e_explosion.getComponent<SpriteComponent>().playAnimation("explosion");
 
     e_explosion.addGroup(GExplosion);

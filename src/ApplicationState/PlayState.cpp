@@ -5,14 +5,14 @@
 
 #include <headers/ApplicationState/PlayState.hpp>
 
-#include <fstream>
-#include <headers/Application.hpp>
 #include <headers/Global.hpp>
+#include <headers/Application.hpp>
 #include <headers/ECS/Components.hpp>
 #include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
 //Define static members
-EntityManager* 	  PlayState::s_entityMan    = new EntityManager;
+bool		   PlayState::s_is_won    = false; 	
+EntityManager* PlayState::s_entityMan = new EntityManager;
 
 void PlayState::initBackground() {
 	m_bg_texture = Application::getResourceManager()->getTexture(play_bg);
@@ -58,6 +58,10 @@ PlayState::~PlayState() {
 	s_entityMan->clear();
 }
 
+bool PlayState::getWinning() {
+	return s_is_won;
+}
+
 EntityManager* PlayState::getEntityManager() {
 	return s_entityMan;
 }
@@ -100,6 +104,8 @@ void PlayState::update() {
 		updateManager();
 		shooting();
 		scrollBackground();
+		loadProgress();
+		loadWinning();
 		resetCharInput();
 		
 		AudioManager::loopMusic();
@@ -136,6 +142,24 @@ void PlayState::scrollBackground() {
 		m_camera.x++;
         if (m_camera.x >= PLAYSTATE_BACKGROUND_WIDTH)
             m_camera.x = 1;
+	}
+}
+
+void PlayState::loadProgress() {
+	std::size_t sc = m_player->getComponent<ProgressComponent>().getScore();
+	std::size_t wt = m_player->getComponent<ProgressComponent>().getWrongCount();
+
+	Application::setProgress(sc, wt);
+
+	if (Application::getScore() >= 10000 && s_entityMan->getEntitesByGroup(GEnemy).size() == 0
+			&& s_entityMan->getEntitesByGroup(GExplosion).size() == 0)
+		s_is_won = true;
+}
+
+void PlayState::loadWinning() {
+	if (s_is_won) {
+		Application::getStateManager()->pushState(result_state);
+		s_is_won = false;
 	}
 }
 

@@ -22,6 +22,8 @@ enum TextureID : short {
     menu_bg,
     play_bg,
     pause_bg,
+    result_bg1,
+    result_bg2,
     game_name,
     pause_title,
     board,
@@ -30,7 +32,8 @@ enum TextureID : short {
 
 enum FontID : short {
     yoster = 0,
-    mariana
+    pixel_30,
+    pixel_80
 };
 
 enum MusicID : short {

@@ -35,6 +35,9 @@ const std::string PATH_BEGIN_AUDIO  = PATH_BEGIN + "audio/";
 
 //Title
 #define TITLE_DEST          SDL_FRect {620, 250, 720, 120}
+#define RESULT_DEST_X       500
+#define RESULT_SC_Y         500
+#define RESULT_WT_Y         700
 
 //Mouse
 #define MOUSE_WIDTH         15

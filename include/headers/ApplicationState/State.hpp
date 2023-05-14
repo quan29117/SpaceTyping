@@ -22,6 +22,7 @@ enum StateID : short {
 	menu_state,
 	play_state,
 	pause_state,
+	result_state
 };
 
 class State {

@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <headers/Global.hpp>
+#include <headers/Application.hpp>
 #include <headers/ApplicationState/PlayState.hpp>
 #include <headers/ECS/HPP/EnemyComponents.hpp>
 #include <headers/ECS/Collision/EnemyCollisionComponent.hpp>
@@ -30,14 +31,20 @@ void SpawnManager::initWordList() {
 }
 
 bool SpawnManager::canSpawn() {
+	if (Application::getScore() >= 10000)
+		return false;
+
     TimePoint curTime = std::chrono::system_clock::now();
     m_elapsed_seconds += curTime - m_last_spawn;
 	m_last_spawn = curTime;
     if (m_elapsed_seconds.count() < m_spawn_CD)
         return false;
-
-	m_elapsed_seconds = std::chrono::duration<double>(0);
-    return (PlayState::getEntityManager()->getEntitesByGroup(GEnemy).size() < 7);
+	
+	if (PlayState::getEntityManager()->getEntitesByGroup(GEnemy).size() >= 7) 
+		return false;
+	
+    m_elapsed_seconds = std::chrono::duration<double>(0);
+	return true;
 }
 
 std::string SpawnManager::generatedWords() {
@@ -73,7 +80,7 @@ Entity& SpawnManager::createEnemy() {
 											 PLAYER_POS,
 											 ENEMY_SPEED);
 	e_enemy.addComponent<SpriteComponent>(enemy, ENEMY_SRC, ENEMY_SIZE);
-	e_enemy.addComponent<EnemyTextComponent>(generatedWords(), yoster);
+	e_enemy.addComponent<EnemyTextComponent>(generatedWords(), pixel_30);
 	e_enemy.addComponent<EnemyShootComponent>(&m_rng);
 	e_enemy.addComponent<EnemyCollisionComponent>(ENEMY_SIZE);
 	e_enemy.addComponent<ExplosionComponent>();

@@ -74,7 +74,7 @@ void PauseState::pollEvent() {
                         m_close = true;
                         AudioManager::setVolume(100);
                         AudioManager::playMusic(menu_bgm);
-                        Application::getStateManager()->changeCurrentState(menu_state);
+                        Application::getStateManager()->pushState(result_state);
                     }
 
                     if (m_buttons[music]->isHovered())

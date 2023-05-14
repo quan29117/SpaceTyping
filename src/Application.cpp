@@ -11,6 +11,8 @@
 
 //Define static members
 bool             Application::s_isRunning = true;
+std::size_t      Application::s_score     = 0;
+std::size_t      Application::s_wrong_count = 0;
 SDL_Renderer*    Application::s_renderer  = nullptr;
 ResourceManager* Application::s_resMan    = new ResourceManager;
 StateManager*    Application::s_stateMan  = new StateManager;
@@ -73,6 +75,8 @@ void Application::initResMan() {
     s_resMan->addTexture(menu_bg, "Menu_Background.png");
     s_resMan->addTexture(play_bg, "Play_Background.png");
     s_resMan->addTexture(pause_bg, "Pause_Background.png");
+    s_resMan->addTexture(result_bg1, "Result_Background1.png");
+    s_resMan->addTexture(result_bg2, "Result_Background2.png");
     s_resMan->addTexture(game_name, "Game_Name.png");
     s_resMan->addTexture(pause_title, "Pause_Title.png");
     s_resMan->addTexture(board, "Board.png");
@@ -80,7 +84,8 @@ void Application::initResMan() {
     
 //Add Fonts
     s_resMan->addFont(yoster, "yoster.ttf", 40);
-    s_resMan->addFont(mariana, "mariana.ttf", 40);
+    s_resMan->addFont(pixel_30, "pixel.ttf", 30);
+    s_resMan->addFont(pixel_80, "pixel.ttf", 80);
 
 //Add Musics
     s_resMan->addMusic(menu_bgm, "Menu_BGM.ogg");
@@ -118,6 +123,19 @@ Application::~Application() {}
 
 void Application::closeApp() {
     s_isRunning = false;
+}
+
+void Application::setProgress(const std::size_t& score, const std::size_t& cnt) {
+    s_score = score;
+    s_wrong_count = cnt;
+}
+
+std::size_t Application::getScore() {
+    return s_score;
+}
+
+std::size_t Application::getWrongCount() {
+    return s_wrong_count;
 }
 
 SDL_Renderer* Application::getRenderer() {

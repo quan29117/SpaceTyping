@@ -7,6 +7,7 @@
 
 #include <headers/Global.hpp>
 #include <headers/Application.hpp>
+#include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
 ProgressComponent::ProgressComponent() {
     m_score = 0;
@@ -19,6 +20,14 @@ ProgressComponent::ProgressComponent() {
 }
 
 ProgressComponent::~ProgressComponent() {}
+
+std::size_t ProgressComponent::getScore() {
+    return m_score;
+}
+
+std::size_t ProgressComponent::getWrongCount() {
+    return m_wrong_type;
+}
 
 void ProgressComponent::setScoreText() {
     SDL_Surface* surface = TTF_RenderText_Blended(Application::getResourceManager()->getFont(m_font_id), m_score_str.c_str(), SDL_Color {255, 255, 255, 255});

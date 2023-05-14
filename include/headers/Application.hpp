@@ -23,6 +23,10 @@ private:
     static bool s_isRunning;
     int frameDelay, frameTime, frameStart;
 
+//Progress
+    static std::size_t s_score;
+    static std::size_t s_wrong_count;
+
 //Init Funtions
     void initSDL();
     void initWindow();
@@ -37,7 +41,11 @@ public:
     Application();
     virtual ~Application();
 
+    static void setProgress(const std::size_t& score, const std::size_t& cnt);
+
     static void             closeApp();
+    static std::size_t      getScore();
+    static std::size_t      getWrongCount();
     static SDL_Renderer*    getRenderer();
     static ResourceManager* getResourceManager();
     static StateManager*    getStateManager();

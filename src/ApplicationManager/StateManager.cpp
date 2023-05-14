@@ -9,6 +9,7 @@
 #include <headers/ApplicationState/MenuState.hpp>
 #include <headers/ApplicationState/PlayState.hpp>
 #include <headers/ApplicationState/PauseState.hpp>
+#include <headers/ApplicationState/ResultState.hpp>
 
 StateManager::StateManager() {
 	m_currentState = none_state;
@@ -60,7 +61,8 @@ void StateManager::pushState(const StateID& stateID) {
 				AudioManager::setVolume(50);
 				break;
 
-			default:
+			case result_state:
+				m_states.push(new ResultState());
 				break;
 		}
 		m_currentState = stateID;

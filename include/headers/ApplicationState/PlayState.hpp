@@ -21,9 +21,10 @@ private:
 	SDL_Texture* m_board_texture;
 	SDL_FRect	 m_board_dest;
 
-//Gameplay																
+//Gameplay				
     unsigned char 		  m_char_input;
-	static EntityManager* s_entityMan;
+	static bool			  s_is_won;	
+	static EntityManager* s_entityMan;	
 	CollisionManager* 	  m_collisionMan;
 	SpawnManager*		  m_spawnMan;
 	Entity* 			  m_player;
@@ -42,13 +43,16 @@ private:
 	void updateManager();
 	void shooting();
 	void scrollBackground();
+	void loadProgress();
+	void loadWinning();
 	void resetCharInput();
 	
 public:			
     PlayState();
     virtual ~PlayState();
 
-	static EntityManager* 	 getEntityManager();
+	static bool			  getWinning();
+	static EntityManager* getEntityManager();
 
     void run()		 override;
 };
