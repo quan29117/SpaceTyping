@@ -63,6 +63,7 @@ void StateManager::pushState(const StateID& stateID) {
 
 			case result_state:
 				m_states.push(new ResultState());
+				AudioManager::setVolume(100);
 				break;
 		}
 		m_currentState = stateID;

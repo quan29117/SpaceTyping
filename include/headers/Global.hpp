@@ -13,7 +13,6 @@
 
 //------------------------------Constant Value------------------------------------
 //File path
-//TODO : Edit the PATH_BEGIN for directing to folder "res" of this game
 const std::string PATH_BEGIN        = "./res/";
 const std::string PATH_BEGIN_IMAGE  = PATH_BEGIN + "img/";
 const std::string PATH_BEGIN_FONT   = PATH_BEGIN + "font/";

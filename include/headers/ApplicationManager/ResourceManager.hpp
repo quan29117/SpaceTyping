@@ -39,7 +39,9 @@ enum FontID : short {
 enum MusicID : short {
     none_music = -1,
     menu_bgm = 0,
-    play_bgm
+    play_bgm,
+    result_victory_bgm,
+    result_defeated_bgm,
 };
 
 enum SoundID : short {

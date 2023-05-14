@@ -90,6 +90,8 @@ void Application::initResMan() {
 //Add Musics
     s_resMan->addMusic(menu_bgm, "Menu_BGM.ogg");
     s_resMan->addMusic(play_bgm, "Play_BGM.ogg");
+    s_resMan->addMusic(result_victory_bgm, "ResultVictory_BGM.ogg");
+    s_resMan->addMusic(result_defeated_bgm, "ResultDefeated_BGM.ogg");
 
 //Add Sounds
     s_resMan->addSound(player_shoot, "Player_Shoot.ogg");

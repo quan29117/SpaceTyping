@@ -14,9 +14,11 @@ void ResultState::initBackground() {
     if (!PlayState::getWinning()) {
         m_bg_texture = Application::getResourceManager()->getTexture(result_bg1);
         m_text_color = SDL_Color {255, 255, 255, 255};
+        AudioManager::playMusic(result_defeated_bgm);
     } else {
         m_bg_texture = Application::getResourceManager()->getTexture(result_bg2);
         m_text_color = SDL_Color {255, 255, 0, 255};
+        AudioManager::playMusic(result_victory_bgm);
     }
     
     m_bg_dest = BACKGROUND_DEST;

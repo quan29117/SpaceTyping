@@ -10,8 +10,8 @@
 #include <headers/ApplicationManager/ResourceMethodManager.hpp>
 
 ProgressComponent::ProgressComponent() {
-    m_score = 0;
-    m_score_str = "Score: 0";
+    m_score = 9990;
+    m_score_str = "Score: 9990";
     
     m_wrong_type = 0;
     m_WT_str = "Wrong: 0";
