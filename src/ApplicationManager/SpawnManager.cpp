@@ -53,11 +53,15 @@ std::string SpawnManager::generatedWords() {
 	int countWord = uni(m_rng) % 2 + 1;
 	switch (countWord) {
 		case 1:
-			m_spawn_CD = 2;
+			if (Application::getScore() < 5000)
+				m_spawn_CD = 2;
+			else m_spawn_CD = 1.5;
 			break;
 
 		case 2:
-			m_spawn_CD = 3;
+			if (Application::getScore() < 5000)
+				m_spawn_CD = 3;
+			else m_spawn_CD = 2;
 			break;
 	}
 

@@ -13,6 +13,16 @@ Type the **red-char** bullets before they hit you.
 
 ![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/Untitled2.png)
 
+You will win when you get score more than 10000 and defeat all enemies.
+
+![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/Victory.png)
+
+Otherwise, you lose.
+
+![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/Defeated.png)
+
+You can watch [this demo video](https://github.com/quan29117/SpaceTyping/blob/master/preview/Demo.mp4) (＾3＾)♪
+
 ## Installing
 >**For Linux, please follow [this link](https://www.paulbarrick.com/game-devlopment/game-development-on-linux-using-vscode-sdl2-and-opengl/) to install.**
 
