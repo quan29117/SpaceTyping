@@ -21,7 +21,7 @@ Otherwise, you lose.
 
 ![Image](https://github.com/quan29117/SpaceTyping/blob/master/preview/Defeated.png)
 
-You can watch [this demo video](https://github.com/quan29117/SpaceTyping/blob/master/preview/Demo.mp4) (＾3＾)♪
+**You can watch [this demo video](https://drive.google.com/file/d/1hH-fqr54HzKZB04gz05aXJskFUQr-6Jf/view?usp=sharing) (＾3＾)♪**
 
 ## Installing
 >**For Linux, please follow [this link](https://www.paulbarrick.com/game-devlopment/game-development-on-linux-using-vscode-sdl2-and-opengl/) to install.**
